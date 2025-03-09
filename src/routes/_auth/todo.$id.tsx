@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { getTodoOptions } from '@/server/functions/todo'
+import { getTodoOptions } from '@/server/todo'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowLeft, Edit } from 'lucide-react'
@@ -21,7 +21,7 @@ export const Route = createFileRoute('/_auth/todo/$id')({
   validateSearch: z.object({
     edit: z.boolean().default(false),
   }),
-  loader: async ({ context, params }) => {
+  loader: ({ context, params }) => {
     context.queryClient.ensureQueryData(getTodoOptions(params.id))
   },
   component: TodoDetail,

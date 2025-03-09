@@ -1,9 +1,9 @@
+import type { TodoSelect } from '@/schemas/todo'
 import { db } from '@/db'
 import { todo } from '@/db/schemas'
 import { sleep } from '@/lib/utils'
 import { authMiddleware } from '@/middleware/auth'
 import { queryClient } from '@/router'
-import type { TodoSelect } from '@/schemas/todo'
 import {
   todoCreateFormSchema,
   todoSelectSchema,

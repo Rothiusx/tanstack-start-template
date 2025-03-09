@@ -1,4 +1,5 @@
 import type { User } from '@/auth'
+import type { StatusMessageProps } from '../ui/status-message'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -11,7 +12,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { updateUserSchema } from '@/schemas/profile'
-import { getSessionOptions, updateUser } from '@/server/functions/auth'
+import { getSessionOptions, updateUser } from '@/server/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
@@ -19,7 +20,6 @@ import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import type { StatusMessageProps } from '../ui/status-message'
 import { StatusMessage } from '../ui/status-message'
 
 export function EditProfileForm({ user }: { user: User }) {

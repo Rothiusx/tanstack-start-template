@@ -1,3 +1,4 @@
+import type { ErrorComponentProps } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -8,7 +9,6 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import type { ErrorComponentProps } from '@tanstack/react-router'
 import { AlertTriangle, RefreshCcw, Terminal } from 'lucide-react'
 
 export function DefaultErrorBoundary({

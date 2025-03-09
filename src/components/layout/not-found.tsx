@@ -1,3 +1,4 @@
+import type { NotFoundRouteProps } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -8,7 +9,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import { Link, type NotFoundRouteProps } from '@tanstack/react-router'
+import { Link } from '@tanstack/react-router'
 import { FileQuestion, Home, Search } from 'lucide-react'
 
 export function NotFound({ data }: NotFoundRouteProps) {

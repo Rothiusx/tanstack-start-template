@@ -25,7 +25,10 @@ function Profile() {
   return (
     <section className="flex flex-col items-center justify-center gap-8 px-4 py-8">
       <Avatar className="size-24 text-2xl lg:size-48 lg:text-6xl">
-        <AvatarImage src={session.user.image ?? undefined} />
+        <AvatarImage
+          src={session.user.image ?? undefined}
+          alt={session.user.name}
+        />
         <AvatarFallback className="uppercase">
           {session.user.name.charAt(0)}
         </AvatarFallback>

@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { DataTable } from '@/components/ui/data-table'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
-import { getTodosOptions } from '@/server/functions/todo'
+import { getTodosOptions } from '@/server/todo'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { CircleCheckBig, CircleX } from 'lucide-react'
 import { TodoListActions } from './todo-list-actions'
@@ -16,7 +16,10 @@ const columns: ColumnDef<TodoWithUser>[] = [
     header: undefined,
     cell: ({ row }) => (
       <Avatar>
-        <AvatarImage src={row.original.user.image ?? undefined} />
+        <AvatarImage
+          src={row.original.user.image ?? undefined}
+          alt={row.original.user.name}
+        />
         <AvatarFallback className="uppercase">
           {row.original.user.name.charAt(0)}
         </AvatarFallback>

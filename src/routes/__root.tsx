@@ -1,12 +1,12 @@
 import type { Session } from '@/auth'
+import type { QueryClient } from '@tanstack/react-query'
 import { DefaultErrorBoundary } from '@/components/layout/default-error-boundary'
 import { NavBar } from '@/components/layout/nav-bar'
 import { NotFound } from '@/components/layout/not-found'
 import { ThemeProvider } from '@/components/ui/theme-provider'
 import { queryClient } from '@/router'
-import { getSession } from '@/server/functions/auth'
+import { getSession } from '@/server/auth'
 import styles from '@/styles.css?url'
-import type { QueryClient } from '@tanstack/react-query'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import {
@@ -52,7 +52,7 @@ export const Route = createRootRouteWithContext<{
       }
     }
   },
-  onEnter: async ({ context }) => {
+  onEnter: ({ context }) => {
     // Remove all queries when opening the page to avoid hydration errors
     context.queryClient.removeQueries()
   },
@@ -88,7 +88,7 @@ export const Route = createRootRouteWithContext<{
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
         <HeadContent />

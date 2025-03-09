@@ -1,3 +1,4 @@
+import type { TodoWithUser } from '@/schemas/todo'
 import { TodoProjectLabel } from '@/components/todo/todo-project-label'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -18,12 +19,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import type { TodoWithUser } from '@/schemas/todo'
 import { todoUpdateFormSchema } from '@/schemas/todo'
-import { updateTodo } from '@/server/functions/todo'
+import { updateTodo } from '@/server/todo'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { getRouteApi, useNavigate } from '@tanstack/react-router'
+import { useNavigate } from '@tanstack/react-router'
 import { Loader2, Save } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -48,7 +48,7 @@ export function TodoUpdateForm({ todo }: { todo: TodoWithUser }) {
 
   const { mutate, isPending } = useMutation({
     mutationFn: updateTodo,
-    onSuccess: ({ data, message }) => {
+    onSuccess: ({ message }) => {
       toast.success(message)
       queryClient.invalidateQueries()
       navigate({ search: { edit: false } })
@@ -62,10 +62,7 @@ export function TodoUpdateForm({ todo }: { todo: TodoWithUser }) {
     <Form {...form}>
       <div>{todo.title}</div>
       <form
-        onSubmit={form.handleSubmit((data) => {
-          console.log(data)
-          mutate({ data })
-        })}
+        onSubmit={form.handleSubmit((data) => mutate({ data }))}
         className="space-y-6"
       >
         <FormField

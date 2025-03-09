@@ -1,4 +1,3 @@
-import type { TodoCreateForm as TodoCreateFormType } from '@/schemas/todo'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -18,7 +17,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { todoCreateFormSchema } from '@/schemas/todo'
-import { createTodo } from '@/server/functions/todo'
+import { createTodo } from '@/server/todo'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'

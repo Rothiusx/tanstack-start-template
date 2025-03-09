@@ -1,6 +1,6 @@
 import type { TodoWithUser } from '@/schemas/todo'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { CalendarDays, CheckCircle2, Clock, User, XCircle } from 'lucide-react'
+import { CalendarDays, CheckCircle2, Clock, XCircle } from 'lucide-react'
 import { Badge } from '../ui/badge'
 import { Separator } from '../ui/separator'
 import { TodoProjectLabel } from './todo-project-label'

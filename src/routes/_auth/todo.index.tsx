@@ -1,7 +1,7 @@
 import { TodoList } from '@/components/todo/todo-list'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-import { getTodosOptions } from '@/server/functions/todo'
+import { getTodosOptions } from '@/server/todo'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ClipboardList, PlusCircle } from 'lucide-react'
 import { Suspense } from 'react'

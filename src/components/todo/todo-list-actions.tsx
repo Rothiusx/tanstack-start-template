@@ -11,7 +11,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import { deleteTodo } from '@/server/functions/todo'
+import { deleteTodo } from '@/server/todo'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { FilePenLine, Loader2, Trash2 } from 'lucide-react'

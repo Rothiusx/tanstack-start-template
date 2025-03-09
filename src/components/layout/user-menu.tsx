@@ -10,9 +10,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-
 import { Link, useRouter } from '@tanstack/react-router'
-import { LogIn } from 'lucide-react'
+import { CircleUserRound, LogIn, LogOut } from 'lucide-react'
 import { toast } from 'sonner'
 
 export function UserMenu({ user }: { user: User | undefined }) {
@@ -31,7 +30,7 @@ export function UserMenu({ user }: { user: User | undefined }) {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
           <Avatar className="size-8">
-            <AvatarImage src={user.image ?? undefined} />
+            <AvatarImage src={user.image ?? undefined} alt={user.name} />
             <AvatarFallback className="bg-background uppercase">
               {user.name.charAt(0)}
             </AvatarFallback>
@@ -49,7 +48,10 @@ export function UserMenu({ user }: { user: User | undefined }) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link to="/profile">Profile</Link>
+          <Link to="/profile">
+            <CircleUserRound className="size-4" />
+            Profile
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
@@ -67,6 +69,7 @@ export function UserMenu({ user }: { user: User | undefined }) {
             })
           }
         >
+          <LogOut className="size-4" />
           Sign out
         </DropdownMenuItem>
       </DropdownMenuContent>
