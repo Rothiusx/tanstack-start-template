@@ -13,10 +13,11 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { updateUserSchema } from '@/schemas/profile'
-import { updateUser } from '@/server/functions/auth'
+import { getSessionOptions, updateUser } from '@/server/functions/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
+import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -29,13 +30,13 @@ export function EditProfileForm({ user }: { user: User }) {
     message: '',
   })
 
-  const form = useForm<UpdateUser>({
+  const form = useForm({
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
       name: user.name,
       email: user.email,
-      age: user.age,
-      city: user.city,
+      age: user.age ?? null,
+      city: user.city ?? null,
     },
   })
 
@@ -44,7 +45,7 @@ export function EditProfileForm({ user }: { user: User }) {
     onSuccess: ({ data, message }) => {
       form.reset(data)
       router.invalidate()
-      queryClient.invalidateQueries({ queryKey: ['user'] })
+      queryClient.invalidateQueries(getSessionOptions())
       setMessage({
         message,
       })
@@ -132,11 +133,18 @@ export function EditProfileForm({ user }: { user: User }) {
         />
         <StatusMessage {...message} />
         <Button
-          className="float-right min-w-32"
           type="submit"
+          className="float-right min-w-36"
           disabled={!form.formState.isDirty || isPending}
         >
-          Save
+          {isPending ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Updating...
+            </>
+          ) : (
+            'Save'
+          )}
         </Button>
       </form>
     </Form>

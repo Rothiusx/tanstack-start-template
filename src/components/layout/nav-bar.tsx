@@ -4,13 +4,13 @@ import { ModeToggle } from './mode-toggle'
 import { UserMenu } from './user-menu'
 
 export function NavBar() {
-  const { session } = useRouteContext({ strict: false })
+  const { session } = useRouteContext({ from: '__root__' })
 
   const links = session
     ? [
         {
           to: '/todo' as const,
-          label: 'Todo',
+          label: 'TODO',
           icon: <ClipboardList className="size-6" />,
         },
         ...(session.user.role === 'admin'

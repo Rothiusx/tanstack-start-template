@@ -1,9 +1,12 @@
-import type { QueryClient } from '@tanstack/react-query'
+import type { Session } from '@/auth'
+import { DefaultErrorBoundary } from '@/components/layout/default-error-boundary'
 import { NavBar } from '@/components/layout/nav-bar'
+import { NotFound } from '@/components/layout/not-found'
 import { ThemeProvider } from '@/components/ui/theme-provider'
 import { queryClient } from '@/router'
 import { getSession } from '@/server/functions/auth'
 import styles from '@/styles.css?url'
+import type { QueryClient } from '@tanstack/react-query'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import {
@@ -17,7 +20,7 @@ import { Toaster } from 'sonner'
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient
-  session: Awaited<ReturnType<typeof getSession>>
+  session: Session | null
 }>()({
   head: () => ({
     meta: [
@@ -37,19 +40,21 @@ export const Route = createRootRouteWithContext<{
         rel: 'stylesheet',
         href: styles,
       },
-      {
-        suppressHydrationWarning: true,
-      },
     ],
   }),
-  beforeLoad: async ({ context }) => {
-    if (!context.session) {
-      const session = await getSession()
-      return {
-        session,
-      }
+  beforeLoad: async () => {
+    // Get session before loading the page
+    const session = await getSession()
+    return {
+      session,
     }
   },
+  onEnter: async ({ context }) => {
+    // Remove all queries when entering accessing the page
+    context.queryClient.removeQueries()
+  },
+  errorComponent: (props) => <DefaultErrorBoundary {...props} />,
+  notFoundComponent: (props) => <NotFound {...props} />,
   component: () => (
     <RootDocument>
       <QueryClientProvider client={queryClient}>
@@ -66,8 +71,12 @@ export const Route = createRootRouteWithContext<{
             <Outlet />
           </main>
           <Toaster richColors />
-          <TanStackRouterDevtools />
-          <ReactQueryDevtools />
+          {import.meta.env.DEV && (
+            <>
+              <TanStackRouterDevtools />
+              <ReactQueryDevtools />
+            </>
+          )}
         </ThemeProvider>
       </QueryClientProvider>
     </RootDocument>
@@ -78,6 +87,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html suppressHydrationWarning>
       <head>
+        <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
         <HeadContent />
       </head>
       <body className="bg-background text-foreground antialiased">

@@ -8,7 +8,7 @@ export const queryClient = new QueryClient()
 
 // Create a new router instance
 export function createRouter() {
-  const router = createTanstackRouter({
+  return createTanstackRouter({
     routeTree,
     scrollRestoration: true,
     context: {
@@ -16,11 +16,10 @@ export function createRouter() {
       session: null,
     },
     defaultPreload: 'intent',
-    defaultStaleTime: 0,
+    defaultPendingMinMs: 0,
     defaultPendingComponent: () => <LoadingScreen />,
     defaultErrorComponent: ({ error }) => <div>{error.message}</div>,
   })
-  return router
 }
 
 // Register the router instance for type safety

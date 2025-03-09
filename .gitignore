@@ -5,6 +5,8 @@ node_modules
 
 # production
 dist
+.output
+.vinxi
 
 # misc
 .DS_Store

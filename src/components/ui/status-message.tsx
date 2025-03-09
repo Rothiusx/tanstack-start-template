@@ -10,8 +10,8 @@ const messageVariants = cva(
   {
     variants: {
       variant: {
-        success: 'bg-emerald-300/25 text-emerald-500',
-        error: 'bg-red-300/25 text-red-500',
+        success: 'bg-success/10 text-success-foreground',
+        error: 'bg-destructive/10 text-destructive-foreground',
       },
     },
     defaultVariants: {

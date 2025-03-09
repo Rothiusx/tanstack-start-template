@@ -32,8 +32,8 @@ export function UserMenu({ user }: { user: User | undefined }) {
         <Button variant="ghost" size="icon">
           <Avatar className="size-8">
             <AvatarImage src={user.image ?? undefined} />
-            <AvatarFallback className="bg-background">
-              {user.name.charAt(0).toUpperCase()}
+            <AvatarFallback className="bg-background uppercase">
+              {user.name.charAt(0)}
             </AvatarFallback>
           </Avatar>
         </Button>

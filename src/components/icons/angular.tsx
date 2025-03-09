@@ -12,7 +12,7 @@ export function AngularIcon(props: SVGProps<SVGSVGElement>) {
     >
       <g clipPath="url(#a)">
         <mask
-          id="b"
+          id="angular-b"
           width={242}
           height={256}
           x={0}
@@ -24,20 +24,20 @@ export function AngularIcon(props: SVGProps<SVGSVGElement>) {
         >
           <path fill="#fff" d="M0 0h242v256H0V0Z" />
         </mask>
-        <g mask="url(#b)">
+        <g mask="url(#angular-b)">
           <path
-            fill="url(#c)"
+            fill="url(#angular-c)"
             d="m241 43-9 136L149 0l92 43Zm-58 176-62 36-63-36 12-31h101l12 31ZM121 68l32 80H88l33-80ZM9 179 0 43 92 0 9 179Z"
           />
           <path
-            fill="url(#d)"
+            fill="url(#angular-d)"
             d="m241 43-9 136L149 0l92 43Zm-58 176-62 36-63-36 12-31h101l12 31ZM121 68l32 80H88l33-80ZM9 179 0 43 92 0 9 179Z"
           />
         </g>
       </g>
       <defs>
         <linearGradient
-          id="c"
+          id="angular-c"
           x1={53.2}
           x2={245}
           y1={231.9}
@@ -52,7 +52,7 @@ export function AngularIcon(props: SVGProps<SVGSVGElement>) {
           <stop offset={1} stopColor="#6C00F5" />
         </linearGradient>
         <linearGradient
-          id="d"
+          id="angular-d"
           x1={44.5}
           x2={170}
           y1={30.7}
@@ -62,7 +62,7 @@ export function AngularIcon(props: SVGProps<SVGSVGElement>) {
           <stop stopColor="#FF31D9" />
           <stop offset={1} stopColor="#FF5BE1" stopOpacity={0} />
         </linearGradient>
-        <clipPath id="a">
+        <clipPath id="angular-a">
           <path fill="#fff" d="M0 0h242v256H0z" />
         </clipPath>
       </defs>

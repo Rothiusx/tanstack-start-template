@@ -14,16 +14,16 @@ import { Button } from '@/components/ui/button'
 import { deleteTodo } from '@/server/functions/todo'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
-import { FilePenLine, Loader2, Trash2, UserPen } from 'lucide-react'
+import { FilePenLine, Loader2, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 
 export function TodoListActions({ id }: { id: TodoSelect['id'] }) {
   const queryClient = useQueryClient()
   const { mutate, isPending } = useMutation({
     mutationFn: deleteTodo,
-    onSuccess: async ({ message }) => {
+    onSuccess: ({ message }) => {
       toast.success(message)
-      await queryClient.invalidateQueries()
+      queryClient.invalidateQueries()
     },
     onError: ({ message }) => {
       toast.error(message)
@@ -39,11 +39,10 @@ export function TodoListActions({ id }: { id: TodoSelect['id'] }) {
       ) : (
         <Button variant="secondary" size="sm" asChild>
           <Link to="/todo/$id" params={{ id }}>
-            <UserPen className="size-5" />
+            <FilePenLine className="size-5" />
           </Link>
         </Button>
       )}
-
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <Button variant="destructive" size="sm" disabled={isPending}>

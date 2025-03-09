@@ -1,4 +1,5 @@
 import { auth } from '@/auth'
+import { sleep } from '@/lib/utils'
 import { authMiddleware } from '@/middleware/auth'
 import { updateUserSchema } from '@/schemas/profile'
 import { queryOptions } from '@tanstack/react-query'
@@ -37,6 +38,9 @@ export const updateUser = createServerFn({ method: 'POST' })
         await auth.api.changeEmail({ headers, body: { newEmail: email } })
       }
       await auth.api.updateUser({ headers, body: user })
+
+      await sleep()
+
       return {
         data,
         message: 'Profile updated successfully',

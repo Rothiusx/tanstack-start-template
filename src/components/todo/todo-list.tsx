@@ -1,5 +1,6 @@
-import type { TodoSelect } from '@/schemas/todo'
+import type { TodoWithUser } from '@/schemas/todo'
 import type { ColumnDef } from '@tanstack/react-table'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { DataTable } from '@/components/ui/data-table'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
@@ -7,8 +8,25 @@ import { getTodosOptions } from '@/server/functions/todo'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { CircleCheckBig, CircleX } from 'lucide-react'
 import { TodoListActions } from './todo-list-actions'
+import { TodoProjectLabel } from './todo-project-label'
 
-const columns: ColumnDef<TodoSelect>[] = [
+const columns: ColumnDef<TodoWithUser>[] = [
+  {
+    accessorKey: 'user.image',
+    header: undefined,
+    cell: ({ row }) => (
+      <Avatar>
+        <AvatarImage src={row.original.user.image ?? undefined} />
+        <AvatarFallback className="uppercase">
+          {row.original.user.name.charAt(0)}
+        </AvatarFallback>
+      </Avatar>
+    ),
+  },
+  {
+    accessorKey: 'user.name',
+    header: 'User',
+  },
   {
     accessorKey: 'title',
     header: 'Title',
@@ -20,10 +38,11 @@ const columns: ColumnDef<TodoSelect>[] = [
   {
     accessorKey: 'project',
     header: 'Project',
+    cell: ({ row }) => <TodoProjectLabel project={row.original.project} />,
   },
   {
     accessorKey: 'language',
-    header: 'Role',
+    header: 'Language',
     cell: ({ row }) => (
       <Badge variant="outline" className="uppercase">
         {row.original.language}
