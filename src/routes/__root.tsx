@@ -42,15 +42,18 @@ export const Route = createRootRouteWithContext<{
       },
     ],
   }),
-  beforeLoad: async () => {
-    // Get session before loading the page
-    const session = await getSession()
-    return {
-      session,
+
+  beforeLoad: async ({ context }) => {
+    // Get session in root route and pass it to the context if session is not already set
+    if (!context.session) {
+      const session = await getSession()
+      return {
+        session,
+      }
     }
   },
   onEnter: async ({ context }) => {
-    // Remove all queries when entering accessing the page
+    // Remove all queries when opening the page to avoid hydration errors
     context.queryClient.removeQueries()
   },
   errorComponent: (props) => <DefaultErrorBoundary {...props} />,
