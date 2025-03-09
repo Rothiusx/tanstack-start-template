@@ -47,7 +47,6 @@ function TodoDetail() {
   const toggleEdit = () => {
     navigate({
       search: { edit: !edit },
-      replace: true,
     })
   }
 

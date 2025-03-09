@@ -23,7 +23,7 @@ import { todoUpdateFormSchema } from '@/schemas/todo'
 import { updateTodo } from '@/server/functions/todo'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useNavigate } from '@tanstack/react-router'
+import { getRouteApi, useNavigate } from '@tanstack/react-router'
 import { Loader2, Save } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -31,7 +31,7 @@ import { projects } from './todo-project-label'
 
 export function TodoUpdateForm({ todo }: { todo: TodoWithUser }) {
   const queryClient = useQueryClient()
-  const navigate = useNavigate()
+  const navigate = useNavigate({ from: '/todo/$id' })
 
   const form = useForm({
     resolver: zodResolver(todoUpdateFormSchema),
@@ -48,16 +48,10 @@ export function TodoUpdateForm({ todo }: { todo: TodoWithUser }) {
 
   const { mutate, isPending } = useMutation({
     mutationFn: updateTodo,
-    onSuccess: async ({ data, message }) => {
-      form.reset(data)
+    onSuccess: ({ data, message }) => {
       toast.success(message)
-      await queryClient.invalidateQueries()
-      await navigate({
-        to: '/todo/$id',
-        params: { id: todo.id },
-        search: { edit: false },
-        replace: true,
-      })
+      queryClient.invalidateQueries()
+      navigate({ search: { edit: false } })
     },
     onError: ({ message }) => {
       toast.error(message)

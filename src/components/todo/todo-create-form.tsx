@@ -28,7 +28,7 @@ import { toast } from 'sonner'
 import { projects, TodoProjectLabel } from './todo-project-label'
 
 export function TodoCreateForm() {
-  const navigate = useNavigate()
+  const navigate = useNavigate({ from: '/todo/create' })
   const form = useForm({
     resolver: zodResolver(todoCreateFormSchema),
     defaultValues: {
@@ -41,8 +41,7 @@ export function TodoCreateForm() {
 
   const { mutate, isPending } = useMutation({
     mutationFn: createTodo,
-    onSuccess: ({ data, message }) => {
-      form.reset(data)
+    onSuccess: ({ message }) => {
       toast.success(message)
       navigate({ to: '/todo' })
     },

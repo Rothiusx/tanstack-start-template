@@ -1,5 +1,5 @@
 import { LoadingScreen } from '@/components/layout/loading-screen'
-import { EditProfileForm } from '@/components/profile/edit-profile-form'
+import { EditProfileForm } from '@/components/profile/update-profile-form'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import {

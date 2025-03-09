@@ -1,6 +1,4 @@
 import type { User } from '@/auth'
-import type { UpdateUser } from '@/schemas/profile'
-import type { StatusMessageProps } from '../ui/status-message'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -21,6 +19,7 @@ import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import type { StatusMessageProps } from '../ui/status-message'
 import { StatusMessage } from '../ui/status-message'
 
 export function EditProfileForm({ user }: { user: User }) {
@@ -82,6 +81,7 @@ export function EditProfileForm({ user }: { user: User }) {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="age"
@@ -101,6 +101,7 @@ export function EditProfileForm({ user }: { user: User }) {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="city"
@@ -118,6 +119,7 @@ export function EditProfileForm({ user }: { user: User }) {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="email"
@@ -131,7 +133,9 @@ export function EditProfileForm({ user }: { user: User }) {
             </FormItem>
           )}
         />
+
         <StatusMessage {...message} />
+
         <Button
           type="submit"
           className="float-right min-w-36"
