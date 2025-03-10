@@ -133,6 +133,7 @@ export function EditProfileForm({ user }: { user: User }) {
             <FormItem>
               <FormLabel>Language</FormLabel>
               <Select
+                key={field.value}
                 onValueChange={field.onChange}
                 defaultValue={field.value ?? undefined}
               >
