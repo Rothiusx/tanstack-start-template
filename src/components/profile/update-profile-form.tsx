@@ -143,9 +143,11 @@ export function EditProfileForm({ user }: { user: User }) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="none" className="text-muted-foreground">
-                    Select a language
-                  </SelectItem>
+                  {field.value && (
+                    <SelectItem value="none" className="text-muted-foreground">
+                      Select a language
+                    </SelectItem>
+                  )}
                   <SelectItem value="cs">Czech</SelectItem>
                   <SelectItem value="en">English</SelectItem>
                 </SelectContent>
