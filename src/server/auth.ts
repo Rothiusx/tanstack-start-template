@@ -1,7 +1,7 @@
 import { auth } from '@/auth'
 import { sleep } from '@/lib/utils'
 import { authMiddleware } from '@/middleware/auth'
-import { updateUserSchema } from '@/schemas/profile'
+import { userUpdateSchema } from '@/schemas/auth'
 import { queryOptions } from '@tanstack/react-query'
 import { createServerFn } from '@tanstack/react-start'
 import { getWebRequest } from '@tanstack/react-start/server'
@@ -13,7 +13,12 @@ export const getSession = createServerFn({ method: 'GET' }).handler(
   async () => {
     const { headers } = getWebRequest()!
     const session = await auth.api.getSession({ headers })
-    return session
+    const locale =
+      session?.user.language ?? headers.get('accept-language')?.split(',')[0]
+    return {
+      session,
+      locale,
+    }
   },
 )
 
@@ -29,7 +34,7 @@ export function getSessionOptions() {
  */
 export const updateUser = createServerFn({ method: 'POST' })
   .middleware([authMiddleware])
-  .validator(updateUserSchema)
+  .validator(userUpdateSchema)
   .handler(async ({ data, context }) => {
     const { headers } = getWebRequest()!
     const { email, ...user } = data

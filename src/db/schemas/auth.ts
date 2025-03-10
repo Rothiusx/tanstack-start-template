@@ -14,6 +14,7 @@ export const user = sqliteTable('user', {
   banExpires: integer('ban_expires', { mode: 'timestamp' }),
   age: integer('age'),
   city: text('city'),
+  language: text('language', { enum: ['en', 'cs'] }),
 })
 
 export const session = sqliteTable('session', {

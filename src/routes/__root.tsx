@@ -1,4 +1,3 @@
-import type { Session } from '@/auth'
 import type { QueryClient } from '@tanstack/react-query'
 import { DefaultErrorBoundary } from '@/components/layout/default-error-boundary'
 import { NavBar } from '@/components/layout/nav-bar'
@@ -15,12 +14,11 @@ import {
   Outlet,
   Scripts,
 } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/router-devtools'
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { Toaster } from 'sonner'
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient
-  session: Session | null
 }>()({
   head: () => ({
     meta: [
@@ -43,13 +41,12 @@ export const Route = createRootRouteWithContext<{
     ],
   }),
 
-  beforeLoad: async ({ context }) => {
+  beforeLoad: async () => {
     // Get session in root route and pass it to the context if session is not already set
-    if (!context.session) {
-      const session = await getSession()
-      return {
-        session,
-      }
+    const { session, locale } = await getSession()
+    return {
+      session,
+      locale,
     }
   },
   onEnter: ({ context }) => {

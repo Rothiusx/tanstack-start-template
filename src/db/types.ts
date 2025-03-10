@@ -8,7 +8,7 @@ export type User = typeof user.$inferSelect
 
 // Type with relations
 export type TodoWithUser = Todo & {
-  user: User
+  user: Pick<User, 'name' | 'image'>
 }
 
 // Generic type helper for getting types with relations
@@ -22,3 +22,5 @@ export type WithRelations<
         : never
     }
   : never
+// Type for todos with user relations using the generic helper
+export type TodoWithUserDetails = WithRelations<'todo', { user: 'user' }>

@@ -10,12 +10,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useLocale } from '@/hooks/use-locale'
 import { Link, useRouter } from '@tanstack/react-router'
 import { CircleUserRound, LogIn, LogOut } from 'lucide-react'
 import { toast } from 'sonner'
 
 export function UserMenu({ user }: { user: User | undefined }) {
   const router = useRouter()
+  const locale = useLocale()
 
   if (!user) {
     return (
@@ -71,6 +73,10 @@ export function UserMenu({ user }: { user: User | undefined }) {
         >
           <LogOut className="size-4" />
           Sign out
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="uppercase" disabled>
+          {locale}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

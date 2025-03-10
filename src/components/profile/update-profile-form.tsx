@@ -1,5 +1,5 @@
 import type { User } from '@/auth'
-import type { StatusMessageProps } from '../ui/status-message'
+import type { StatusMessageProps } from '@/components/ui/status-message'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -11,31 +11,38 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { updateUserSchema } from '@/schemas/profile'
-import { getSessionOptions, updateUser } from '@/server/auth'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { StatusMessage } from '@/components/ui/status-message'
+import { userUpdateSchema } from '@/schemas/auth'
+import { updateUser } from '@/server/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
 import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import { StatusMessage } from '../ui/status-message'
 
 export function EditProfileForm({ user }: { user: User }) {
   const router = useRouter()
-  const queryClient = useQueryClient()
   const [message, setMessage] = useState<StatusMessageProps>({
     message: '',
   })
 
   const form = useForm({
-    resolver: zodResolver(updateUserSchema),
+    resolver: zodResolver(userUpdateSchema),
     defaultValues: {
       name: user.name,
       email: user.email,
       age: user.age ?? null,
       city: user.city ?? null,
+      language: user.language ?? null,
     },
   })
 
@@ -44,13 +51,12 @@ export function EditProfileForm({ user }: { user: User }) {
     onSuccess: ({ data, message }) => {
       form.reset(data)
       router.invalidate()
-      queryClient.invalidateQueries(getSessionOptions())
       setMessage({
         message,
       })
       toast.success(message)
     },
-    onError: ({ message }) => {
+    onError: ({ result: { message } }) => {
       setMessage({
         message,
         variant: 'error',
@@ -115,6 +121,37 @@ export function EditProfileForm({ user }: { user: User }) {
                   value={field.value ?? ''}
                 />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="language"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Language</FormLabel>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value ?? undefined}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a language" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="none" className="text-muted-foreground">
+                    Select a language
+                  </SelectItem>
+                  <SelectItem value="cs">Czech</SelectItem>
+                  <SelectItem value="en">English</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormDescription>
+                Select the language of the todo.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

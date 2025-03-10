@@ -48,12 +48,16 @@ export function TodoUpdateForm({ todo }: { todo: TodoWithUser }) {
 
   const { mutate, isPending } = useMutation({
     mutationFn: updateTodo,
-    onSuccess: ({ message }) => {
-      toast.success(message)
+    onSuccess: (response) => {
+      console.log('success', response)
+      toast.success(response.message)
       queryClient.invalidateQueries()
-      navigate({ search: { edit: false } })
+      navigate({
+        search: { edit: false },
+        replace: true,
+      })
     },
-    onError: ({ message }) => {
+    onError: ({ result: { message } }) => {
       toast.error(message)
     },
   })

@@ -44,12 +44,6 @@ function TodoDetail() {
     )
   }
 
-  const toggleEdit = () => {
-    navigate({
-      search: { edit: !edit },
-    })
-  }
-
   return (
     <div className="container max-w-3xl py-8">
       <Card>
@@ -70,7 +64,16 @@ function TodoDetail() {
                 )}
               </div>
             </div>
-            <Button variant="outline" size="sm" onClick={toggleEdit}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                navigate({
+                  search: { edit: !edit },
+                  replace: true,
+                })
+              }
+            >
               {edit ? (
                 'Cancel'
               ) : (

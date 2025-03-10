@@ -44,7 +44,7 @@ export function TodoCreateForm() {
       toast.success(message)
       navigate({ to: '/todo' })
     },
-    onError: ({ message }) => {
+    onError: ({ result: { message } }) => {
       toast.error(message)
     },
   })

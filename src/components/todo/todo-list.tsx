@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { DataTable } from '@/components/ui/data-table'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import { formatDate } from '@/lib/utils'
 import { getTodosOptions } from '@/server/todo'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { CircleCheckBig, CircleX } from 'lucide-react'
@@ -66,11 +67,11 @@ const columns: ColumnDef<TodoWithUser>[] = [
     ),
   },
   {
-    accessorFn: (row) => row.createdAt.toLocaleString(),
+    accessorFn: (row) => formatDate(row.createdAt),
     header: 'Created',
   },
   {
-    accessorFn: (row) => row.updatedAt.toLocaleString(),
+    accessorFn: (row) => formatDate(row.updatedAt),
     header: 'Updated',
   },
   {
@@ -85,12 +86,10 @@ export function TodoList() {
   return (
     <>
       {todos.length > 0 ? (
-        <div className=" ">
-          <ScrollArea>
-            <DataTable columns={columns} data={todos} />
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea>
-        </div>
+        <ScrollArea>
+          <DataTable columns={columns} data={todos} />
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       ) : (
         <p className="text-muted-foreground py-8 text-center">No todos found</p>
       )}

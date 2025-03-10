@@ -4,7 +4,20 @@ import { QueryClient } from '@tanstack/react-query'
 import { createRouter as createTanstackRouter } from '@tanstack/react-router'
 import '@/styles.css'
 
+// Create a new query client
 export const queryClient = new QueryClient()
+
+// Register the default error for the query client
+declare module '@tanstack/react-query' {
+  interface Register {
+    defaultError: {
+      result: {
+        message?: string
+      }
+      context: unknown
+    }
+  }
+}
 
 // Create a new router instance
 export function createRouter() {
@@ -13,7 +26,6 @@ export function createRouter() {
     scrollRestoration: true,
     context: {
       queryClient,
-      session: null,
     },
     defaultPreload: 'intent',
     defaultPendingMinMs: 0,

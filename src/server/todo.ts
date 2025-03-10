@@ -11,7 +11,10 @@ import {
 } from '@/schemas/todo'
 import { queryOptions } from '@tanstack/react-query'
 import { createServerFn } from '@tanstack/react-start'
+import { setResponseStatus } from '@tanstack/react-start/server'
 import { desc, DrizzleError, eq } from 'drizzle-orm'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+
 /**
  * ! Server function to get all todos
  */
@@ -145,7 +148,10 @@ export const updateTodo = createServerFn({ method: 'POST' })
   .handler(async ({ data, context }) => {
     try {
       if (context.session.user.id !== data.userId) {
-        throw new Error('Unauthorized')
+        setResponseStatus(StatusCodes.FORBIDDEN)
+        return {
+          message: ReasonPhrases.FORBIDDEN,
+        }
       }
 
       const result = await db

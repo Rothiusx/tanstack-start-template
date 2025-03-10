@@ -1,8 +1,9 @@
 import type { TodoWithUser } from '@/schemas/todo'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Badge } from '@/components/ui/badge'
+import { Separator } from '@/components/ui/separator'
+import { formatDate } from '@/lib/utils'
 import { CalendarDays, CheckCircle2, Clock, XCircle } from 'lucide-react'
-import { Badge } from '../ui/badge'
-import { Separator } from '../ui/separator'
 import { TodoProjectLabel } from './todo-project-label'
 
 export function TodoView({ todo }: { todo: TodoWithUser }) {
@@ -75,12 +76,12 @@ export function TodoView({ todo }: { todo: TodoWithUser }) {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="text-muted-foreground flex items-center">
           <CalendarDays className="mr-2 h-5 w-5" />
-          <span>Created: {new Date(todo.createdAt).toLocaleString()}</span>
+          <span>Created: {formatDate(todo.createdAt)}</span>
         </div>
 
         <div className="text-muted-foreground flex items-center">
           <Clock className="mr-2 h-5 w-5" />
-          <span>Updated: {new Date(todo.updatedAt).toLocaleString()}</span>
+          <span>Updated: {formatDate(todo.updatedAt)}</span>
         </div>
       </div>
     </div>

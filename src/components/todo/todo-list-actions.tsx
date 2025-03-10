@@ -25,7 +25,7 @@ export function TodoListActions({ id }: { id: TodoSelect['id'] }) {
       toast.success(message)
       queryClient.invalidateQueries()
     },
-    onError: ({ message }) => {
+    onError: ({ result: { message } }) => {
       toast.error(message)
     },
   })

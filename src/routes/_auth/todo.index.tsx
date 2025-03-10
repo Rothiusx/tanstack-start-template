@@ -46,8 +46,8 @@ function Todo() {
             <div className="min-w-[max(50vw,300px)]">
               <div className="space-y-2">
                 <Skeleton className="h-10 w-full rounded-md" />
-                {Array.from({ length: 10 }).map((_, i) => (
-                  <Skeleton key={i} className="h-12 w-full rounded-md" />
+                {Array.from({ length: 10 }).map((_, index) => (
+                  <Skeleton key={index} className="h-12 w-full rounded-md" />
                 ))}
               </div>
             </div>

@@ -1,10 +1,11 @@
-import { Link, useRouteContext } from '@tanstack/react-router'
+import { useSession } from '@/hooks/use-session'
+import { Link } from '@tanstack/react-router'
 import { ClipboardList, Home, ShieldUser } from 'lucide-react'
 import { ModeToggle } from './mode-toggle'
 import { UserMenu } from './user-menu'
 
 export function NavBar() {
-  const { session } = useRouteContext({ from: '__root__' })
+  const session = useSession()
 
   const links = session
     ? [
