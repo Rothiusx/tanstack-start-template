@@ -17,9 +17,9 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { todoCreateFormSchema } from '@/schemas/todo'
-import { createTodo } from '@/server/todo'
+import { createTodo, getTodoOptions, getTodosOptions } from '@/server/todo'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { Loader2, Save } from 'lucide-react'
 import { useForm } from 'react-hook-form'
@@ -28,6 +28,8 @@ import { projects, TodoProjectLabel } from './todo-project-label'
 
 export function TodoCreateForm() {
   const navigate = useNavigate({ from: '/todo/create' })
+  const queryClient = useQueryClient()
+
   const form = useForm({
     resolver: zodResolver(todoCreateFormSchema),
     defaultValues: {
@@ -42,6 +44,7 @@ export function TodoCreateForm() {
     mutationFn: createTodo,
     onSuccess: ({ message }) => {
       toast.success(message)
+      queryClient.invalidateQueries(getTodosOptions())
       navigate({ to: '/todo' })
     },
     onError: ({ result: { message } }) => {

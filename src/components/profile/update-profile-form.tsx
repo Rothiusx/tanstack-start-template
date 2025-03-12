@@ -20,17 +20,16 @@ import {
 } from '@/components/ui/select'
 import { StatusMessage } from '@/components/ui/status-message'
 import { userUpdateSchema } from '@/schemas/auth'
-import { updateUser } from '@/server/auth'
+import { getSessionOptions, updateUser } from '@/server/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
-import { useRouter } from '@tanstack/react-router'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 export function EditProfileForm({ user }: { user: User }) {
-  const router = useRouter()
+  const queryClient = useQueryClient()
   const [message, setMessage] = useState<StatusMessageProps>({
     message: '',
   })
@@ -50,7 +49,7 @@ export function EditProfileForm({ user }: { user: User }) {
     mutationFn: updateUser,
     onSuccess: ({ data, message }) => {
       form.reset(data)
-      router.invalidate()
+      queryClient.invalidateQueries(getSessionOptions())
       setMessage({
         message,
       })

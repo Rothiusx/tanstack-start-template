@@ -7,14 +7,14 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { createFileRoute, Link, useRouteContext } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
   component: Home,
 })
 
 function Home() {
-  const { session } = useRouteContext({ strict: false })
+  const { session } = Route.useRouteContext()
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -28,7 +28,7 @@ function Home() {
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-4">
-          <Button size="lg" asChild>
+          <Button size="lg" className="min-w-36" asChild>
             {session ? (
               <Link to="/todo">Get Started</Link>
             ) : (

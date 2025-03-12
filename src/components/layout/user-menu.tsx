@@ -1,4 +1,3 @@
-import type { User } from '@/auth'
 import { signOut } from '@/auth/client'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -11,18 +10,21 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useLocale } from '@/hooks/use-locale'
+import { useSession } from '@/hooks/use-session'
+import { queryClient } from '@/router'
 import { Link, useRouter } from '@tanstack/react-router'
 import { CircleUserRound, LogIn, LogOut } from 'lucide-react'
 import { toast } from 'sonner'
 
-export function UserMenu({ user }: { user: User | undefined }) {
+export function UserMenu() {
   const router = useRouter()
+  const session = useSession()
   const locale = useLocale()
 
-  if (!user) {
+  if (!session) {
     return (
       <Link to="/login" className="relative rounded-full">
-        <LogIn className="size-8" />
+        <LogIn className="size-9" />
       </Link>
     )
   }
@@ -32,9 +34,12 @@ export function UserMenu({ user }: { user: User | undefined }) {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
           <Avatar className="size-8">
-            <AvatarImage src={user.image ?? undefined} alt={user.name} />
+            <AvatarImage
+              src={session.user.image ?? undefined}
+              alt={session.user.name}
+            />
             <AvatarFallback className="bg-background uppercase">
-              {user.name.charAt(0)}
+              {session.user.name.charAt(0)}
             </AvatarFallback>
           </Avatar>
         </Button>
@@ -42,9 +47,11 @@ export function UserMenu({ user }: { user: User | undefined }) {
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm leading-none font-medium">{user.name}</p>
+            <p className="text-sm leading-none font-medium">
+              {session.user.name}
+            </p>
             <p className="text-muted-foreground text-xs leading-none">
-              {user.email}
+              {session.user.email}
             </p>
           </div>
         </DropdownMenuLabel>
@@ -61,8 +68,10 @@ export function UserMenu({ user }: { user: User | undefined }) {
             signOut({
               fetchOptions: {
                 onSuccess: () => {
-                  router.invalidate()
                   toast.info('Signed out successfully')
+                  queryClient.resetQueries()
+                  router.invalidate()
+                  router.navigate({ to: '/' })
                 },
                 onError: () => {
                   toast.error('Failed to sign out')

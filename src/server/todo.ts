@@ -33,6 +33,9 @@ export const getTodos = createServerFn({ method: 'GET' })
           },
         },
       })
+
+      await sleep()
+
       return result
     } catch (error) {
       console.error(error)
@@ -68,6 +71,8 @@ export const getTodo = createServerFn({ method: 'GET' })
           },
         },
       })
+
+      await sleep()
 
       return result
     } catch (error) {

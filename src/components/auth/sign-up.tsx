@@ -9,12 +9,15 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useRouter } from '@tanstack/react-router'
+import { useQueryClient } from '@tanstack/react-query'
+import { useNavigate, useRouter } from '@tanstack/react-router'
 import { Loader2, X } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
 export function SignUp() {
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
@@ -22,7 +25,6 @@ export function SignUp() {
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
   const [image, setImage] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
-  const router = useRouter()
   const [loading, setLoading] = useState(false)
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -152,19 +154,19 @@ export function SignUp() {
                 image: image ? await convertImageToBase64(image) : '',
                 callbackURL: '/',
                 fetchOptions: {
-                  onResponse: () => {
-                    setLoading(false)
-                  },
                   onRequest: () => {
                     setLoading(true)
                   },
-                  onError: (ctx) => {
-                    toast.error(ctx.error.message)
+                  onResponse: () => {
+                    setLoading(false)
+                  },
+                  onError: ({ error }) => {
+                    toast.error(error.message)
                   },
                   onSuccess: () => {
-                    router.invalidate()
-                    router.navigate({ to: '/' })
                     toast.success('Account created successfully')
+                    queryClient.resetQueries()
+                    navigate({ to: '/' })
                   },
                 },
               })

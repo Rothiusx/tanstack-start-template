@@ -1,6 +1,14 @@
 import { useSession } from '@/hooks/use-session'
 import { Link } from '@tanstack/react-router'
-import { ClipboardList, Home, ShieldUser } from 'lucide-react'
+import { ClipboardList, Home, Loader2, Menu, ShieldUser } from 'lucide-react'
+import { Suspense } from 'react'
+import { Button } from '../ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu'
 import { ModeToggle } from './mode-toggle'
 import { UserMenu } from './user-menu'
 
@@ -34,6 +42,21 @@ export function NavBar() {
             <Home className="size-8" />
           </Link>
         </li>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <Menu className="size-8" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem asChild>
+              <a href="https://ui.shadcn.com/">Shadcn UI</a>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <a href="https://tanstack.com/">TanStack</a>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
         {links.map(({ to, label, icon }) => (
           <li key={to}>
             <Link
@@ -51,7 +74,9 @@ export function NavBar() {
       </ul>
       <div className="ml-auto flex items-center space-x-4">
         <ModeToggle />
-        <UserMenu user={session?.user} />
+        <Suspense fallback={<Loader2 className="size-9 animate-spin" />}>
+          <UserMenu />
+        </Suspense>
       </div>
     </nav>
   )

@@ -5,7 +5,13 @@ import { createRouter as createTanstackRouter } from '@tanstack/react-router'
 import '@/styles.css'
 
 // Create a new query client
-export const queryClient = new QueryClient()
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60,
+    },
+  },
+})
 
 // Register the default error for the query client
 declare module '@tanstack/react-query' {
@@ -24,13 +30,16 @@ export function createRouter() {
   return createTanstackRouter({
     routeTree,
     scrollRestoration: true,
+    defaultStructuralSharing: true,
     context: {
       queryClient,
+      session: null,
+      locale: undefined,
     },
     defaultPreload: 'intent',
+    defaultPreloadStaleTime: 0,
     defaultPendingMinMs: 0,
     defaultPendingComponent: () => <LoadingScreen />,
-    defaultErrorComponent: ({ error }) => <div>{error.message}</div>,
   })
 }
 

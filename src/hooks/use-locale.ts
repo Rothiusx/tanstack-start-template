@@ -1,9 +1,9 @@
-import { useRouteContext } from '@tanstack/react-router'
+import { getSessionOptions } from '@/server/auth'
+import { useSuspenseQuery } from '@tanstack/react-query'
 
 export function useLocale() {
-  const locale = useRouteContext({
-    from: '__root__',
-    select: ({ locale }) => locale,
-  })
+  const {
+    data: { locale },
+  } = useSuspenseQuery(getSessionOptions())
   return locale
 }

@@ -11,11 +11,15 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
-import { Link } from '@tanstack/react-router'
+import { useQueryClient } from '@tanstack/react-query'
+import { Link, useRouter } from '@tanstack/react-router'
 import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 export default function SignIn() {
+  const router = useRouter()
+  const queryClient = useQueryClient()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -88,6 +92,15 @@ export default function SignIn() {
                   },
                   onResponse: () => {
                     setLoading(false)
+                  },
+                  onError: ({ error }) => {
+                    toast.error(error.message)
+                  },
+                  onSuccess: () => {
+                    toast.success('Login successful')
+                    queryClient.resetQueries()
+                    router.invalidate()
+                    router.navigate({ to: '/' })
                   },
                 },
               })

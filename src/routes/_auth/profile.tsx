@@ -9,14 +9,15 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { createFileRoute, useRouteContext } from '@tanstack/react-router'
+import { useSession } from '@/hooks/use-session'
+import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_auth/profile')({
   component: Profile,
 })
 
 function Profile() {
-  const { session } = useRouteContext({ strict: false })
+  const session = useSession()
 
   if (!session) {
     return <LoadingScreen />

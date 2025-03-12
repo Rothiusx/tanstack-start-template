@@ -15,6 +15,9 @@ export const getSession = createServerFn({ method: 'GET' }).handler(
     const session = await auth.api.getSession({ headers })
     const locale =
       session?.user.language ?? headers.get('accept-language')?.split(',')[0]
+
+    await sleep()
+
     return {
       session,
       locale,
@@ -25,7 +28,7 @@ export const getSession = createServerFn({ method: 'GET' }).handler(
 export function getSessionOptions() {
   return queryOptions({
     queryKey: ['session'],
-    queryFn: () => getSession(),
+    queryFn: ({ signal }) => getSession({ signal }),
   })
 }
 

@@ -20,7 +20,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { todoUpdateFormSchema } from '@/schemas/todo'
-import { updateTodo } from '@/server/todo'
+import { getTodoOptions, updateTodo } from '@/server/todo'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
@@ -48,14 +48,13 @@ export function TodoUpdateForm({ todo }: { todo: TodoWithUser }) {
 
   const { mutate, isPending } = useMutation({
     mutationFn: updateTodo,
-    onSuccess: (response) => {
-      console.log('success', response)
-      toast.success(response.message)
-      queryClient.invalidateQueries()
+    onSuccess: ({ message }) => {
+      toast.success(message)
       navigate({
         search: { edit: false },
         replace: true,
       })
+      queryClient.invalidateQueries()
     },
     onError: ({ result: { message } }) => {
       toast.error(message)
