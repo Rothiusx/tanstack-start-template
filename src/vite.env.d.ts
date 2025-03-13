@@ -2,7 +2,7 @@
 /// <reference types="vite-plugin-svgr/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_BETTER_AUTH_URL: string | undefined
+  readonly VITE_BASE_URL: string
 }
 
 interface ImportMeta {

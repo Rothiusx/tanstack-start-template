@@ -1,3 +1,4 @@
+import type { LinkOptions } from '@tanstack/react-router'
 import { signUp } from '@/auth/client'
 import { Button } from '@/components/ui/button'
 import {
@@ -8,36 +9,49 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { signUpSchema } from '@/schemas/auth'
+import { getUserOptions } from '@/server/auth'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
-import { Loader2, X } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
+import { useForm, useWatch } from 'react-hook-form'
 import { toast } from 'sonner'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '../ui/form'
+import { PasswordInput } from '../ui/password-input'
+
+/**
+ * The callback URL for the sign up
+ */
+const CALLBACK_URL: LinkOptions['to'] = '/todo'
 
 export function SignUp() {
-  const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordConfirmation, setPasswordConfirmation] = useState('')
-  const [image, setImage] = useState<File | null>(null)
-  const [imagePreview, setImagePreview] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate({ from: '/login' })
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      setImage(file)
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string)
-      }
-      reader.readAsDataURL(file)
-    }
-  }
+  const [imagePreview, setImagePreview] = useState('')
+  const form = useForm({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      image: undefined,
+    },
+  })
+
+  const watch = useWatch({ control: form.control })
 
   return (
     <Card className="z-50 max-w-md rounded-xl">
@@ -49,140 +63,159 @@ export function SignUp() {
       </CardHeader>
       <CardContent>
         <div className="grid gap-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="first-name">First name</Label>
-              <Input
-                id="first-name"
-                placeholder="Max"
-                required
-                onChange={(e) => {
-                  setFirstName(e.target.value)
-                }}
-                value={firstName}
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="last-name">Last name</Label>
-              <Input
-                id="last-name"
-                placeholder="Robinson"
-                required
-                onChange={(e) => {
-                  setLastName(e.target.value)
-                }}
-                value={lastName}
-              />
-            </div>
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="m@example.com"
-              required
-              onChange={(e) => {
-                setEmail(e.target.value)
-              }}
-              value={email}
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="new-password"
-              placeholder="Password"
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="password">Confirm Password</Label>
-            <Input
-              id="password_confirmation"
-              type="password"
-              value={passwordConfirmation}
-              onChange={(e) => setPasswordConfirmation(e.target.value)}
-              autoComplete="new-password"
-              placeholder="Confirm Password"
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="image">Profile Image (optional)</Label>
-            <div className="flex items-end gap-4">
-              {imagePreview && (
-                <div className="relative h-16 w-16 overflow-hidden rounded-sm">
-                  <img
-                    src={imagePreview}
-                    alt="Profile preview"
-                    className="object-cover"
-                  />
-                </div>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(
+                async ({ email, password, firstName, lastName, image }) =>
+                  await signUp.email({
+                    email,
+                    password,
+                    name: `${firstName} ${lastName}`,
+                    image: image ? await convertImageToBase64(image) : '',
+                    callbackURL: CALLBACK_URL,
+                    fetchOptions: {
+                      onSuccess: async () => {
+                        toast.success('Account created successfully')
+                        await queryClient.invalidateQueries(getUserOptions())
+                        navigate({ to: '/todo' })
+                      },
+                      onError: ({ error }) => {
+                        toast.error(error.message)
+                      },
+                    },
+                  }),
               )}
-              <div className="flex w-full items-center gap-2">
-                <Input
-                  id="image"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="w-full"
+              className="space-y-8"
+            >
+              <div className="flex justify-between gap-4">
+                <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>First Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="John" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-                {imagePreview && (
-                  <X
-                    className="cursor-pointer"
-                    onClick={() => {
-                      setImage(null)
-                      setImagePreview(null)
-                    }}
-                  />
-                )}
+
+                <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Last Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Doe" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
-            </div>
-          </div>
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={loading}
-            onClick={async () => {
-              await signUp.email({
-                email,
-                password,
-                name: `${firstName} ${lastName}`,
-                image: image ? await convertImageToBase64(image) : '',
-                callbackURL: '/todo',
-                fetchOptions: {
-                  onRequest: () => {
-                    setLoading(true)
-                  },
-                  onResponse: () => {
-                    setLoading(false)
-                  },
-                  onError: ({ error }) => {
-                    toast.error(error.message)
-                  },
-                  onSuccess: async () => {
-                    toast.success('Account created successfully')
-                    await queryClient.invalidateQueries({ queryKey: ['user'] })
-                  },
-                },
-              })
-            }}
-          >
-            {loading ? (
-              <Loader2 size={16} className="animate-spin" />
-            ) : (
-              'Create an account'
-            )}
-          </Button>
+
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="john.doe@example.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <PasswordInput placeholder="********" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm Password</FormLabel>
+                    <FormControl>
+                      <PasswordInput placeholder="********" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="image"
+                render={({ field: { value, onChange, ...fieldProps } }) => (
+                  <FormItem>
+                    <FormLabel>Profile Image (optional)</FormLabel>
+                    <div className="flex items-center gap-2">
+                      <Avatar className="size-14">
+                        <AvatarImage src={imagePreview} />
+                        <AvatarFallback className="uppercase">
+                          {watch.firstName?.charAt(0) || 'JD'}
+                          {watch.lastName?.charAt(0)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <FormControl>
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          {...fieldProps}
+                          onChange={(event) => {
+                            const file = event.target.files?.[0]
+                            if (file) {
+                              setImagePreview(URL.createObjectURL(file))
+                              onChange(file)
+                            }
+                          }}
+                          className="hover:bg-muted/50 transition-colors"
+                        />
+                      </FormControl>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={form.formState.isSubmitting}
+              >
+                {form.formState.isSubmitting ? (
+                  <Loader2 className="size-6 animate-spin" />
+                ) : (
+                  'Sign Up'
+                )}
+              </Button>
+            </form>
+          </Form>
         </div>
       </CardContent>
     </Card>
   )
 }
 
+/**
+ * Convert the image to a base64 string
+ */
 function convertImageToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()

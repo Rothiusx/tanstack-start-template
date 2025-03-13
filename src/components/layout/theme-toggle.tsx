@@ -7,9 +7,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Moon, Sun } from 'lucide-react'
 
-type Theme = 'light' | 'dark' | 'system'
-
-function setTheme(theme: Theme) {
+function setTheme(theme: 'light' | 'dark' | 'system') {
   localStorage.setItem('theme', theme)
   const root = document.documentElement
   root.classList.remove('light', 'dark')
@@ -22,7 +20,21 @@ function setTheme(theme: Theme) {
   }
 }
 
-export function ModeToggle() {
+// function setTheme(theme: 'light' | 'dark' | 'system') {
+//   if (
+//     document.documentElement.classList.contains('dark') ??
+//     (!('theme' in localStorage) &&
+//       window.matchMedia('(prefers-color-scheme: dark)').matches)
+//   ) {
+//     document.documentElement.classList.remove('dark')
+//     localStorage.theme = 'light'
+//   } else {
+//     document.documentElement.classList.add('dark')
+//     localStorage.theme = 'dark'
+//   }
+// }
+
+export function ThemeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

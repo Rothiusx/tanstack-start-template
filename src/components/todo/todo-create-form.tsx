@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { todoCreateFormSchema } from '@/schemas/todo'
-import { createTodo, getTodoOptions, getTodosOptions } from '@/server/todo'
+import { createTodo, getTodosOptions } from '@/server/todo'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'

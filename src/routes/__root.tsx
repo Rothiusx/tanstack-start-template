@@ -1,6 +1,7 @@
+import type { getUser } from '@/server/auth'
 import type { QueryClient } from '@tanstack/react-query'
 import { NavBar } from '@/components/layout/nav-bar'
-import { getUser } from '@/server/auth'
+import { getUserOptions } from '@/server/auth'
 import styles from '@/styles.css?url'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import {
@@ -19,10 +20,7 @@ export const Route = createRootRouteWithContext<{
 }>()({
   beforeLoad: async ({ context }) => {
     // Get user in root route and pass it to the context
-    const user = await context.queryClient.fetchQuery({
-      queryKey: ['user'],
-      queryFn: ({ signal }) => getUser({ signal }),
-    })
+    const user = await context.queryClient.fetchQuery(getUserOptions())
     return { user }
   },
   head: () => ({
@@ -53,10 +51,10 @@ export const Route = createRootRouteWithContext<{
   /**
    * ! Should not be needed for now, enable if encountering hydration errors
    */
-  onEnter: ({ context }) => {
-    // Remove all queries when opening the page to avoid hydration errors
-    context.queryClient.removeQueries()
-  },
+  // onEnter: ({ context }) => {
+  //   // Remove all queries when opening the page to avoid hydration errors
+  //   context.queryClient.removeQueries()
+  // },
   component: () => (
     <RootDocument>
       <Outlet />
@@ -69,7 +67,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
-        {/* <script src="https://unpkg.com/react-scan/dist/auto.global.js" /> */}
+        <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
       </head>
       <body
         className="bg-background text-foreground antialiased"
@@ -90,8 +88,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 
         <Toaster richColors />
 
-        <TanStackRouterDevtools />
         <ReactQueryDevtools />
+        <TanStackRouterDevtools />
 
         <Scripts />
       </body>

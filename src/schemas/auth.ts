@@ -8,14 +8,23 @@ const { createInsertSchema, createSelectSchema } = createSchemaFactory({
   },
 })
 
-export const userInsertSchema = createInsertSchema(user)
-
-export type UserInsert = z.infer<typeof userInsertSchema>
-
+/**
+ * User select schema and type
+ */
 export const userSelectSchema = createSelectSchema(user)
 
 export type UserSelect = z.infer<typeof userSelectSchema>
 
+/**
+ * User insert schema and type
+ */
+export const userInsertSchema = createInsertSchema(user)
+
+export type UserInsert = z.infer<typeof userInsertSchema>
+
+/**
+ * User update schema and type
+ */
 export const userUpdateSchema = createInsertSchema(user, {
   name: (schema) =>
     schema.min(1, { message: 'Name is required' }).max(32, {
@@ -51,3 +60,36 @@ export const userUpdateSchema = createInsertSchema(user, {
 })
 
 export type UserUpdate = z.infer<typeof userUpdateSchema>
+
+/**
+ * Sign in schema
+ */
+export const signInSchema = z.object({
+  email: z.string().min(1, { message: 'Email is required' }).email({
+    message: 'Invalid email address',
+  }),
+  password: z
+    .string()
+    .min(1, { message: 'Password is required' })
+    .min(8, { message: 'Password must be at least 8 characters long' }),
+  rememberMe: z.boolean().default(false),
+})
+
+/**
+ * Sign up schema
+ */
+export const signUpSchema = signInSchema
+  .omit({ rememberMe: true })
+  .extend({
+    firstName: z.string().min(1, { message: 'First name is required' }),
+    lastName: z.string().min(1, { message: 'Last name is required' }),
+    confirmPassword: z.string(),
+    image: z
+      .any()
+      .refine((f) => f && f.size < 10000000, 'Max 10MB upload size.')
+      .optional(),
+  })
+  .refine(({ password, confirmPassword }) => password === confirmPassword, {
+    message: "Passwords don't match!",
+    path: ['confirmPassword'],
+  })

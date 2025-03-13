@@ -20,7 +20,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { todoUpdateFormSchema } from '@/schemas/todo'
-import { getTodoOptions, updateTodo } from '@/server/todo'
+import { updateTodo } from '@/server/todo'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'

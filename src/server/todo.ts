@@ -1,8 +1,8 @@
-import type { TodoSelect } from '@/schemas/todo'
 import { db } from '@/db'
 import { todo } from '@/db/schemas'
 import { sleep } from '@/lib/utils'
 import { authMiddleware } from '@/middleware/auth'
+import { queryClient } from '@/router'
 import {
   todoCreateFormSchema,
   todoSelectSchema,
@@ -82,14 +82,16 @@ export const getTodo = createServerFn({ method: 'GET' })
     }
   })
 
-export function getTodoOptions(id: TodoSelect['id']) {
+export function getTodoOptions(
+  id: NonNullable<Awaited<ReturnType<typeof getTodo>>>['id'],
+) {
   return queryOptions({
     queryKey: ['todo', id],
     queryFn: ({ signal }) => getTodo({ data: { id }, signal }),
-    // initialData: () => {
-    //   const todos = queryClient.getQueryData(getTodosOptions().queryKey)
-    //   return todos?.find((todo) => todo.id === id)
-    // },
+    initialData: () => {
+      const todos = queryClient.getQueryData(getTodosOptions().queryKey)
+      return todos?.find((todo) => todo.id === id)
+    },
   })
 }
 

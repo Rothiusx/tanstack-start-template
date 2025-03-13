@@ -19,6 +19,7 @@ const envSchema = z
       .enum(['development', 'test', 'production'])
       .default('development'),
     DATABASE_URL: z.string().url(),
+    VITE_BASE_URL: z.string().url(),
     BETTER_AUTH_SECRET: z.string(),
     DISCORD_CLIENT_ID: z.string(),
     DISCORD_CLIENT_SECRET: z.string(),

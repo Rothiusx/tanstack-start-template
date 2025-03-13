@@ -28,9 +28,15 @@ function Home() {
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-4">
-          <Button size="lg" className="min-w-36" asChild>
-            <Link to="/login">Sign In</Link>
-          </Button>
+          {user ? (
+            <Button size="lg" className="min-w-36" asChild>
+              <Link to="/todo">Get Started</Link>
+            </Button>
+          ) : (
+            <Button size="lg" className="min-w-36" asChild>
+              <Link to="/login">Sign In</Link>
+            </Button>
+          )}
           <Button size="lg" variant="outline">
             Learn More
           </Button>
