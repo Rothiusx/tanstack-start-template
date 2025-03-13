@@ -1,5 +1,4 @@
 import { signUp } from '@/auth/client'
-import { router } from '@/client'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -11,7 +10,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useQueryClient } from '@tanstack/react-query'
-import { useNavigate, useRouter } from '@tanstack/react-router'
+import { useNavigate } from '@tanstack/react-router'
 import { Loader2, X } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -167,8 +166,6 @@ export function SignUp() {
                   onSuccess: async () => {
                     toast.success('Account created successfully')
                     await queryClient.invalidateQueries({ queryKey: ['user'] })
-                    await router.invalidate()
-                    router.navigate({ to: '/todo' })
                   },
                 },
               })
