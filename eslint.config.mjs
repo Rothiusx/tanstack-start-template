@@ -1,4 +1,6 @@
 import antfu from '@antfu/eslint-config'
+import query from '@tanstack/eslint-plugin-query'
+import router from '@tanstack/eslint-plugin-router'
 import drizzle from 'eslint-plugin-drizzle'
 import prettier from 'eslint-plugin-prettier/recommended'
 import compiler from 'eslint-plugin-react-compiler'
@@ -30,6 +32,8 @@ const config = antfu(
     },
     ignores: ['src/routeTree.gen.ts'],
   },
+  ...query.configs['flat/recommended'],
+  ...router.configs['flat/recommended'],
   {
     files: ['**/*.tsx'],
     rules: {

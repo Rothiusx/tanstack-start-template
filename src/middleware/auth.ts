@@ -1,7 +1,7 @@
 import { auth } from '@/auth'
+import { redirect } from '@tanstack/react-router'
 import { createMiddleware } from '@tanstack/react-start'
-import { getWebRequest } from '@tanstack/react-start/server'
-import { ERROR_CODES } from 'better-auth/plugins'
+import { getWebRequest, setResponseStatus } from '@tanstack/react-start/server'
 import { loggerMiddleware } from './logger'
 
 // https://tanstack.com/start/latest/docs/framework/react/middleware
@@ -25,7 +25,8 @@ export const authMiddleware = createMiddleware()
     })
 
     if (!session) {
-      throw new Error(ERROR_CODES.UNAUTHORIZED_SESSION)
+      setResponseStatus(401)
+      throw redirect({ to: '/login' })
     }
 
     return next({ context: { session } })

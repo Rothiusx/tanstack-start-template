@@ -9,26 +9,17 @@ import { getWebRequest } from '@tanstack/react-start/server'
 /**
  * ! Server function to get user session
  */
-export const getSession = createServerFn({ method: 'GET' }).handler(
-  async () => {
-    const { headers } = getWebRequest()!
-    const session = await auth.api.getSession({ headers })
-    const locale =
-      session?.user.language ?? headers.get('accept-language')?.split(',')[0]
+export const getUser = createServerFn({ method: 'GET' }).handler(async () => {
+  const { headers } = getWebRequest()!
+  const session = await auth.api.getSession({ headers })
 
-    await sleep()
+  return session?.user ?? null
+})
 
-    return {
-      session,
-      locale,
-    }
-  },
-)
-
-export function getSessionOptions() {
+export function getUserOptions() {
   return queryOptions({
-    queryKey: ['session'],
-    queryFn: ({ signal }) => getSession({ signal }),
+    queryKey: ['user'],
+    queryFn: ({ signal }) => getUser({ signal }),
   })
 }
 

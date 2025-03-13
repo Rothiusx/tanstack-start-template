@@ -1,7 +1,7 @@
-import { LoadingScreen } from '@/components/layout/loading-screen'
 import { routeTree } from '@/routeTree.gen'
 import { QueryClient } from '@tanstack/react-query'
 import { createRouter as createTanstackRouter } from '@tanstack/react-router'
+import { routerWithQueryClient } from '@tanstack/react-router-with-query'
 import '@/styles.css'
 
 // Create a new query client
@@ -27,20 +27,21 @@ declare module '@tanstack/react-query' {
 
 // Create a new router instance
 export function createRouter() {
-  return createTanstackRouter({
-    routeTree,
-    scrollRestoration: true,
-    defaultStructuralSharing: true,
-    context: {
-      queryClient,
-      session: null,
-      locale: undefined,
-    },
-    defaultPreload: 'intent',
-    defaultPreloadStaleTime: 0,
-    defaultPendingMinMs: 0,
-    defaultPendingComponent: () => <LoadingScreen />,
-  })
+  return routerWithQueryClient(
+    createTanstackRouter({
+      routeTree,
+      scrollRestoration: true,
+      defaultStructuralSharing: true,
+      context: {
+        queryClient,
+        user: null,
+      },
+      defaultPreload: 'intent',
+      defaultPreloadStaleTime: 0,
+      defaultPendingMinMs: 0,
+    }),
+    queryClient,
+  )
 }
 
 // Register the router instance for type safety

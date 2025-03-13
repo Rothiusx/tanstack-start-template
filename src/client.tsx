@@ -3,7 +3,7 @@ import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
 import { createRouter } from './router'
 
-export const router = createRouter()
+const router = createRouter()
 
 hydrateRoot(
   document,

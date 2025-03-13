@@ -85,7 +85,7 @@ export default function SignIn() {
               await signIn.email({
                 email,
                 password,
-                callbackURL: '/',
+                callbackURL: '/todo',
                 fetchOptions: {
                   onRequest: () => {
                     setLoading(true)
@@ -98,9 +98,9 @@ export default function SignIn() {
                   },
                   onSuccess: () => {
                     toast.success('Login successful')
-                    queryClient.resetQueries()
-                    router.invalidate()
-                    router.navigate({ to: '/' })
+                    // queryClient.resetQueries()
+                    // router.invalidate()
+                    // router.navigate({ to: '/' })
                   },
                 },
               })

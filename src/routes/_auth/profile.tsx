@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { useSession } from '@/hooks/use-session'
+import { useUser } from '@/hooks/use-user'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_auth/profile')({
@@ -17,24 +17,21 @@ export const Route = createFileRoute('/_auth/profile')({
 })
 
 function Profile() {
-  const session = useSession()
+  const user = useUser()
 
-  if (!session) {
+  if (!user) {
     return <LoadingScreen />
   }
 
   return (
     <section className="flex flex-col items-center justify-center gap-8 px-4 py-8">
       <Avatar className="size-24 text-2xl lg:size-48 lg:text-6xl">
-        <AvatarImage
-          src={session.user.image ?? undefined}
-          alt={session.user.name}
-        />
+        <AvatarImage src={user.image ?? undefined} alt={user.name} />
         <AvatarFallback className="uppercase">
-          {session.user.name.charAt(0)}
+          {user.name.charAt(0)}
         </AvatarFallback>
       </Avatar>
-      <h1 className="text-4xl font-medium">Welcome, {session.user.name}!</h1>
+      <h1 className="text-4xl font-medium">Welcome, {user.name}!</h1>
       <Card className="w-1/3 max-w-[600px] min-w-[350px]">
         <CardHeader>
           <CardTitle>Edit Profile</CardTitle>
@@ -43,9 +40,9 @@ function Profile() {
         <CardContent className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
             <span className="text-sm">Permissions</span>
-            <Badge className="uppercase">{session.user.role}</Badge>
+            <Badge className="uppercase">{user.role}</Badge>
           </div>
-          <EditProfileForm user={session.user} />
+          <EditProfileForm user={user} />
         </CardContent>
       </Card>
     </section>

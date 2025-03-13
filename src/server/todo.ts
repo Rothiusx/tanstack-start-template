@@ -48,7 +48,7 @@ export const getTodos = createServerFn({ method: 'GET' })
 export function getTodosOptions() {
   return queryOptions({
     queryKey: ['todos'],
-    queryFn: () => getTodos(),
+    queryFn: ({ signal }) => getTodos({ signal }),
   })
 }
 
@@ -86,7 +86,7 @@ export const getTodo = createServerFn({ method: 'GET' })
 export function getTodoOptions(id: TodoSelect['id']) {
   return queryOptions({
     queryKey: ['todo', id],
-    queryFn: () => getTodo({ data: { id } }),
+    queryFn: ({ signal }) => getTodo({ data: { id }, signal }),
     initialData: () => {
       const todos = queryClient.getQueryData(getTodosOptions().queryKey)
       return todos?.find((todo) => todo.id === id)

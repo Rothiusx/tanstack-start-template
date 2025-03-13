@@ -1,4 +1,5 @@
 import { signUp } from '@/auth/client'
+import { router } from '@/client'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -152,7 +153,7 @@ export function SignUp() {
                 password,
                 name: `${firstName} ${lastName}`,
                 image: image ? await convertImageToBase64(image) : '',
-                callbackURL: '/',
+                callbackURL: '/todo',
                 fetchOptions: {
                   onRequest: () => {
                     setLoading(true)
@@ -163,10 +164,11 @@ export function SignUp() {
                   onError: ({ error }) => {
                     toast.error(error.message)
                   },
-                  onSuccess: () => {
+                  onSuccess: async () => {
                     toast.success('Account created successfully')
-                    queryClient.resetQueries()
-                    navigate({ to: '/' })
+                    await queryClient.invalidateQueries({ queryKey: ['user'] })
+                    await router.invalidate()
+                    router.navigate({ to: '/todo' })
                   },
                 },
               })

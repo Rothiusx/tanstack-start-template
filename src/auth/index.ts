@@ -18,6 +18,12 @@ export const auth = betterAuth({
     }),
     openAPI(),
   ],
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 60, // 5 minutes
+    },
+  },
   user: {
     changeEmail: {
       enabled: true,

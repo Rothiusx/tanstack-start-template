@@ -10,18 +10,20 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useLocale } from '@/hooks/use-locale'
-import { useSession } from '@/hooks/use-session'
-import { queryClient } from '@/router'
+import { useUser } from '@/hooks/use-user'
+import { getUserOptions } from '@/server/auth'
+import { useQueryClient } from '@tanstack/react-query'
 import { Link, useRouter } from '@tanstack/react-router'
 import { CircleUserRound, LogIn, LogOut } from 'lucide-react'
 import { toast } from 'sonner'
 
 export function UserMenu() {
   const router = useRouter()
-  const session = useSession()
+  const queryClient = useQueryClient()
+  const user = useUser()
   const locale = useLocale()
 
-  if (!session) {
+  if (!user) {
     return (
       <Link to="/login" className="relative rounded-full">
         <LogIn className="size-9" />
@@ -34,12 +36,9 @@ export function UserMenu() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
           <Avatar className="size-8">
-            <AvatarImage
-              src={session.user.image ?? undefined}
-              alt={session.user.name}
-            />
+            <AvatarImage src={user.image ?? undefined} alt={user.name} />
             <AvatarFallback className="bg-background uppercase">
-              {session.user.name.charAt(0)}
+              {user.name.charAt(0)}
             </AvatarFallback>
           </Avatar>
         </Button>
@@ -47,11 +46,9 @@ export function UserMenu() {
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm leading-none font-medium">
-              {session.user.name}
-            </p>
+            <p className="text-sm leading-none font-medium">{user.name}</p>
             <p className="text-muted-foreground text-xs leading-none">
-              {session.user.email}
+              {user.email}
             </p>
           </div>
         </DropdownMenuLabel>
@@ -64,21 +61,20 @@ export function UserMenu() {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          onClick={() =>
-            signOut({
+          onClick={async () => {
+            await signOut({
               fetchOptions: {
                 onSuccess: () => {
                   toast.info('Signed out successfully')
-                  queryClient.resetQueries()
-                  router.invalidate()
-                  router.navigate({ to: '/' })
                 },
                 onError: () => {
                   toast.error('Failed to sign out')
                 },
               },
             })
-          }
+            await queryClient.resetQueries(getUserOptions())
+            await router.invalidate()
+          }}
         >
           <LogOut className="size-4" />
           Sign out

@@ -14,7 +14,7 @@ export const Route = createFileRoute('/')({
 })
 
 function Home() {
-  const { session } = Route.useRouteContext()
+  const { user } = Route.useRouteContext()
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -29,11 +29,7 @@ function Home() {
 
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Button size="lg" className="min-w-36" asChild>
-            {session ? (
-              <Link to="/todo">Get Started</Link>
-            ) : (
-              <Link to="/login">Sign In</Link>
-            )}
+            <Link to="/login">Sign In</Link>
           </Button>
           <Button size="lg" variant="outline">
             Learn More

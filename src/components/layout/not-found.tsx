@@ -13,7 +13,7 @@ import { Link } from '@tanstack/react-router'
 import { FileQuestion, Home, Search } from 'lucide-react'
 
 export function NotFound({ data }: NotFoundRouteProps) {
-  // Check if data exists and is not null/undefined
+  // Check if data exists
   const hasData = data !== null && data !== undefined
 
   return (

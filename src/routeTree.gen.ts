@@ -12,7 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
-import { Route as AuthImport } from './routes/_auth'
+import { Route as AuthRouteImport } from './routes/_auth/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as AuthTodoImport } from './routes/_auth/todo'
 import { Route as AuthProfileImport } from './routes/_auth/profile'
@@ -28,7 +28,7 @@ const LoginRoute = LoginImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthRoute = AuthImport.update({
+const AuthRouteRoute = AuthRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRoute,
 } as any)
@@ -42,13 +42,13 @@ const IndexRoute = IndexImport.update({
 const AuthTodoRoute = AuthTodoImport.update({
   id: '/todo',
   path: '/todo',
-  getParentRoute: () => AuthRoute,
+  getParentRoute: () => AuthRouteRoute,
 } as any)
 
 const AuthProfileRoute = AuthProfileImport.update({
   id: '/profile',
   path: '/profile',
-  getParentRoute: () => AuthRoute,
+  getParentRoute: () => AuthRouteRoute,
 } as any)
 
 const AuthTodoIndexRoute = AuthTodoIndexImport.update({
@@ -84,7 +84,7 @@ declare module '@tanstack/react-router' {
       id: '/_auth'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof AuthImport
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRoute
     }
     '/login': {
@@ -99,14 +99,14 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof AuthProfileImport
-      parentRoute: typeof AuthImport
+      parentRoute: typeof AuthRouteImport
     }
     '/_auth/todo': {
       id: '/_auth/todo'
       path: '/todo'
       fullPath: '/todo'
       preLoaderRoute: typeof AuthTodoImport
-      parentRoute: typeof AuthImport
+      parentRoute: typeof AuthRouteImport
     }
     '/_auth/todo/$id': {
       id: '/_auth/todo/$id'
@@ -150,21 +150,23 @@ const AuthTodoRouteWithChildren = AuthTodoRoute._addFileChildren(
   AuthTodoRouteChildren,
 )
 
-interface AuthRouteChildren {
+interface AuthRouteRouteChildren {
   AuthProfileRoute: typeof AuthProfileRoute
   AuthTodoRoute: typeof AuthTodoRouteWithChildren
 }
 
-const AuthRouteChildren: AuthRouteChildren = {
+const AuthRouteRouteChildren: AuthRouteRouteChildren = {
   AuthProfileRoute: AuthProfileRoute,
   AuthTodoRoute: AuthTodoRouteWithChildren,
 }
 
-const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
+  AuthRouteRouteChildren,
+)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof AuthRouteWithChildren
+  '': typeof AuthRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/profile': typeof AuthProfileRoute
   '/todo': typeof AuthTodoRouteWithChildren
@@ -175,7 +177,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof AuthRouteWithChildren
+  '': typeof AuthRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/profile': typeof AuthProfileRoute
   '/todo/$id': typeof AuthTodoIdRoute
@@ -186,7 +188,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/_auth': typeof AuthRouteWithChildren
+  '/_auth': typeof AuthRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/_auth/profile': typeof AuthProfileRoute
   '/_auth/todo': typeof AuthTodoRouteWithChildren
@@ -223,13 +225,13 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthRoute: typeof AuthRouteWithChildren
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthRoute: AuthRouteWithChildren,
+  AuthRouteRoute: AuthRouteRouteWithChildren,
   LoginRoute: LoginRoute,
 }
 
@@ -252,7 +254,7 @@ export const routeTree = rootRoute
       "filePath": "index.tsx"
     },
     "/_auth": {
-      "filePath": "_auth.tsx",
+      "filePath": "_auth/route.tsx",
       "children": [
         "/_auth/profile",
         "/_auth/todo"

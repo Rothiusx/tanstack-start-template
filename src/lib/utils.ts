@@ -13,16 +13,35 @@ export async function sleep(ms: number = 1000, dev: boolean = true) {
   }
 }
 
-export function getLocale() {
-  const rootRoute = getRouteApi('__root__')
-  const locale = rootRoute.useRouteContext({
-    select: ({ locale }) => locale,
-  })
-  return locale
+/**
+ * Get the browser's locale
+ * @returns The browser's locale string (e.g. 'en-US', 'cs-CZ')
+ */
+export function getBrowserLocale() {
+  return navigator.languages?.[0] ?? navigator.language ?? 'en-US'
 }
 
+/**
+ * Get the locale from the root route context or the browser's locale as fallback
+ * @returns The locale string (e.g. 'en-US', 'cs-CZ')
+ */
+export function getLocale() {
+  const rootRoute = getRouteApi('__root__')
+  const language = rootRoute.useRouteContext({
+    select: ({ user }) => user?.language,
+  })
+
+  return language ?? getBrowserLocale()
+}
+
+/**
+ * Format a date to a string based on the locale
+ * @param date - The date to format
+ * @returns The formatted date string
+ */
 export function formatDate(date: Date | string | number) {
-  const locale = getLocale() || 'en'
+  const locale = getLocale()
+
   return new Intl.DateTimeFormat(locale, {
     dateStyle: 'medium',
     timeStyle: 'short',

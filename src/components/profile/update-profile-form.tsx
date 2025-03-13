@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/select'
 import { StatusMessage } from '@/components/ui/status-message'
 import { userUpdateSchema } from '@/schemas/auth'
-import { getSessionOptions, updateUser } from '@/server/auth'
+import { getUserOptions, updateUser } from '@/server/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Loader2 } from 'lucide-react'
@@ -49,7 +49,7 @@ export function EditProfileForm({ user }: { user: User }) {
     mutationFn: updateUser,
     onSuccess: ({ data, message }) => {
       form.reset(data)
-      queryClient.invalidateQueries(getSessionOptions())
+      queryClient.invalidateQueries(getUserOptions())
       setMessage({
         message,
       })
