@@ -1,5 +1,3 @@
-import { TodoUpdateForm } from '@/components/todo/todo-update-form'
-import { TodoView } from '@/components/todo/todo-view'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -13,6 +11,8 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowLeft, Edit } from 'lucide-react'
 import { z } from 'zod'
+import { TodoUpdateForm } from './components/todo-update-form'
+import { TodoView } from './components/todo-view'
 
 export const Route = createFileRoute('/_auth/todo/$id')({
   params: z.object({

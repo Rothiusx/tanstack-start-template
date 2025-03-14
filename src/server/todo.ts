@@ -2,7 +2,6 @@ import { db } from '@/db'
 import { todo } from '@/db/schemas'
 import { sleep } from '@/lib/utils'
 import { authMiddleware } from '@/middleware/auth'
-import { queryClient } from '@/router'
 import {
   todoCreateFormSchema,
   todoSelectSchema,
@@ -88,10 +87,6 @@ export function getTodoOptions(
   return queryOptions({
     queryKey: ['todo', id],
     queryFn: ({ signal }) => getTodo({ data: { id }, signal }),
-    initialData: () => {
-      const todos = queryClient.getQueryData(getTodosOptions().queryKey)
-      return todos?.find((todo) => todo.id === id)
-    },
   })
 }
 

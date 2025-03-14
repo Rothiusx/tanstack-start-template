@@ -7,12 +7,13 @@ import { CalendarDays, CheckCircle2, Clock, XCircle } from 'lucide-react'
 import { TodoProjectLabel } from './todo-project-label'
 
 export function TodoView({ todo }: { todo: TodoWithUser }) {
+  console.log(todo)
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4 rounded-lg border p-4">
         <Avatar className="h-12 w-12">
           <AvatarImage
-            src={todo.user.image || undefined}
+            src={todo.user.image ?? undefined}
             alt={todo.user.name}
           />
           <AvatarFallback className="uppercase">

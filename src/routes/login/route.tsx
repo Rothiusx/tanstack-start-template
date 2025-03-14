@@ -1,7 +1,7 @@
-import SignIn from '@/components/auth/sign-in'
-import { SignUp } from '@/components/auth/sign-up'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { createFileRoute, redirect } from '@tanstack/react-router'
+import SignIn from './components/sign-in'
+import { SignUp } from './components/sign-up'
 
 export const Route = createFileRoute('/login')({
   component: Login,

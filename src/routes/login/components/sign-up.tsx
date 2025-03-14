@@ -1,5 +1,6 @@
 import type { LinkOptions } from '@tanstack/react-router'
 import { signUp } from '@/auth/client'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -8,7 +9,16 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { PasswordInput } from '@/components/ui/password-input'
 import { signUpSchema } from '@/schemas/auth'
 import { getUserOptions } from '@/server/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -18,16 +28,6 @@ import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { toast } from 'sonner'
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '../ui/form'
-import { PasswordInput } from '../ui/password-input'
 
 /**
  * The callback URL for the sign up

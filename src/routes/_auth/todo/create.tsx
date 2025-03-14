@@ -1,4 +1,3 @@
-import { TodoCreateForm } from '@/components/todo/todo-create-form'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -9,6 +8,7 @@ import {
 } from '@/components/ui/card'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowLeft } from 'lucide-react'
+import { TodoCreateForm } from './components/todo-create-form'
 
 export const Route = createFileRoute('/_auth/todo/create')({
   component: TodoCreate,

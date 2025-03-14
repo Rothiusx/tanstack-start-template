@@ -7,29 +7,16 @@ import { LoadingScreen } from './components/layout/loading-screen'
 import { NotFound } from './components/layout/not-found'
 import '@/styles.css'
 
-// Create a new query client
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60,
-    },
-  },
-})
-
-// Register the default error for the query client
-declare module '@tanstack/react-query' {
-  interface Register {
-    defaultError: {
-      result: {
-        message?: string
-      }
-      context: unknown
-    }
-  }
-}
-
 // Create a new router instance
 export function createRouter() {
+  // Create a new query client inside the router
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 1000 * 60,
+      },
+    },
+  })
   return routerWithQueryClient(
     createTanstackRouter({
       routeTree,
@@ -47,6 +34,18 @@ export function createRouter() {
     }),
     queryClient,
   )
+}
+
+// Register the default error for the query client
+declare module '@tanstack/react-query' {
+  interface Register {
+    defaultError: {
+      result: {
+        message?: string
+      }
+      context: unknown
+    }
+  }
 }
 
 // Register the router instance for type safety

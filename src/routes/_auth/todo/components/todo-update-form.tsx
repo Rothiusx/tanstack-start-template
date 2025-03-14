@@ -1,5 +1,4 @@
 import type { TodoWithUser } from '@/schemas/todo'
-import { TodoProjectLabel } from '@/components/todo/todo-project-label'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -19,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { TodoProjectLabel } from '@/routes/_auth/todo/components/todo-project-label'
 import { todoUpdateFormSchema } from '@/schemas/todo'
 import { updateTodo } from '@/server/todo'
 import { zodResolver } from '@hookform/resolvers/zod'
