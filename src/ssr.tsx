@@ -6,7 +6,10 @@ import {
 
 import { createRouter } from './router'
 
-export default createStartHandler({
+const handler = createStartHandler({
   createRouter,
   getRouterManifest,
+  // eslint-disable-next-line ts/no-unsafe-argument
 })(defaultStreamHandler)
+
+export default handler

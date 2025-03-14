@@ -1,4 +1,4 @@
-import type { TodoWithUser } from '@/schemas/todo'
+import type { TodoWithUser } from '@/validation/todo'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'

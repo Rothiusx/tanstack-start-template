@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { getTodoOptions } from '@/server/todo'
+import { getTodoOptions, getTodosOptions } from '@/server/todo'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowLeft, Edit } from 'lucide-react'
@@ -22,7 +22,13 @@ export const Route = createFileRoute('/_auth/todo/$id')({
     edit: z.boolean().default(false),
   }),
   loader: ({ context, params }) => {
-    context.queryClient.ensureQueryData(getTodoOptions(params.id))
+    const todos = context.queryClient.getQueryData(getTodosOptions().queryKey)
+    const initialData = todos?.find((todo) => todo.id === params.id)
+
+    context.queryClient.ensureQueryData({
+      ...getTodoOptions(params.id),
+      ...(initialData && { initialData }),
+    })
   },
   component: TodoDetail,
 })
@@ -57,11 +63,9 @@ function TodoDetail() {
               </Button>
               <div>
                 <CardTitle>{todo.title}</CardTitle>
-                {todo.user && (
-                  <CardDescription className="mt-1">
-                    Created by {todo.user.name}
-                  </CardDescription>
-                )}
+                <CardDescription className="mt-1">
+                  Created by {todo.user.name}
+                </CardDescription>
               </div>
             </div>
             <Button

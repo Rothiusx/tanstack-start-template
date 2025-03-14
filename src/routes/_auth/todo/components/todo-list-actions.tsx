@@ -1,4 +1,4 @@
-import type { TodoSelect } from '@/schemas/todo'
+import type { TodoSelect } from '@/validation/todo'
 import {
   AlertDialog,
   AlertDialogAction,

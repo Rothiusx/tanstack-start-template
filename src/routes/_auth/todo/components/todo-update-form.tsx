@@ -1,4 +1,4 @@
-import type { TodoWithUser } from '@/schemas/todo'
+import type { TodoWithUser } from '@/validation/todo'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -19,8 +19,8 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { TodoProjectLabel } from '@/routes/_auth/todo/components/todo-project-label'
-import { todoUpdateFormSchema } from '@/schemas/todo'
 import { updateTodo } from '@/server/todo'
+import { todoUpdateFormSchema } from '@/validation/todo'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
@@ -50,11 +50,11 @@ export function TodoUpdateForm({ todo }: { todo: TodoWithUser }) {
     mutationFn: updateTodo,
     onSuccess: ({ message }) => {
       toast.success(message)
+      queryClient.invalidateQueries()
       navigate({
         search: { edit: false },
         replace: true,
       })
-      queryClient.invalidateQueries()
     },
     onError: ({ result: { message } }) => {
       toast.error(message)
@@ -63,7 +63,6 @@ export function TodoUpdateForm({ todo }: { todo: TodoWithUser }) {
 
   return (
     <Form {...form}>
-      <div>{todo.title}</div>
       <form
         onSubmit={form.handleSubmit((data) => mutate({ data }))}
         className="space-y-6"
@@ -109,7 +108,7 @@ export function TodoUpdateForm({ todo }: { todo: TodoWithUser }) {
                 <FormLabel>Project</FormLabel>
                 <Select
                   onValueChange={field.onChange}
-                  defaultValue={field.value || undefined}
+                  defaultValue={field.value ?? undefined}
                 >
                   <FormControl>
                     <SelectTrigger>

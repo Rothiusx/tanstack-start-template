@@ -16,8 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { todoCreateFormSchema } from '@/schemas/todo'
 import { createTodo, getTodosOptions } from '@/server/todo'
+import { todoCreateFormSchema } from '@/validation/todo'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
@@ -42,10 +42,14 @@ export function TodoCreateForm() {
 
   const { mutate, isPending } = useMutation({
     mutationFn: createTodo,
-    onSuccess: ({ message }) => {
+    onSuccess: ({ data, message }) => {
       toast.success(message)
-      queryClient.invalidateQueries(getTodosOptions())
+      queryClient.setQueryData(getTodosOptions().queryKey, (todos) => [
+        data,
+        ...(Array.isArray(todos) ? todos : []),
+      ])
       navigate({ to: '/todo' })
+      queryClient.invalidateQueries(getTodosOptions())
     },
     onError: ({ result: { message } }) => {
       toast.error(message)

@@ -24,5 +24,7 @@ export const loggerMiddleware = createMiddleware().server(async ({ next }) => {
     headers,
   })
 
-  return await next()
+  const response = await next()
+
+  return response
 })

@@ -1,5 +1,4 @@
 import type { LinkOptions } from '@tanstack/react-router'
-import { signIn } from '@/auth/client'
 import { DiscordIcon } from '@/components/icons/discord'
 import { Button } from '@/components/ui/button'
 import {
@@ -21,8 +20,9 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/ui/password-input'
+import { signIn } from '@/lib/auth/client'
 import { cn } from '@/lib/utils'
-import { signInSchema } from '@/schemas/auth'
+import { signInSchema } from '@/validation/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQueryClient } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
@@ -59,25 +59,24 @@ export default function SignIn() {
         <div className="flex flex-col gap-4">
           <Form {...form}>
             <form
-              onSubmit={form.handleSubmit(
-                async ({ email, password }) =>
-                  await signIn.email({
-                    email,
-                    password,
-                    callbackURL: CALLBACK_URL,
-                    fetchOptions: {
-                      onError: ({ error }) => {
-                        toast.error(error.message)
-                      },
-                      onSuccess: async () => {
-                        toast.success('Login successful')
-                        await queryClient.invalidateQueries({
-                          queryKey: ['user'],
-                        })
-                      },
+              onSubmit={form.handleSubmit(async ({ email, password }) => {
+                await signIn.email({
+                  email,
+                  password,
+                  callbackURL: CALLBACK_URL,
+                  fetchOptions: {
+                    onError: ({ error }) => {
+                      toast.error(error.message)
                     },
-                  }),
-              )}
+                    onSuccess: async () => {
+                      toast.success('Login successful')
+                      await queryClient.invalidateQueries({
+                        queryKey: ['user'],
+                      })
+                    },
+                  },
+                })
+              })}
               className="space-y-8"
             >
               <FormField

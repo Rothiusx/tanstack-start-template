@@ -1,5 +1,5 @@
-import type { User } from '@/auth'
 import type { StatusMessageProps } from '@/components/ui/status-message'
+import type { User } from '@/lib/auth'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -19,8 +19,8 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { StatusMessage } from '@/components/ui/status-message'
-import { userUpdateSchema } from '@/schemas/auth'
 import { getUserOptions, updateUser } from '@/server/auth'
+import { userUpdateSchema } from '@/validation/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Loader2 } from 'lucide-react'

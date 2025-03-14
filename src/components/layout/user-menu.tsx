@@ -1,4 +1,3 @@
-import { signOut } from '@/auth/client'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
@@ -11,6 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useLocale } from '@/hooks/use-locale'
 import { useUser } from '@/hooks/use-user'
+import { signOut } from '@/lib/auth/client'
 import { getUserOptions } from '@/server/auth'
 import { useQueryClient } from '@tanstack/react-query'
 import { Link, useRouter } from '@tanstack/react-router'
@@ -52,7 +52,7 @@ export function UserMenu() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link to="/profile" disabled={!user}>
+              <Link to="/profile">
                 <CircleUserRound className="size-4" />
                 Profile
               </Link>
@@ -60,7 +60,7 @@ export function UserMenu() {
             <DropdownMenuSeparator />
 
             <DropdownMenuItem
-              onClick={async () =>
+              onClick={async () => {
                 await signOut({
                   fetchOptions: {
                     onSuccess: async () => {
@@ -73,7 +73,7 @@ export function UserMenu() {
                     },
                   },
                 })
-              }
+              }}
             >
               <LogOut className="size-4" />
               Sign out

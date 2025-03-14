@@ -67,7 +67,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <HeadContent />
-        <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
+        {/* <script src="https://unpkg.com/react-scan/dist/auto.global.js" /> */}
       </head>
       <body
         className="bg-background text-foreground antialiased"

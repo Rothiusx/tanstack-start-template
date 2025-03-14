@@ -1,7 +1,5 @@
 import env from '@/env'
-import { createClient } from '@libsql/client'
-import { drizzle } from 'drizzle-orm/libsql'
-import * as schema from './schemas'
+import { drizzle } from 'drizzle-orm/node-postgres'
+import * as schema from './schema'
 
-const client = createClient({ url: env.DATABASE_URL! })
-export const db = drizzle<typeof schema>(client, { schema })
+export const db = drizzle(env.DATABASE_URL, { schema })

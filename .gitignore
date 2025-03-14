@@ -21,8 +21,12 @@ dist
 
 # database
 db.sqlite
-/drizzle
+drizzle
+
+# docker
+docker
 
 # vscode
 .vscode/*
 !.vscode/settings.json
+

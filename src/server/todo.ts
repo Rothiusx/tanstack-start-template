@@ -1,12 +1,12 @@
 import { db } from '@/db'
-import { todo } from '@/db/schemas'
+import { todo } from '@/db/schema'
 import { sleep } from '@/lib/utils'
 import { authMiddleware } from '@/middleware/auth'
 import {
   todoCreateFormSchema,
   todoSelectSchema,
   todoUpdateFormSchema,
-} from '@/schemas/todo'
+} from '@/validation/todo'
 import { queryOptions } from '@tanstack/react-query'
 import { createServerFn } from '@tanstack/react-start'
 import { setResponseStatus } from '@tanstack/react-start/server'
@@ -72,11 +72,18 @@ export const getTodo = createServerFn({ method: 'GET' })
 
       await sleep()
 
+      // if (!result) {
+      //   setResponseStatus(StatusCodes.NOT_FOUND)
+      //   return {
+      //     message: ReasonPhrases.NOT_FOUND,
+      //   }
+      // }
+
       return result
     } catch (error) {
       console.error(error)
       throw new Error(
-        error instanceof DrizzleError ? error.message : 'Failed to load todo',
+        error instanceof DrizzleError ? error.message : 'Failed to get todo',
       )
     }
   })
@@ -108,7 +115,16 @@ export const createTodo = createServerFn({ method: 'POST' })
 
       await sleep()
 
-      return { data: result[0], message: 'Todo created successfully' }
+      return {
+        data: {
+          ...result[0],
+          user: {
+            name: context.session.user.name,
+            image: context.session.user.image ?? null,
+          },
+        },
+        message: 'Todo created successfully',
+      }
     } catch (error) {
       console.error(error)
       throw new Error(

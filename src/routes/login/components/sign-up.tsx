@@ -1,5 +1,4 @@
 import type { LinkOptions } from '@tanstack/react-router'
-import { signUp } from '@/auth/client'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
@@ -19,8 +18,9 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/ui/password-input'
-import { signUpSchema } from '@/schemas/auth'
+import { signUp } from '@/lib/auth/client'
 import { getUserOptions } from '@/server/auth'
+import { signUpSchema } from '@/validation/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
@@ -67,7 +67,7 @@ export function SignUp() {
             <form
               onSubmit={form.handleSubmit(
                 async ({ email, password, firstName, lastName, image }) =>
-                  await signUp.email({
+                  signUp.email({
                     email,
                     password,
                     name: `${firstName} ${lastName}`,
@@ -219,7 +219,9 @@ export function SignUp() {
 function convertImageToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
-    reader.onloadend = () => resolve(reader.result as string)
+    reader.onloadend = () => {
+      resolve(reader.result as string)
+    }
     reader.onerror = reject
     reader.readAsDataURL(file)
   })

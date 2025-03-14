@@ -1,4 +1,4 @@
-import type { TodoSelect } from '@/schemas/todo'
+import type { TodoSelect } from '@/validation/todo'
 import { AngularIcon } from '@/components/icons/angular'
 import { NextIcon } from '@/components/icons/next'
 import { SolidIcon } from '@/components/icons/solid'
@@ -8,6 +8,7 @@ import { VueIcon } from '@/components/icons/vue'
 import { cn } from '@/lib/utils'
 import { CircleHelp } from 'lucide-react'
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const projects = {
   angular: {
     label: 'Angular',
@@ -51,8 +52,8 @@ export function TodoProjectLabel({
     >
       {project ? (
         <>
-          {projects[project as keyof typeof projects].icon}
-          {projects[project as keyof typeof projects].label}
+          {projects[project].icon}
+          {projects[project].label}
         </>
       ) : (
         <>

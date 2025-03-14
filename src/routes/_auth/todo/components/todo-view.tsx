@@ -1,4 +1,4 @@
-import type { TodoWithUser } from '@/schemas/todo'
+import type { TodoWithUser } from '@/validation/todo'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
@@ -7,7 +7,6 @@ import { CalendarDays, CheckCircle2, Clock, XCircle } from 'lucide-react'
 import { TodoProjectLabel } from './todo-project-label'
 
 export function TodoView({ todo }: { todo: TodoWithUser }) {
-  console.log(todo)
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4 rounded-lg border p-4">
@@ -31,7 +30,7 @@ export function TodoView({ todo }: { todo: TodoWithUser }) {
           Description
         </h3>
         <p className="text-base">
-          {todo.description || 'No description provided'}
+          {todo.description ?? 'No description provided'}
         </p>
       </div>
 

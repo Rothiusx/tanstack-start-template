@@ -9,7 +9,8 @@ export function cn(...inputs: ClassValue[]) {
 
 export async function sleep(ms: number = 1000, dev: boolean = true) {
   if (dev && import.meta.env.DEV) {
-    return await new Promise((resolve) => setTimeout(resolve, ms))
+    const sleep = await new Promise((resolve) => setTimeout(resolve, ms))
+    return sleep
   }
 }
 

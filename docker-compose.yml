@@ -7,9 +7,9 @@ services:
     volumes:
       - ./docker/db:/var/lib/postgresql/data
     environment:
+      - POSTGRES_DB=tanstack-start-template
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=tanstack-start-template
 
   adminer:
     image: adminer:latest
@@ -17,4 +17,4 @@ services:
     ports:
       - 8080:8080
     environment:
-      ADMINER_DESIGN: 'dracula'
+      ADMINER_DESIGN: dracula

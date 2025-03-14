@@ -40,7 +40,7 @@ export function DefaultErrorBoundary({
               </p>
             </div>
 
-            {info?.componentStack && (
+            {info?.componentStack != null && (
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <Terminal className="text-muted-foreground h-4 w-4" />

@@ -7,7 +7,6 @@ import compiler from 'eslint-plugin-react-compiler'
 
 const config = antfu(
   {
-    react: true,
     formatters: {
       css: 'prettier',
       markdown: 'prettier',
@@ -16,11 +15,44 @@ const config = antfu(
       'react-compiler': compiler,
       drizzle,
     },
+    javascript: {
+      overrides: {
+        'no-console': 'off',
+        'require-await': 'error',
+      },
+    },
+    typescript: {
+      tsconfigPath: './tsconfig.json',
+      overridesTypeAware: {
+        'ts/no-floating-promises': 'off',
+        'ts/no-misused-promises': 'off',
+        'ts/promise-function-async': 'off',
+        'ts/prefer-nullish-coalescing': [
+          'error',
+          {
+            ignorePrimitives: true,
+          },
+        ],
+        'ts/strict-boolean-expressions': [
+          'error',
+          {
+            allowNullableString: true,
+          },
+        ],
+        'ts/switch-exhaustiveness-check': [
+          'error',
+          {
+            considerDefaultExhaustiveForUnions: true,
+          },
+        ],
+      },
+    },
+    react: {
+      overrides: {
+        'react-compiler/react-compiler': 'error',
+      },
+    },
     rules: {
-      'no-console': 'off',
-      'require-await': 'error',
-      'ts/no-explicit-any': 'error',
-      'react-compiler/react-compiler': 'error',
       'drizzle/enforce-delete-with-where': [
         'error',
         { drizzleObjectName: ['db'] },
@@ -35,17 +67,17 @@ const config = antfu(
   ...query.configs['flat/recommended'],
   ...router.configs['flat/recommended'],
   {
-    files: ['**/*.tsx'],
-    rules: {
-      'react/no-array-index-key': 'off',
-      'react/no-unstable-context-value': 'off',
-      'react-refresh/only-export-components': 'off',
-    },
-  },
-  {
     files: ['package.json', 'tsconfig.json'],
     rules: {
       'jsonc/sort-keys': 'off',
+    },
+  },
+  {
+    files: ['src/components/ui/**/*.tsx'],
+    rules: {
+      'ts/strict-boolean-expressions': 'off',
+      'react/no-unstable-context-value': 'off',
+      'react-refresh/only-export-components': 'off',
     },
   },
   {

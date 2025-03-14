@@ -1,15 +1,15 @@
 import { db } from '@/db'
-import { user } from '@/db/schemas'
+import { user } from '@/db/schema'
 import env from '@/env'
 import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { admin, openAPI } from 'better-auth/plugins'
 import { eq } from 'drizzle-orm'
-import { ac, roles } from './permissions'
+import { ac, roles } from './auth/permissions'
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
-    provider: 'sqlite',
+    provider: 'pg',
   }),
   plugins: [
     admin({
@@ -18,12 +18,6 @@ export const auth = betterAuth({
     }),
     openAPI(),
   ],
-  // session: {
-  //   cookieCache: {
-  //     enabled: true,
-  //     maxAge: 60, // 5 minutes
-  //   },
-  // },
   user: {
     changeEmail: {
       enabled: true,

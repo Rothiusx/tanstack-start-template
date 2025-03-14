@@ -1,4 +1,4 @@
-import { user } from '@/db/schemas/auth'
+import { user } from '@/db/schema/auth'
 import { createSchemaFactory } from 'drizzle-zod'
 import { z } from 'zod'
 
@@ -86,7 +86,11 @@ export const signUpSchema = signInSchema
     confirmPassword: z.string(),
     image: z
       .any()
-      .refine((f) => f && f.size < 10000000, 'Max 10MB upload size.')
+      .refine(
+        (file) => file instanceof File && file.size < 3_000_000,
+        'Max 3MB upload size.',
+      )
+      .transform((file) => (file instanceof File ? file : undefined))
       .optional(),
   })
   .refine(({ password, confirmPassword }) => password === confirmPassword, {

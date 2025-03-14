@@ -46,4 +46,5 @@ if (error) {
   process.exit(1)
 }
 
+// eslint-disable-next-line ts/no-unnecessary-type-assertion
 export default env!
