@@ -1,4 +1,4 @@
-import type { TodoWithUser } from '@/validation/todo'
+import type { getTodo } from '@/server/todo'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,7 +18,11 @@ import { Link } from '@tanstack/react-router'
 import { FilePenLine, Loader2, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 
-export function TodoListActions({ todo }: { todo: TodoWithUser }) {
+export function TodoListActions({
+  todo,
+}: {
+  todo: Awaited<ReturnType<typeof getTodo>>
+}) {
   const queryClient = useQueryClient()
   const user = useUser()
 

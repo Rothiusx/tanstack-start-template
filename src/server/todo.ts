@@ -1,4 +1,3 @@
-import type { TodoWithUser } from '@/validation/todo'
 import { db } from '@/db'
 import { todo } from '@/db/schema'
 import { sleep } from '@/lib/utils'
@@ -59,42 +58,44 @@ export const getTodo = createServerFn({ method: 'GET' })
   .middleware([authMiddleware])
   .validator(todoSelectSchema.pick({ id: true }))
   .handler(async ({ data, context }) => {
-    // try {
-    const result = await db.query.todo.findFirst({
-      where: and(
-        eq(todo.id, data.id),
-        eq(todo.userId, context.session.user.id),
-      ),
-      with: {
-        user: {
-          columns: {
-            name: true,
-            image: true,
+    try {
+      const result = await db.query.todo.findFirst({
+        where: and(
+          eq(todo.id, data.id),
+          eq(todo.userId, context.session.user.id),
+        ),
+        with: {
+          user: {
+            columns: {
+              name: true,
+              image: true,
+            },
           },
         },
-      },
-    })
-
-    await sleep()
-
-    if (!result) {
-      throw notFound({
-        data: {
-          message: `Todo #${data.id} not found on the server`,
-        },
       })
-    }
 
-    return result
-    // } catch (error) {
-    //   console.error(error)
-    //   throw error instanceof DrizzleError
-    //     ? error
-    //     : new Error('Failed to get todo')
-    // }
+      await sleep()
+
+      if (!result) {
+        throw notFound({
+          data: {
+            message: `Todo #${data.id} not found on the server`,
+          },
+        })
+      }
+
+      return result
+    } catch (error) {
+      console.error(error)
+      throw error instanceof DrizzleError
+        ? error
+        : new Error('Failed to get todo')
+    }
   })
 
-export function getTodoOptions(id: TodoWithUser['id']) {
+export type Todo = Awaited<ReturnType<typeof getTodo>>
+
+export function getTodoOptions(id: Todo['id']) {
   return queryOptions({
     queryKey: ['todo', id],
     queryFn: ({ signal }) => getTodo({ data: { id }, signal }),
@@ -189,8 +190,8 @@ export const updateTodo = createServerFn({ method: 'POST' })
           description: data.description,
           project: data.project,
           language: data.language,
-          completed: data.completed,
           updatedAt: new Date(),
+          completed: data.completed,
         })
         .where(eq(todo.id, data.id))
         .returning()

@@ -1,4 +1,4 @@
-import type { TodoWithUser } from '@/validation/todo'
+import type { getTodos } from '@/server/todo'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
@@ -11,7 +11,7 @@ import { CircleCheckBig, CircleX } from 'lucide-react'
 import { TodoListActions } from './todo-list-actions'
 import { TodoProjectLabel } from './todo-project-label'
 
-const columns: ColumnDef<TodoWithUser>[] = [
+const columns: ColumnDef<Awaited<ReturnType<typeof getTodos>>[number]>[] = [
   {
     accessorKey: 'user.image',
     header: undefined,

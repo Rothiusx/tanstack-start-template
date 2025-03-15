@@ -1,4 +1,3 @@
-import type { UserSelect } from './auth'
 import { todo } from '@/db/schema/todo'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 import { z } from 'zod'
@@ -58,10 +57,3 @@ export const todoUpdateFormSchema = todoUpdateSchema.pick({
   completed: true,
 })
 export type TodoUpdateForm = z.infer<typeof todoUpdateFormSchema>
-
-/**
- * ! Type for todo with user
- */
-export type TodoWithUser = TodoSelect & {
-  user: Pick<UserSelect, 'name' | 'image'>
-}

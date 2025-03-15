@@ -1,4 +1,4 @@
-import type { TodoWithUser } from '@/validation/todo'
+import type { getTodo } from '@/server/todo'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
@@ -6,7 +6,11 @@ import { formatDate } from '@/lib/utils'
 import { CalendarDays, CheckCircle2, Clock, XCircle } from 'lucide-react'
 import { TodoProjectLabel } from './todo-project-label'
 
-export function TodoView({ todo }: { todo: TodoWithUser }) {
+export function TodoView({
+  todo,
+}: {
+  todo: Awaited<ReturnType<typeof getTodo>>
+}) {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4 rounded-lg border p-4">

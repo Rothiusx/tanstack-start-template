@@ -1,4 +1,4 @@
-import type { TodoWithUser } from '@/validation/todo'
+import type { getTodo } from '@/server/todo'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -29,7 +29,11 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { projects } from './todo-project-label'
 
-export function TodoUpdateForm({ todo }: { todo: TodoWithUser }) {
+export function TodoUpdateForm({
+  todo,
+}: {
+  todo: Awaited<ReturnType<typeof getTodo>>
+}) {
   const queryClient = useQueryClient()
   const navigate = useNavigate({ from: '/todo/$id' })
 
