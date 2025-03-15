@@ -1,3 +1,4 @@
+import type { TodoWithUser } from '@/validation/todo'
 import { db } from '@/db'
 import { todo } from '@/db/schema'
 import { sleep } from '@/lib/utils'
@@ -8,9 +9,10 @@ import {
   todoUpdateFormSchema,
 } from '@/validation/todo'
 import { queryOptions } from '@tanstack/react-query'
+import { notFound } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { setResponseStatus } from '@tanstack/react-start/server'
-import { desc, DrizzleError, eq } from 'drizzle-orm'
+import { and, desc, DrizzleError, eq } from 'drizzle-orm'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
 /**
@@ -37,9 +39,9 @@ export const getTodos = createServerFn({ method: 'GET' })
       return result
     } catch (error) {
       console.error(error)
-      throw new Error(
-        error instanceof DrizzleError ? error.message : 'Failed to get todos',
-      )
+      throw error instanceof DrizzleError
+        ? error
+        : new Error('Failed to get todos')
     }
   })
 
@@ -56,41 +58,43 @@ export function getTodosOptions() {
 export const getTodo = createServerFn({ method: 'GET' })
   .middleware([authMiddleware])
   .validator(todoSelectSchema.pick({ id: true }))
-  .handler(async ({ data }) => {
-    try {
-      const result = await db.query.todo.findFirst({
-        where: eq(todo.id, data.id),
-        with: {
-          user: {
-            columns: {
-              name: true,
-              image: true,
-            },
+  .handler(async ({ data, context }) => {
+    // try {
+    const result = await db.query.todo.findFirst({
+      where: and(
+        eq(todo.id, data.id),
+        eq(todo.userId, context.session.user.id),
+      ),
+      with: {
+        user: {
+          columns: {
+            name: true,
+            image: true,
           },
         },
+      },
+    })
+
+    await sleep()
+
+    if (!result) {
+      throw notFound({
+        data: {
+          message: `Todo #${data.id} not found on the server`,
+        },
       })
-
-      await sleep()
-
-      // if (!result) {
-      //   setResponseStatus(StatusCodes.NOT_FOUND)
-      //   return {
-      //     message: ReasonPhrases.NOT_FOUND,
-      //   }
-      // }
-
-      return result
-    } catch (error) {
-      console.error(error)
-      throw new Error(
-        error instanceof DrizzleError ? error.message : 'Failed to get todo',
-      )
     }
+
+    return result
+    // } catch (error) {
+    //   console.error(error)
+    //   throw error instanceof DrizzleError
+    //     ? error
+    //     : new Error('Failed to get todo')
+    // }
   })
 
-export function getTodoOptions(
-  id: NonNullable<Awaited<ReturnType<typeof getTodo>>>['id'],
-) {
+export function getTodoOptions(id: TodoWithUser['id']) {
   return queryOptions({
     queryKey: ['todo', id],
     queryFn: ({ signal }) => getTodo({ data: { id }, signal }),
@@ -138,8 +142,15 @@ export const createTodo = createServerFn({ method: 'POST' })
  */
 export const deleteTodo = createServerFn({ method: 'POST' })
   .middleware([authMiddleware])
-  .validator(todoSelectSchema.pick({ id: true }))
-  .handler(async ({ data }) => {
+  .validator(todoSelectSchema.pick({ id: true, userId: true }))
+  .handler(async ({ data, context }) => {
+    if (data.userId !== context.session.user.id) {
+      setResponseStatus(StatusCodes.FORBIDDEN)
+      return {
+        message: ReasonPhrases.FORBIDDEN,
+      }
+    }
+
     try {
       await db.delete(todo).where(eq(todo.id, data.id))
 

@@ -23,7 +23,7 @@ export function NavBar() {
     ? [
         {
           to: '/todo' as const,
-          label: 'TODO',
+          label: 'Todos',
           icon: <ClipboardList className="size-6" />,
         },
         ...(user.role === 'admin'

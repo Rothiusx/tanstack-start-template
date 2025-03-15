@@ -47,9 +47,9 @@ export function EditProfileForm({ user }: { user: User }) {
 
   const { mutate, isPending } = useMutation({
     mutationFn: updateUser,
-    onSuccess: ({ data, message }) => {
+    onSuccess: async ({ data, message }) => {
       form.reset(data)
-      queryClient.invalidateQueries(getUserOptions())
+      await queryClient.invalidateQueries(getUserOptions())
       setMessage({
         message,
       })

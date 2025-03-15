@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { useUser } from '@/hooks/use-user'
 import { createFileRoute, Link } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
@@ -14,7 +15,7 @@ export const Route = createFileRoute('/')({
 })
 
 function Home() {
-  const { user } = Route.useRouteContext()
+  const user = useUser()
 
   return (
     <div className="container mx-auto px-4 py-12">

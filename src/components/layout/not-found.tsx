@@ -11,10 +11,27 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { Link } from '@tanstack/react-router'
 import { FileQuestion, Home, Search } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { z } from 'zod'
 
-export function NotFound({ data }: NotFoundRouteProps) {
-  // Check if data exists
-  const hasData = data !== null && data !== undefined
+const notFoundSchema = z.object({
+  data: z.object({
+    message: z.string().min(1),
+  }),
+})
+
+export function NotFound({
+  data,
+  children,
+}: NotFoundRouteProps & { children?: React.ReactNode }) {
+  const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    const result = notFoundSchema.safeParse(data)
+    if (result.success) {
+      setMessage(result.data.data.message)
+    }
+  }, [data])
 
   return (
     <div className="mt-24 flex w-full items-center justify-center p-4">
@@ -32,24 +49,18 @@ export function NotFound({ data }: NotFoundRouteProps) {
         </CardHeader>
         <Separator />
         <CardContent className="pt-6">
-          <div className="flex flex-col items-center justify-center space-y-4 py-6">
+          <div className="flex flex-col items-center justify-center space-y-4 py-6 text-center">
             <Search className="text-muted-foreground h-16 w-16 opacity-50" />
-            <p className="text-muted-foreground text-center">
+            <p className="text-muted-foreground">
               The page you requested either doesn't exist or you don't have
               access to it.
             </p>
-            {hasData && (
-              <div className="mt-4 w-full">
-                <p className="mb-2 text-sm font-medium">
-                  Additional Information:
-                </p>
-                <div className="bg-muted max-h-40 overflow-auto rounded-md p-3">
-                  <pre className="font-mono text-xs break-words whitespace-pre-wrap">
-                    {JSON.stringify(data, null, 2)}
-                  </pre>
-                </div>
-              </div>
+            {message && (
+              <p className="text-muted-foreground text-lg font-semibold">
+                {message}
+              </p>
             )}
+            {children}
           </div>
         </CardContent>
         <CardFooter className="flex justify-center">

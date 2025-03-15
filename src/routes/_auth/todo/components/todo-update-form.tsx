@@ -35,15 +35,7 @@ export function TodoUpdateForm({ todo }: { todo: TodoWithUser }) {
 
   const form = useForm({
     resolver: zodResolver(todoUpdateFormSchema),
-    defaultValues: {
-      id: todo.id,
-      userId: todo.userId,
-      title: todo.title,
-      description: todo.description,
-      project: todo.project,
-      language: todo.language,
-      completed: todo.completed,
-    },
+    defaultValues: todo,
   })
 
   const { mutate, isPending } = useMutation({

@@ -2,7 +2,11 @@ import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_auth/todo')({
   head: () => ({
-    meta: [{ title: 'Todos' }],
+    meta: [
+      {
+        title: 'Todos',
+      },
+    ],
   }),
   component: Todo,
 })

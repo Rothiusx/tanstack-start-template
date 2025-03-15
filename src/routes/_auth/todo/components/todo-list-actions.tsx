@@ -1,4 +1,4 @@
-import type { TodoSelect } from '@/validation/todo'
+import type { TodoWithUser } from '@/validation/todo'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,14 +11,17 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import { useUser } from '@/hooks/use-user'
 import { deleteTodo } from '@/server/todo'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { FilePenLine, Loader2, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 
-export function TodoListActions({ id }: { id: TodoSelect['id'] }) {
+export function TodoListActions({ todo }: { todo: TodoWithUser }) {
   const queryClient = useQueryClient()
+  const user = useUser()
+
   const { mutate, isPending } = useMutation({
     mutationFn: deleteTodo,
     onSuccess: ({ message }) => {
@@ -30,22 +33,24 @@ export function TodoListActions({ id }: { id: TodoSelect['id'] }) {
     },
   })
 
+  const disabled = isPending || todo.userId !== user?.id
+
   return (
     <div className="flex w-full flex-row justify-end gap-2">
-      {isPending ? (
+      {disabled ? (
         <Button variant="secondary" size="sm" disabled>
           <FilePenLine className="size-5" />
         </Button>
       ) : (
         <Button variant="secondary" size="sm" asChild>
-          <Link to="/todo/$id" params={{ id }}>
+          <Link to="/todo/$id" params={{ id: todo.id }}>
             <FilePenLine className="size-5" />
           </Link>
         </Button>
       )}
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="destructive" size="sm" disabled={isPending}>
+          <Button variant="destructive" size="sm" disabled={disabled}>
             {isPending ? (
               <Loader2 className="size-5 animate-spin" />
             ) : (
@@ -63,7 +68,11 @@ export function TodoListActions({ id }: { id: TodoSelect['id'] }) {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={() => mutate({ data: { id } })}>
+            <AlertDialogAction
+              onClick={() =>
+                mutate({ data: { id: todo.id, userId: todo.userId } })
+              }
+            >
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>

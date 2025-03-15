@@ -1,6 +1,9 @@
 import type { getUser } from '@/server/auth'
 import type { QueryClient } from '@tanstack/react-query'
+import { DefaultErrorBoundary } from '@/components/layout/default-error-boundary'
+import { LoadingScreen } from '@/components/layout/loading-screen'
 import { NavBar } from '@/components/layout/nav-bar'
+import { NotFound } from '@/components/layout/not-found'
 import { getUserOptions } from '@/server/auth'
 import styles from '@/styles.css?url'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -49,12 +52,15 @@ export const Route = createRootRouteWithContext<{
     ],
   }),
   /**
-   * ! Should not be needed for now, enable if encountering hydration errors
+   * ! Should not be needed anymore since we're are creating the query client instance along with the router
    */
   // onEnter: ({ context }) => {
   //   // Remove all queries when opening the page to avoid hydration errors
   //   context.queryClient.removeQueries()
   // },
+  pendingComponent: () => <LoadingScreen />,
+  errorComponent: (props) => <DefaultErrorBoundary {...props} />,
+  notFoundComponent: (props) => <NotFound {...props} />,
   component: () => (
     <RootDocument>
       <Outlet />

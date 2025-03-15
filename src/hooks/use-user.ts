@@ -1,16 +1,18 @@
+import type { FileRoutesById } from '@/routeTree.gen'
 import { getUserOptions } from '@/server/auth'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { useRouteContext } from '@tanstack/react-router'
+import { redirect, useRouteContext } from '@tanstack/react-router'
 
 /**
  * Hook to get the user from the root context
  * @returns The user object
  */
-export function useContextUser() {
+export function useRootContextUser() {
   const user = useRouteContext({
     from: '__root__',
     select: ({ user }) => user,
   })
+
   return user
 }
 
@@ -18,13 +20,20 @@ export function useContextUser() {
  * Hook to get the user from from the query client
  * @returns The user object
  */
-export function useUser() {
-  const user = useContextUser()
+export function useUser(route?: keyof FileRoutesById) {
+  const user = useRouteContext({
+    from: route ?? '__root__',
+    select: ({ user }) => user,
+  })
 
   const { data } = useSuspenseQuery({
     ...getUserOptions(),
     initialData: user,
   })
+
+  if (!data && route) {
+    throw redirect({ to: '/login' })
+  }
 
   return data
 }

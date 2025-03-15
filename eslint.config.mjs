@@ -17,6 +17,7 @@ const config = antfu(
     },
     javascript: {
       overrides: {
+        'prefer-const': 'off',
         'no-console': 'off',
         'require-await': 'error',
       },
@@ -62,7 +63,7 @@ const config = antfu(
         { drizzleObjectName: ['db'] },
       ],
     },
-    ignores: ['src/routeTree.gen.ts'],
+    ignores: ['src/routeTree.gen.ts', '.drizzle/visualizer.json'],
   },
   ...query.configs['flat/recommended'],
   ...router.configs['flat/recommended'],

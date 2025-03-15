@@ -5,5 +5,8 @@ export const Route = createFileRoute('/_auth')({
     if (!context.user) {
       throw redirect({ to: '/login' })
     }
+    return {
+      user: context.user,
+    }
   },
 })

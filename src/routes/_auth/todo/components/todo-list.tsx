@@ -76,7 +76,7 @@ const columns: ColumnDef<TodoWithUser>[] = [
   },
   {
     id: 'actions',
-    cell: ({ row }) => <TodoListActions id={row.original.id} />,
+    cell: ({ row }) => <TodoListActions todo={row.original} />,
   },
 ]
 

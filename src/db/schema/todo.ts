@@ -1,6 +1,15 @@
 import { relations } from 'drizzle-orm'
-import { boolean, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core'
+import {
+  boolean,
+  pgEnum,
+  pgTable,
+  serial,
+  text,
+  timestamp,
+} from 'drizzle-orm/pg-core'
 import { user } from './auth'
+
+const languageEnum = pgEnum('language', ['en', 'cs', 'de', 'fr', 'es', 'it'])
 
 export const todo = pgTable('todo', {
   id: serial('id').primaryKey(),
@@ -12,9 +21,7 @@ export const todo = pgTable('todo', {
   project: text('project', {
     enum: ['tanstack', 'next', 'svelte', 'solid', 'angular', 'vue'],
   }),
-  language: text('language', { enum: ['en', 'cs', 'de', 'fr', 'es', 'it'] })
-    .notNull()
-    .default('en'),
+  language: languageEnum('language').notNull().default('en'),
   completed: boolean('completed').notNull().default(false),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
