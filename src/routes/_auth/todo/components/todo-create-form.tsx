@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Language } from '@/db/schema'
 import { createTodo, getTodosOptions } from '@/server/todo'
 import { todoCreateFormSchema } from '@/validation/todo'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -145,8 +146,11 @@ export function TodoCreateForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="cs">Czech</SelectItem>
-                    <SelectItem value="en">English</SelectItem>
+                    {Object.entries(Language).map(([key, value]) => (
+                      <SelectItem key={key} value={key}>
+                        {value}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <FormDescription>

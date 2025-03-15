@@ -1,15 +1,7 @@
 import { relations } from 'drizzle-orm'
-import {
-  boolean,
-  pgEnum,
-  pgTable,
-  serial,
-  text,
-  timestamp,
-} from 'drizzle-orm/pg-core'
+import { boolean, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core'
 import { user } from './auth'
-
-const languageEnum = pgEnum('language', ['en', 'cs', 'de', 'fr', 'es', 'it'])
+import { languageEnum } from './language'
 
 export const todo = pgTable('todo', {
   id: serial('id').primaryKey(),

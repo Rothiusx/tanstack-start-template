@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { Link } from '@tanstack/react-router'
 import { AlertTriangle, RefreshCcw, Terminal } from 'lucide-react'
 
 export function DefaultErrorBoundary({
@@ -58,9 +59,10 @@ export function DefaultErrorBoundary({
         <CardFooter className="flex justify-between">
           <Button
             variant="outline"
+            asChild
             onClick={() => (window.location.href = '/')}
           >
-            Go Home
+            <Link to="/">Go Home</Link>
           </Button>
           <Button onClick={reset} className="gap-1">
             <RefreshCcw className="mr-1 h-4 w-4" />

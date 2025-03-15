@@ -18,7 +18,11 @@ import { TodoView } from './components/todo-view'
 
 export const Route = createFileRoute('/_auth/todo/$id')({
   params: z.object({
-    id: z.coerce.number().int().positive(),
+    id: z.coerce
+      .number({ message: 'Id must be a number' })
+      .int({ message: 'Id must be a whole number' })
+      .positive({ message: 'Id must be positive' })
+      .lte(100000, { message: 'Id number is out of range' }),
   }),
   validateSearch: z.object({
     edit: z.boolean().default(false),
@@ -51,6 +55,7 @@ export const Route = createFileRoute('/_auth/todo/$id')({
       <TodoNotFound />
     </NotFound>
   ),
+  // errorComponent: (error) => <DefaultErrorBoundary {...error} />,
   component: TodoDetail,
 })
 

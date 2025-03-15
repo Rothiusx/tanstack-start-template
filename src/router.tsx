@@ -2,6 +2,9 @@ import { routeTree } from '@/routeTree.gen'
 import { QueryClient } from '@tanstack/react-query'
 import { createRouter as createTanstackRouter } from '@tanstack/react-router'
 import { routerWithQueryClient } from '@tanstack/react-router-with-query'
+import { DefaultErrorBoundary } from './components/layout/default-error-boundary'
+import { LoadingScreen } from './components/layout/loading-screen'
+import { NotFound } from './components/layout/not-found'
 import '@/styles.css'
 
 // Create a new router instance
@@ -25,6 +28,9 @@ export function createRouter() {
       defaultStructuralSharing: true,
       defaultPreload: 'intent',
       defaultPreloadStaleTime: 0,
+      defaultPendingComponent: () => <LoadingScreen />,
+      defaultNotFoundComponent: (props) => <NotFound {...props} />,
+      defaultErrorComponent: (props) => <DefaultErrorBoundary {...props} />,
     }),
     queryClient,
   )

@@ -58,44 +58,42 @@ export const getTodo = createServerFn({ method: 'GET' })
   .middleware([authMiddleware])
   .validator(todoSelectSchema.pick({ id: true }))
   .handler(async ({ data, context }) => {
-    try {
-      const result = await db.query.todo.findFirst({
-        where: and(
-          eq(todo.id, data.id),
-          eq(todo.userId, context.session.user.id),
-        ),
-        with: {
-          user: {
-            columns: {
-              name: true,
-              image: true,
-            },
+    // try {
+    const result = await db.query.todo.findFirst({
+      where: and(
+        eq(todo.id, data.id),
+        eq(todo.userId, context.session.user.id),
+      ),
+      with: {
+        user: {
+          columns: {
+            name: true,
+            image: true,
           },
         },
+      },
+    })
+
+    await sleep()
+
+    if (!result) {
+      throw notFound({
+        data: {
+          message: `Todo #${data.id} not found on the server`,
+        },
       })
-
-      await sleep()
-
-      if (!result) {
-        throw notFound({
-          data: {
-            message: `Todo #${data.id} not found on the server`,
-          },
-        })
-      }
-
-      return result
-    } catch (error) {
-      console.error(error)
-      throw error instanceof DrizzleError
-        ? error
-        : new Error('Failed to get todo')
     }
+
+    return result
+    // } catch (error) {
+    //   console.error(error)
+    //   throw error instanceof DrizzleError
+    //     ? error
+    //     : new Error('Failed to get todo')
+    // }
   })
 
-export type Todo = Awaited<ReturnType<typeof getTodo>>
-
-export function getTodoOptions(id: Todo['id']) {
+export function getTodoOptions(id: Awaited<ReturnType<typeof getTodo>>['id']) {
   return queryOptions({
     queryKey: ['todo', id],
     queryFn: ({ signal }) => getTodo({ data: { id }, signal }),
