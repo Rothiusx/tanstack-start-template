@@ -7,8 +7,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export async function sleep(ms: number = 100, dev: boolean = true) {
-  if (dev && import.meta.env.DEV) {
+export async function sleep(ms: number = 100, enabled: boolean = true) {
+  if (enabled && import.meta.env.DEV) {
     await new Promise((resolve) => setTimeout(resolve, ms))
   }
 }
