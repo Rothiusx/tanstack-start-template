@@ -16,7 +16,7 @@ import { ThemeProvider } from 'next-themes'
 import { lazy, Suspense } from 'react'
 import { Toaster } from 'sonner'
 
-// Lazy load devtools in development mode
+// Lazy load Router devtools in development mode
 const TanStackRouterDevtools = import.meta.env.DEV
   ? lazy(() =>
       import('@tanstack/react-router-devtools').then((res) => ({
@@ -25,7 +25,7 @@ const TanStackRouterDevtools = import.meta.env.DEV
     )
   : () => null
 
-// Lazy load React Query devtools in development mode
+// Lazy load Query devtools in development mode
 const ReactQueryDevtools = import.meta.env.DEV
   ? lazy(() =>
       import('@tanstack/react-query-devtools').then((res) => ({
@@ -90,19 +90,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <HeadContent />
-        {/* <script src="https://unpkg.com/react-scan/dist/auto.global.js" /> */}
+        {import.meta.env.DEV && (
+          <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
+        )}
       </head>
       <body
         className="text-foreground from-background to-muted/30 flex min-h-screen flex-col bg-gradient-to-b antialiased"
         suppressHydrationWarning
       >
-        {/* <ScriptOnce>
-          {`document.documentElement.classList.toggle(
-            'dark',
-            localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-            )`}
-        </ScriptOnce> */}
-
         <ThemeProvider attribute="class" enableColorScheme enableSystem>
           <header>
             <NavBar />
