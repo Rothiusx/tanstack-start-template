@@ -73,7 +73,7 @@ function TodoDetail() {
           <CardHeader className="space-y-4 pb-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <Button variant="ghost" size="icon" asChild className="p-6">
+                <Button variant="ghost" size="icon" className="p-6" asChild>
                   <Link to="/todo">
                     <ArrowLeft className="size-10" />
                   </Link>

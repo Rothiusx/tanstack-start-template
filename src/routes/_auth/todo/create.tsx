@@ -29,14 +29,9 @@ function TodoCreate() {
         <Card className="relative border shadow-xl">
           <CardHeader className="space-y-4 pb-2">
             <div className="flex items-center gap-3">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="bg-background/80 hover:bg-background/90 rounded-full shadow-sm transition-all"
-                asChild
-              >
+              <Button variant="ghost" size="icon" className="p-6" asChild>
                 <Link to="/todo">
-                  <ArrowLeft className="size-5" />
+                  <ArrowLeft className="size-10" />
                 </Link>
               </Button>
               <div>
