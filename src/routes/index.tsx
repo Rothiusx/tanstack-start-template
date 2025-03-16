@@ -38,7 +38,7 @@ function Home() {
               ]}
             />
           </h1>
-          <p className="text-muted-foreground mx-auto max-w-[700px] text-xl">
+          <p className="text-muted-foreground mx-auto text-xl">
             A modern, feature-rich application built with React and beautiful UI
             components.
           </p>
