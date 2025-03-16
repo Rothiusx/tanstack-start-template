@@ -1,13 +1,26 @@
-# TanStack Start Template App
+# TanStack Start Template
 
-This is a starter app for TanStack Start with basic TODO app and using Better Auth for authentication
+[![TanStack](https://img.shields.io/badge/TanStack-Framework-blue)](https://tanstack.com/)
 
-## Getting Started
+A starter template featuring:
 
-1. Create a `.env` file in the root directory and copy the contents from `.env.example`
-2. Generate an OpenSSL key (or use https://www.better-auth.com/docs/installation to generate one)
-3. Set the generated secret key as the `BETTER_AUTH_SECRET` environment variable in your `.env` file
-4. If using Discord authentication, add your Discord Client ID and Secret to the `.env` file
+- Implementation of TanStack Start/Router, Query and Table
+- Functional TODO application
+- Better Auth authentication
+- Shadcn UI components
+- Drizzle ORM for database operations
+
+## Setup
+
+1. Create a `.env` file in the root directory and copy contents from `.env.example`
+2. Set up authentication:
+   - Generate an [OpenSSL key](https://www.better-auth.com/docs/installation)
+   - Add the key as `BETTER_AUTH_SECRET` in your `.env` file
+   - For Discord provider (optional), add `DISCORD_CLIENT_ID` and `DISCORD_CLIENT_SECRET`
+3. Configure `VITE_BASE_URL` if needed
+4. Update `DATABASE_URL` with your database credentials (or use the provided Docker compose file)
+
+## Quick Start
 
 Push the database schema:
 
@@ -21,14 +34,14 @@ pnpm db:push
 bun db:push
 ```
 
-Run the development server:
+Start the development server:
 
 ```bash
-npm run dev
+npm run db:push
 # or
-yarn dev
+yarn db:push
 # or
-pnpm dev
+pnpm db:push
 # or
-bun dev
+bun db:push
 ```
