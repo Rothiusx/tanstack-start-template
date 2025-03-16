@@ -4,7 +4,9 @@
 
 A starter template featuring:
 
-- Implementation of TanStack Start/Router, Query and Table
+- Implementation of TanStack Start and Router features
+- Usage of TanStack query
+- Basic implementation of TanStack Table
 - Functional TODO application
 - Better Auth authentication
 - Shadcn UI components
