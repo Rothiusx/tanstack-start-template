@@ -1,5 +1,4 @@
 import { LoadingScreen } from '@/components/layout/loading-screen'
-import { EditProfileForm } from '@/components/profile/update-profile-form'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -10,9 +9,17 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { useUser } from '@/hooks/use-user'
+import { EditProfileForm } from '@/routes/_auth/profile/components/update-profile-form'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_auth/profile')({
+  head: () => ({
+    meta: [
+      {
+        title: 'Profile',
+      },
+    ],
+  }),
   component: Profile,
 })
 

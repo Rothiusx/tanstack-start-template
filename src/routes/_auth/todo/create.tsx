@@ -11,6 +11,13 @@ import { ArrowLeft } from 'lucide-react'
 import { TodoCreateForm } from './components/todo-create-form'
 
 export const Route = createFileRoute('/_auth/todo/create')({
+  head: () => ({
+    meta: [
+      {
+        title: 'Create Todo',
+      },
+    ],
+  }),
   component: TodoCreate,
 })
 
