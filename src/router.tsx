@@ -8,9 +8,9 @@ import { createRouter as createTanstackRouter } from '@tanstack/react-router'
 import { routerWithQueryClient } from '@tanstack/react-router-with-query'
 import { toast } from 'sonner'
 import superjson from 'superjson'
-import { DefaultErrorBoundary } from './components/layout/default-error-boundary'
-import { LoadingScreen } from './components/layout/loading-screen'
-import { NotFound } from './components/layout/not-found'
+import { DefaultErrorBoundary } from './components/common/default-error-boundary'
+import { LoadingScreen } from './components/common/loading-screen'
+import { NotFound } from './components/common/not-found'
 
 // Function to create a new router instance
 export function createRouter() {

@@ -1,3 +1,7 @@
+import { BetterAuthIcon } from '@/components/icons/better-auth'
+import { DrizzleIcon } from '@/components/icons/drizzle'
+import { ShadcnIcon } from '@/components/icons/shadcn'
+import { TanStackIcon } from '@/components/icons/tanstack'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -7,6 +11,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { FlipWords } from '@/components/ui/flip-words'
+import { LinkPreview } from '@/components/ui/link-preview'
 import { useUser } from '@/hooks/use-user'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowRight, Layout, Shield, Zap } from 'lucide-react'
@@ -22,19 +28,21 @@ function Home() {
     <div className="container mx-auto px-4 py-16">
       <div className="flex flex-col items-center justify-center space-y-10 text-center">
         <div className="space-y-4">
-          <h1 className="text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl">
-            Build{' '}
-            <span className="from-primary to-primary/70 bg-gradient-to-r bg-clip-text text-transparent">
-              faster
-            </span>{' '}
-            with our platform
+          <h1 className="text-3xl font-bold tracking-tight sm:text-6xl md:text-7xl">
+            <FlipWords
+              className="from-primary to-primary/70 xl-[800px] w-[400px] bg-gradient-to-r bg-clip-text text-center text-4xl font-semibold tracking-tight text-transparent md:text-5xl lg:w-[600px] lg:text-5xl 2xl:w-[1000px]"
+              words={[
+                'Build faster with our platform',
+                'Create better with our tools',
+                'Design smarter with our system',
+              ]}
+            />
           </h1>
           <p className="text-muted-foreground mx-auto max-w-[700px] text-xl">
             A modern, feature-rich application built with React and beautiful UI
             components.
           </p>
         </div>
-
         <div className="flex flex-wrap items-center justify-center gap-4">
           {user ? (
             <Button size="lg" className="group min-w-40 gap-2" asChild>
@@ -128,6 +136,46 @@ function Home() {
                 </CardFooter>
               </Card>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mx-auto mt-16 w-full max-w-5xl">
+        <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-wrap items-center justify-center gap-6 font-medium lg:gap-10 xl:gap-16">
+            {[
+              {
+                url: 'https://tanstack.com/',
+                icon: <TanStackIcon className="size-6 lg:size-8 xl:size-10" />,
+                label: 'TanStack',
+              },
+              {
+                url: 'https://ui.shadcn.com/',
+                icon: <ShadcnIcon className="size-6 lg:size-8 xl:size-10" />,
+                label: 'Shadcn UI',
+              },
+              {
+                url: 'https://better-auth.com/',
+                icon: (
+                  <BetterAuthIcon className="size-6 lg:size-8 xl:size-10" />
+                ),
+                label: 'Better Auth',
+              },
+              {
+                url: 'https://orm.drizzle.team/',
+                icon: <DrizzleIcon className="size-6 lg:size-8 xl:size-10" />,
+                label: 'Drizzle ORM',
+              },
+            ].map(({ url, icon, label }) => (
+              <LinkPreview
+                key={label}
+                url={url}
+                className="hover:text-primary flex items-center gap-2 transition-colors lg:gap-3"
+              >
+                {icon}
+                <span className="lg:text-lg xl:text-xl">{label}</span>
+              </LinkPreview>
+            ))}
           </div>
         </div>
       </div>

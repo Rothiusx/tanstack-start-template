@@ -1,16 +1,15 @@
 import type { getUser } from '@/server/auth'
 import type { QueryClient } from '@tanstack/react-query'
-import { DefaultErrorBoundary } from '@/components/layout/default-error-boundary'
-import { LoadingScreen } from '@/components/layout/loading-screen'
-import { NavBar } from '@/components/layout/nav-bar'
-import { NotFound } from '@/components/layout/not-found'
+import { DefaultErrorBoundary } from '@/components/common/default-error-boundary'
+import { LoadingScreen } from '@/components/common/loading-screen'
+import { NavBar } from '@/components/common/nav-bar'
+import { NotFound } from '@/components/common/not-found'
 import { getUserOptions } from '@/server/auth'
 import styles from '@/styles.css?url'
 import {
   createRootRouteWithContext,
   HeadContent,
   Outlet,
-  ScriptOnce,
   Scripts,
 } from '@tanstack/react-router'
 import { ThemeProvider } from 'next-themes'

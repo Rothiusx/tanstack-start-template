@@ -1,4 +1,4 @@
-import { LoadingScreen } from '@/components/layout/loading-screen'
+import { LoadingScreen } from '@/components/common/loading-screen'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import {

@@ -78,6 +78,7 @@ const config = antfu(
     rules: {
       'ts/strict-boolean-expressions': 'off',
       'react/no-unstable-context-value': 'off',
+      'react/no-array-index-key': 'off',
       'react-refresh/only-export-components': 'off',
     },
   },

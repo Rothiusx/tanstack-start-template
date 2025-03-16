@@ -1,4 +1,4 @@
-import { NotFound } from '@/components/layout/not-found'
+import { NotFound } from '@/components/common/not-found'
 import { Button } from '@/components/ui/button'
 import {
   Card,
