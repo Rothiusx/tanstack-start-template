@@ -28,7 +28,7 @@ export const Route = createFileRoute('/_auth/todo/')({
 
 function Todo() {
   return (
-    <div className="container mx-auto flex flex-col gap-8 py-8">
+    <div className="container mx-auto flex flex-col gap-6 py-2">
       <div className="space-y-3">
         <h1 className="flex items-center gap-2 text-4xl font-bold tracking-tight">
           <ClipboardList className="text-primary size-9" />
