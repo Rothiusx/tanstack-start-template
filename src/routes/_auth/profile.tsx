@@ -24,27 +24,36 @@ function Profile() {
   }
 
   return (
-    <section className="flex flex-col items-center justify-center gap-8 px-4 py-8">
-      <Avatar className="size-24 text-2xl lg:size-48 lg:text-6xl">
-        <AvatarImage src={user.image ?? undefined} alt={user.name} />
-        <AvatarFallback className="uppercase">
-          {user.name.charAt(0)}
-        </AvatarFallback>
-      </Avatar>
-      <h1 className="text-4xl font-medium">Welcome, {user.name}!</h1>
-      <Card className="w-1/3 max-w-[600px] min-w-[350px]">
-        <CardHeader>
-          <CardTitle>Edit Profile</CardTitle>
-          <CardDescription>Update your profile information</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          <div className="flex items-center justify-between">
-            <span className="text-sm">Permissions</span>
-            <Badge className="uppercase">{user.role}</Badge>
-          </div>
-          <EditProfileForm user={user} />
-        </CardContent>
-      </Card>
-    </section>
+    <div className="container mx-auto py-10">
+      <div className="relative mb-12 flex flex-col items-center">
+        <Avatar className="border-background size-32 border-4 text-3xl shadow-xl">
+          <AvatarImage src={user.image ?? undefined} alt={user.name} />
+          <AvatarFallback className="from-primary to-secondary bg-gradient-to-br text-white uppercase">
+            {user.name.charAt(0)}
+          </AvatarFallback>
+        </Avatar>
+        <h1 className="mt-4 text-3xl font-bold tracking-tight">{user.name}</h1>
+        <Badge className="bg-primary/10 text-primary hover:bg-primary/20 mt-2.5 px-2.5 py-1 uppercase transition-colors select-none">
+          {user.role}
+        </Badge>
+      </div>
+
+      <div className="relative mx-auto max-w-xl">
+        <div className="from-primary/20 via-secondary/20 to-primary/20 absolute -inset-1 rounded-xl bg-gradient-to-r opacity-70 blur-xl"></div>
+        <Card className="relative border shadow-xl">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-2xl font-bold">
+              Edit Profile
+            </CardTitle>
+            <CardDescription className="text-base">
+              Update your personal information and account settings
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-6 backdrop-blur-sm">
+            <EditProfileForm user={user} />
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   )
 }

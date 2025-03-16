@@ -16,25 +16,39 @@ export const Route = createFileRoute('/_auth/todo/create')({
 
 function TodoCreate() {
   return (
-    <div className="container max-w-3xl py-8">
-      <Card>
-        <CardHeader className="flex flex-row items-center gap-4">
-          <Button variant="ghost" size="icon" className="p-6" asChild>
-            <Link to="/todo">
-              <ArrowLeft className="size-8" />
-            </Link>
-          </Button>
-          <div>
-            <CardTitle>Create New Todo</CardTitle>
-            <CardDescription>
-              Fill in the details to create a new todo item
-            </CardDescription>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <TodoCreateForm />
-        </CardContent>
-      </Card>
+    <div className="container max-w-3xl py-10">
+      <div className="relative">
+        <div className="from-primary/20 via-secondary/20 to-primary/20 absolute -inset-1 rounded-xl bg-gradient-to-r opacity-70 blur-xl"></div>
+        <Card className="relative border shadow-xl">
+          <CardHeader className="space-y-4 pb-2">
+            <div className="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="bg-background/80 hover:bg-background/90 rounded-full shadow-sm transition-all"
+                asChild
+              >
+                <Link to="/todo">
+                  <ArrowLeft className="size-5" />
+                </Link>
+              </Button>
+              <div>
+                <CardTitle className="from-primary to-secondary bg-gradient-to-r bg-clip-text text-3xl font-bold text-transparent">
+                  Create New Task
+                </CardTitle>
+                <CardDescription className="text-muted-foreground mt-1 text-base">
+                  Add a new task to your productivity journey
+                </CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="pt-6">
+            <div className="p-6 backdrop-blur-sm">
+              <TodoCreateForm />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }

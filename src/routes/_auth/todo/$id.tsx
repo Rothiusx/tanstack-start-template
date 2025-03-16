@@ -66,85 +66,103 @@ function TodoDetail() {
   const { data: todo } = useSuspenseQuery(getTodoOptions(id))
 
   return (
-    <section className="container max-w-3xl py-8">
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" className="p-6" asChild>
-                <Link to="/todo">
-                  <ArrowLeft className="size-8" />
-                </Link>
+    <div className="container max-w-3xl py-10">
+      <div className="relative">
+        <div className="from-primary/20 via-secondary/20 to-primary/20 absolute -inset-1 rounded-xl bg-gradient-to-r opacity-70 blur-xl"></div>
+        <Card className="relative border shadow-xl">
+          <CardHeader className="space-y-4 pb-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Button variant="ghost" size="icon" asChild className="p-6">
+                  <Link to="/todo">
+                    <ArrowLeft className="size-10" />
+                  </Link>
+                </Button>
+                <div>
+                  <CardTitle className="from-primary to-secondary bg-gradient-to-r bg-clip-text text-2xl font-bold text-transparent">
+                    {todo.title}
+                    <p className="text-muted-foreground mt-1 text-xs font-normal">
+                      Created by {todo.user.name}
+                    </p>
+                  </CardTitle>
+                </div>
+              </div>
+              <Button
+                variant={edit ? 'outline' : 'default'}
+                size="sm"
+                className={edit ? '' : 'flex items-center gap-1.5'}
+                onClick={() =>
+                  navigate({
+                    search: { edit: !edit },
+                    replace: true,
+                  })
+                }
+              >
+                {edit ? (
+                  'Cancel'
+                ) : (
+                  <>
+                    <Edit className="size-4" /> Edit
+                  </>
+                )}
               </Button>
-              <CardTitle>
-                {todo.title}
-                <p className="text-muted-foreground mt-1 text-xs">
-                  Created by {todo.user.name}
-                </p>
-              </CardTitle>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() =>
-                navigate({
-                  search: { edit: !edit },
-                  replace: true,
-                })
-              }
-            >
-              {edit ? (
-                'Cancel'
-              ) : (
-                <>
-                  <Edit className="mr-2 h-4 w-4" /> Edit
-                </>
-              )}
-            </Button>
-          </div>
-          <CardDescription>
-            Todo #{todo.id} - Created on{' '}
-            {new Date(todo.createdAt).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {edit ? <TodoUpdateForm todo={todo} /> : <TodoView todo={todo} />}
-        </CardContent>
-      </Card>
-    </section>
+            <CardDescription className="flex items-center gap-2 text-sm">
+              <span className="bg-primary/10 text-primary rounded-full px-2.5 py-0.5 text-xs font-medium">
+                Todo #{todo.id}
+              </span>
+              <span className="text-muted-foreground">
+                Created on{' '}
+                {new Date(todo.createdAt).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </span>
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="px-12 py-4">
+            <div className="rounded-lg backdrop-blur-sm">
+              {edit ? <TodoUpdateForm todo={todo} /> : <TodoView todo={todo} />}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   )
 }
 
 function TodoPending() {
   return (
-    <div className="container max-w-3xl py-8">
-      <Card>
-        <CardHeader className="py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Skeleton className="h-14 w-14 rounded-full" />
-              <div>
-                <Skeleton className="h-7 w-48" />
-                <Skeleton className="mt-3 h-5 w-32" />
+    <div className="container max-w-3xl py-10">
+      <div className="relative">
+        <div className="from-primary/20 via-secondary/20 to-primary/20 absolute -inset-1 rounded-xl bg-gradient-to-r opacity-70 blur-xl"></div>
+        <Card className="relative border shadow-xl">
+          <CardHeader className="py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Skeleton className="h-10 w-10 rounded-full" />
+                <div>
+                  <Skeleton className="h-7 w-48" />
+                  <Skeleton className="mt-2 h-4 w-32" />
+                </div>
               </div>
+              <Skeleton className="h-9 w-24 rounded-md" />
             </div>
-            <Skeleton className="h-10 w-28" />
-          </div>
-        </CardHeader>
-        <CardContent className="pb-8">
-          <div className="space-y-6">
-            <Skeleton className="h-8 w-full" />
-            <Skeleton className="h-8 w-3/4" />
-            <Skeleton className="h-8 w-5/6" />
-            <Skeleton className="h-8 w-full" />
-            <Skeleton className="h-8 w-4/5" />
-          </div>
-        </CardContent>
-      </Card>
+            <div className="mt-4">
+              <Skeleton className="h-5 w-40 rounded-full" />
+            </div>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="space-y-4">
+              <Skeleton className="h-8 w-full rounded-md" />
+              <Skeleton className="h-8 w-3/4 rounded-md" />
+              <Skeleton className="h-8 w-5/6 rounded-md" />
+              <Skeleton className="h-8 w-full rounded-md" />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }

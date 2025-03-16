@@ -26,9 +26,13 @@ export function UserMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="ml-4 size-10 rounded-full shadow-sm"
+        >
           {user ? (
-            <Avatar className="size-8">
+            <Avatar className="size-full">
               <AvatarImage src={user.image ?? undefined} alt={user.name} />
               <AvatarFallback className="bg-background uppercase">
                 {user.name.charAt(0)}
@@ -39,7 +43,7 @@ export function UserMenu() {
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
+      <DropdownMenuContent align="end" className="w-56">
         {user ? (
           <>
             <DropdownMenuLabel className="font-normal">

@@ -7,102 +7,133 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useUser } from '@/hooks/use-user'
 import { Link } from '@tanstack/react-router'
 import { ClipboardList, Home, Loader2, Menu, ShieldUser } from 'lucide-react'
-import { Suspense } from 'react'
+import { Fragment, Suspense } from 'react'
 import { ThemeToggle } from './theme-toggle'
 import { UserMenu } from './user-menu'
 
 export function NavBar() {
   const user = useUser()
 
-  const links = user
-    ? [
-        {
-          to: '/todo' as const,
-          label: 'Todos',
-          icon: <ClipboardList className="size-6" />,
-        },
-        ...(user.role === 'admin'
-          ? [
-              {
-                to: '/admin',
-                label: 'Admin',
-                icon: <ShieldUser className="size-6" />,
-              },
-            ]
-          : []),
-      ]
-    : []
+  const links = [
+    {
+      to: '/' as const,
+      label: 'Home',
+      icon: <Home className="size-6" />,
+    },
+    ...(user
+      ? [
+          {
+            to: '/todo' as const,
+            label: 'Todos',
+            icon: <ClipboardList className="size-6" />,
+          },
+          ...(user.role === 'admin'
+            ? [
+                {
+                  to: '/' as const,
+                  label: 'Admin',
+                  icon: <ShieldUser className="size-6" />,
+                },
+              ]
+            : []),
+        ]
+      : []),
+  ]
 
   return (
-    <nav className="bg-secondary text-secondary-foreground m-1 flex h-12 items-center rounded-sm border-b px-4 shadow-lg md:px-6">
-      <ul className="flex items-center space-x-4 lg:space-x-6">
-        <li>
-          <Link to="/" className="mr-6 flex items-center">
-            <Home className="size-8" />
-          </Link>
-        </li>
+    <nav className="from-secondary to-secondary/90 border-secondary/20 m-2 flex h-14 items-center justify-between rounded-lg border bg-gradient-to-r px-4 shadow-lg backdrop-blur-sm md:px-6">
+      <div className="flex items-center">
+        <div className="hidden md:flex md:items-center md:space-x-2">
+          {links.map(({ to, label, icon }) => (
+            <Link
+              key={to}
+              to={to}
+              activeProps={{
+                className:
+                  'bg-secondary-foreground/15 text-secondary-foreground',
+              }}
+              className="hover:bg-secondary-foreground/10 text-muted-foreground flex items-center gap-2 rounded-md px-3 py-1.5 text-xl font-medium transition-all"
+            >
+              {icon}
+              {label}
+            </Link>
+          ))}
+        </div>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild className="ml-2 md:hidden">
+            <Menu className="size-8" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="w-48">
+            {links.map(({ to, label, icon }, index) => (
+              <Fragment key={to}>
+                {index > 0 && <DropdownMenuSeparator />}
+                <DropdownMenuItem asChild>
+                  <Link to={to} className="flex items-center gap-2">
+                    {icon}
+                    {label}
+                  </Link>
+                </DropdownMenuItem>
+              </Fragment>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      <div className="flex items-center gap-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
-              <Menu className="size-8" />
+            <Button variant="ghost" size="icon" className="rounded-full">
+              <TanStackIcon className="size-8" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent align="end">
             {[
               {
                 href: 'https://tanstack.com/',
-                icon: <TanStackIcon className="size-5" />,
+                icon: <TanStackIcon className="size-4" />,
                 label: 'TanStack',
               },
               {
                 href: 'https://ui.shadcn.com/',
-                icon: <ShadcnIcon className="size-5" />,
+                icon: <ShadcnIcon className="size-4" />,
                 label: 'Shadcn UI',
               },
               {
                 href: 'https://better-auth.com/',
-                icon: <BetterAuthIcon className="size-5" />,
+                icon: <BetterAuthIcon className="size-4" />,
                 label: 'Better Auth',
               },
               {
                 href: 'https://orm.drizzle.team/',
-                icon: <DrizzleIcon className="size-5" />,
+                icon: <DrizzleIcon className="size-4" />,
                 label: 'Drizzle ORM',
               },
             ].map(({ href, icon, label }) => (
               <DropdownMenuItem key={href} asChild>
-                <a href={href} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
                   {icon}
-                  {label}
+                  <span>{label}</span>
                 </a>
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        {links.map(({ to, label, icon }) => (
-          <li key={to}>
-            <Link
-              to={to}
-              activeProps={{
-                className: 'text-secondary-foreground',
-              }}
-              className="hover:text-secondary-foreground text-muted-foreground flex items-center gap-2 text-2xl font-medium transition-colors"
-            >
-              {icon}
-              {label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <div className="ml-auto flex items-center space-x-4">
-        <span className="mx-4">{user ? user.name : 'Guest'}</span>
+
         <ThemeToggle />
-        <Suspense fallback={<Loader2 className="size-9 animate-spin" />}>
+
+        <Suspense fallback={<Loader2 className="size-5 animate-spin" />}>
           <UserMenu />
         </Suspense>
       </div>
