@@ -21,30 +21,30 @@ A starter template featuring:
    - For Discord provider (optional), add `DISCORD_CLIENT_ID` and `DISCORD_CLIENT_SECRET`
 3. Configure `VITE_BASE_URL` if needed
 4. Setup PostgreSQL database (or use the provided Docker compose file)
-5. Update `DATABASE_URL` with your database credentials
+5. Update `DATABASE_URL` with your database credentials (already setup for Docker)
 
 ## Quick Start
 
 Push the database schema:
 
 ```bash
-npm run db:push
+npm run db push
 # or
-yarn db:push
+yarn db push
 # or
-pnpm db:push
+pnpm db push
 # or
-bun db:push
+bun db push
 ```
 
-Start the development server:
+Start the development server
 
 ```bash
-npm run db:push
+npm run dev
 # or
-yarn db:push
+yarn dev
 # or
-pnpm db:push
+pnpm dev
 # or
-bun db:push
+bun dev
 ```
