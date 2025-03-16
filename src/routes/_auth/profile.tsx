@@ -24,8 +24,8 @@ function Profile() {
   }
 
   return (
-    <div className="container mx-auto py-10">
-      <div className="relative mb-12 flex flex-col items-center">
+    <div className="container mx-auto">
+      <div className="relative mb-8 flex flex-col items-center">
         <Avatar className="border-background size-32 border-4 text-3xl shadow-xl">
           <AvatarImage src={user.image ?? undefined} alt={user.name} />
           <AvatarFallback className="from-primary to-secondary bg-gradient-to-br text-white uppercase">
