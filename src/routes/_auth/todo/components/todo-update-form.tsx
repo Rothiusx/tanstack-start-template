@@ -52,9 +52,6 @@ export function TodoUpdateForm({
         replace: true,
       })
     },
-    onError: ({ result: { message } }) => {
-      toast.error(message)
-    },
   })
 
   return (

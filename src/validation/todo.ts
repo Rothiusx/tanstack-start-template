@@ -1,6 +1,12 @@
-import { todo } from '@/db/schema/todo'
-import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
+import { todo } from '@/db/schema'
+import { createSchemaFactory } from 'drizzle-zod'
 import { z } from 'zod'
+
+const { createInsertSchema, createSelectSchema } = createSchemaFactory({
+  coerce: {
+    number: true,
+  },
+})
 
 /**
  * ! Schema for inserting a todo
@@ -22,14 +28,24 @@ export type TodoInsert = z.infer<typeof todoInsertSchema>
 /**
  * ! Schema for selecting a todo
  */
-export const todoSelectSchema = createSelectSchema(todo)
+export const todoSelectSchema = createSelectSchema(todo, {
+  id: (schema) =>
+    schema
+      .int({ message: 'Id must be a whole number' })
+      .positive({ message: 'Id must be positive' })
+      .lte(100000, { message: 'Id number is out of range' }),
+})
 export type TodoSelect = z.infer<typeof todoSelectSchema>
 
 /**
  * ! Schema for updating a todo
  */
 export const todoUpdateSchema = createInsertSchema(todo, {
-  id: (schema) => schema.int().positive(),
+  id: (schema) =>
+    schema
+      .int({ message: 'Id must be a whole number' })
+      .positive({ message: 'Id must be positive' })
+      .lte(100000, { message: 'Id number is out of range' }),
 })
 export type TodoUpdate = z.infer<typeof todoUpdateSchema>
 

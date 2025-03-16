@@ -11,7 +11,7 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { Link } from '@tanstack/react-router'
 import { FileQuestion, Home, Search } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { z } from 'zod'
 
 const notFoundSchema = z.object({
@@ -26,7 +26,7 @@ export function NotFound({
 }: NotFoundRouteProps & { children?: React.ReactNode }) {
   const [message, setMessage] = useState('')
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const result = notFoundSchema.safeParse(data)
     if (result.success) {
       setMessage(result.data.data.message)

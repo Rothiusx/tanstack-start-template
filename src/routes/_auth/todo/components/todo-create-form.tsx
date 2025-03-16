@@ -52,9 +52,6 @@ export function TodoCreateForm() {
       navigate({ to: '/todo' })
       queryClient.invalidateQueries(getTodosOptions())
     },
-    onError: ({ result: { message } }) => {
-      toast.error(message)
-    },
   })
 
   return (

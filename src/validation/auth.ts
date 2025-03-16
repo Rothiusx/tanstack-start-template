@@ -1,4 +1,4 @@
-import { user } from '@/db/schema/auth'
+import { user } from '@/db/schema'
 import { createSchemaFactory } from 'drizzle-zod'
 import { z } from 'zod'
 

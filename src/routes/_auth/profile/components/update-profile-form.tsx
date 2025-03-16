@@ -55,12 +55,11 @@ export function EditProfileForm({ user }: { user: User }) {
       })
       toast.success(message)
     },
-    onError: ({ result: { message } }) => {
+    onError: ({ result }) => {
       setMessage({
-        message,
+        message: result?.message ?? 'Something went wrong',
         variant: 'error',
       })
-      toast.error(message)
     },
   })
 

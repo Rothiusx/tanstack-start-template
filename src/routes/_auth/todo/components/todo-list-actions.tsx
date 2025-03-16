@@ -32,9 +32,6 @@ export function TodoListActions({
       toast.success(message)
       queryClient.invalidateQueries()
     },
-    onError: ({ result: { message } }) => {
-      toast.error(message)
-    },
   })
 
   const disabled = isPending || todo.userId !== user?.id
@@ -66,8 +63,8 @@ export function TodoListActions({
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete a user
-              from the database.
+              This action cannot be undone. This will permanently delete a TODO{' '}
+              {todo.title} from the database.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

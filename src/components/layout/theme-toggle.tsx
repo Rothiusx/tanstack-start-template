@@ -6,35 +6,24 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Moon, Sun } from 'lucide-react'
-
-function setTheme(theme: 'light' | 'dark' | 'system') {
-  localStorage.setItem('theme', theme)
-  const root = document.documentElement
-  root.classList.remove('light', 'dark')
-
-  if (theme === 'system') {
-    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    root.classList.add(isDark ? 'dark' : 'light')
-  } else {
-    root.classList.add(theme)
-  }
-}
+import { useTheme } from 'next-themes'
 
 // function setTheme(theme: 'light' | 'dark' | 'system') {
-//   if (
-//     document.documentElement.classList.contains('dark') ??
-//     (!('theme' in localStorage) &&
-//       window.matchMedia('(prefers-color-scheme: dark)').matches)
-//   ) {
-//     document.documentElement.classList.remove('dark')
-//     localStorage.theme = 'light'
+//   localStorage.setItem('theme', theme)
+//   const root = document.documentElement
+//   root.classList.remove('light', 'dark')
+
+//   if (theme === 'system') {
+//     const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+//     root.classList.add(isDark ? 'dark' : 'light')
 //   } else {
-//     document.documentElement.classList.add('dark')
-//     localStorage.theme = 'dark'
+//     root.classList.add(theme)
 //   }
 // }
 
 export function ThemeToggle() {
+  const { setTheme } = useTheme()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

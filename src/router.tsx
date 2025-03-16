@@ -1,22 +1,54 @@
 import { routeTree } from '@/routeTree.gen'
-import { QueryClient } from '@tanstack/react-query'
+import {
+  MutationCache,
+  notifyManager,
+  QueryClient,
+} from '@tanstack/react-query'
 import { createRouter as createTanstackRouter } from '@tanstack/react-router'
 import { routerWithQueryClient } from '@tanstack/react-router-with-query'
+import { toast } from 'sonner'
+import superjson from 'superjson'
 import { DefaultErrorBoundary } from './components/layout/default-error-boundary'
 import { LoadingScreen } from './components/layout/loading-screen'
 import { NotFound } from './components/layout/not-found'
-import '@/styles.css'
 
-// Create a new router instance
+// Function to create a new router instance
 export function createRouter() {
+  // Check if we're running in a browser environment
+  if (typeof document !== 'undefined') {
+    notifyManager.setScheduler(window.requestAnimationFrame)
+  }
+
   // Create a new query client inside the router
   const queryClient = new QueryClient({
     defaultOptions: {
+      dehydrate: {
+        serializeData: superjson.serialize,
+      },
+      hydrate: {
+        deserializeData: superjson.deserialize,
+      },
       queries: {
-        staleTime: 1000 * 60,
+        staleTime: 1000 * 10,
       },
     },
+    mutationCache: new MutationCache({
+      onSettled: () => {
+        if (!queryClient.isFetching() || !queryClient.isMutating()) {
+          queryClient.invalidateQueries()
+        }
+      },
+      onError: (error) => {
+        if (error.result?.message) {
+          toast.error(error.result.message)
+        } else if (error.message) {
+          toast.error(error.message)
+        }
+      },
+    }),
   })
+
+  // Return a router instance with the query client
   return routerWithQueryClient(
     createTanstackRouter({
       routeTree,
@@ -27,7 +59,6 @@ export function createRouter() {
       scrollRestoration: true,
       defaultStructuralSharing: true,
       defaultPreload: 'intent',
-      defaultPreloadStaleTime: 0,
       defaultPendingComponent: () => <LoadingScreen />,
       defaultNotFoundComponent: (props) => <NotFound {...props} />,
       defaultErrorComponent: (props) => <DefaultErrorBoundary {...props} />,
@@ -40,15 +71,11 @@ export function createRouter() {
 declare module '@tanstack/react-query' {
   interface Register {
     defaultError: {
-      result: {
+      message?: string
+      result?: {
         message?: string
       }
-      context: unknown
-    }
-  }
-  interface StaticDataRouteOption {
-    data: {
-      message?: string
+      context?: unknown
     }
   }
 }

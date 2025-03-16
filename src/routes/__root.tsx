@@ -6,7 +6,6 @@ import { NavBar } from '@/components/layout/nav-bar'
 import { NotFound } from '@/components/layout/not-found'
 import { getUserOptions } from '@/server/auth'
 import styles from '@/styles.css?url'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import {
   createRootRouteWithContext,
   HeadContent,
@@ -14,8 +13,27 @@ import {
   ScriptOnce,
   Scripts,
 } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+import { ThemeProvider } from 'next-themes'
+import { lazy, Suspense } from 'react'
 import { Toaster } from 'sonner'
+
+// Lazy load devtools in development mode
+const TanStackRouterDevtools = import.meta.env.DEV
+  ? lazy(() =>
+      import('@tanstack/react-router-devtools').then((res) => ({
+        default: res.TanStackRouterDevtools,
+      })),
+    )
+  : () => null
+
+// Lazy load React Query devtools in development mode
+const ReactQueryDevtools = import.meta.env.DEV
+  ? lazy(() =>
+      import('@tanstack/react-query-devtools').then((res) => ({
+        default: res.ReactQueryDevtools,
+      })),
+    )
+  : () => null
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient
@@ -79,23 +97,27 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         className="text-foreground from-background to-muted/30 flex min-h-screen flex-col bg-gradient-to-b antialiased"
         suppressHydrationWarning
       >
-        <ScriptOnce>
+        {/* <ScriptOnce>
           {`document.documentElement.classList.toggle(
             'dark',
             localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
             )`}
-        </ScriptOnce>
+        </ScriptOnce> */}
 
-        <header>
-          <NavBar />
-        </header>
+        <ThemeProvider attribute="class" enableColorScheme enableSystem>
+          <header>
+            <NavBar />
+          </header>
 
-        <main className="flex flex-col p-8">{children}</main>
+          <main className="flex flex-col p-8">{children}</main>
 
-        <Toaster richColors />
+          <Toaster richColors />
+        </ThemeProvider>
 
-        <ReactQueryDevtools />
-        <TanStackRouterDevtools />
+        <Suspense>
+          <ReactQueryDevtools />
+          <TanStackRouterDevtools />
+        </Suspense>
 
         <Scripts />
       </body>

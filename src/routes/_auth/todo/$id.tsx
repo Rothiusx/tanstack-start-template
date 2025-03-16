@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { getTodoOptions, getTodosOptions } from '@/server/todo'
+import { todoSelectSchema } from '@/validation/todo'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link, redirect } from '@tanstack/react-router'
 import { ArrowLeft, Edit } from 'lucide-react'
@@ -17,13 +18,7 @@ import { TodoUpdateForm } from './components/todo-update-form'
 import { TodoView } from './components/todo-view'
 
 export const Route = createFileRoute('/_auth/todo/$id')({
-  params: z.object({
-    id: z.coerce
-      .number({ message: 'Id must be a number' })
-      .int({ message: 'Id must be a whole number' })
-      .positive({ message: 'Id must be positive' })
-      .lte(100000, { message: 'Id number is out of range' }),
-  }),
+  params: todoSelectSchema.pick({ id: true }),
   validateSearch: z.object({
     edit: z.boolean().default(false),
   }),
