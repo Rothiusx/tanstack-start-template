@@ -34,7 +34,7 @@ function Todo() {
           <ClipboardList className="text-primary size-9" />
           Task Manager
         </h1>
-        <p className="text-muted-foreground max-w-2xl text-lg">
+        <p className="text-muted-foreground text-lg">
           Your personal productivity hub. Organize, prioritize, and accomplish
           your goals with ease.
         </p>
