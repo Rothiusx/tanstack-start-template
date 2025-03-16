@@ -30,7 +30,7 @@ function Home() {
         <div className="space-y-4">
           <h1 className="text-3xl font-bold tracking-tight sm:text-6xl md:text-7xl">
             <FlipWords
-              className="from-primary to-primary/70 xl-[800px] w-[400px] bg-gradient-to-r bg-clip-text text-center text-4xl font-semibold tracking-tight text-transparent md:text-5xl lg:w-[600px] lg:text-5xl 2xl:w-[1000px]"
+              className="xl-[800px] w-[400px] text-center text-4xl font-semibold tracking-tight md:text-5xl lg:w-[600px] lg:text-5xl 2xl:w-[1000px]"
               words={[
                 'Build faster with our platform',
                 'Create better with our tools',

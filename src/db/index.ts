@@ -1,5 +1,4 @@
-import env from '@/env'
 import { neonDb } from './neon'
 import { postgresDb } from './postgres'
 
-export const db = env.NODE_ENV === 'production' ? neonDb : postgresDb
+export const db = import.meta.env.PROD ? neonDb : postgresDb

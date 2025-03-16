@@ -1,6 +1,5 @@
 import { db } from '@/db'
 import { todo } from '@/db/schema'
-import env from '@/env'
 import { sleep } from '@/lib/utils'
 import { authMiddleware } from '@/middleware/auth'
 import {
