@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "start": "vinxi start",
-    "build": "vinxi build",
+    "build": "vinxi build --preset vercel",
     "serve": "vite preview",
     "test": "vitest run",
     "dev": "vinxi dev",
