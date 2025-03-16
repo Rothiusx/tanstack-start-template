@@ -20,7 +20,8 @@ A starter template featuring:
    - Add the key as `BETTER_AUTH_SECRET` in your `.env` file
    - For Discord provider (optional), add `DISCORD_CLIENT_ID` and `DISCORD_CLIENT_SECRET`
 3. Configure `VITE_BASE_URL` if needed
-4. Update `DATABASE_URL` with your database credentials (or use the provided Docker compose file)
+4. Setup PostgreSQL database (or use the provided Docker compose file)
+5. Update `DATABASE_URL` with your database credentials
 
 ## Quick Start
 
