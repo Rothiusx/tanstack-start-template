@@ -54,7 +54,7 @@ export function SignUp() {
   const watch = useWatch({ control: form.control })
 
   return (
-    <Card className="z-50 max-w-md rounded-xl">
+    <Card>
       <CardHeader>
         <CardTitle className="text-lg md:text-xl">Sign Up</CardTitle>
         <CardDescription className="text-xs md:text-sm">

@@ -14,8 +14,8 @@ export const Route = createFileRoute('/login')({
 
 function Login() {
   return (
-    <section className="mx-auto mt-[8vh]">
-      <Tabs defaultValue="sign-in" className="w-[400px]">
+    <section className="container mx-auto mt-[8vh] max-w-md">
+      <Tabs defaultValue="sign-in">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="sign-in">Sign In</TabsTrigger>
           <TabsTrigger value="sign-up">Sign Up</TabsTrigger>
