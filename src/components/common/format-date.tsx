@@ -21,5 +21,13 @@ export function FormatDate({ date }: { date: Date | string | number }) {
     }
   }, [displayDate, date, language])
 
-  return <span suppressHydrationWarning>{displayDate}</span>
+  return (
+    <span suppressHydrationWarning>
+      {displayDate ||
+        new Date(date).toLocaleString(language, {
+          dateStyle: 'medium',
+          timeStyle: 'short',
+        })}
+    </span>
+  )
 }
