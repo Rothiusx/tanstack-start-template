@@ -13,7 +13,7 @@ export function FormatDate({ date }: { date: Date | string | number }) {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setDisplayDate(
-        new Date(date).toLocaleDateString(language || getBrowserLocale(), {
+        new Date(date).toLocaleString(language || getBrowserLocale(), {
           dateStyle: 'medium',
           timeStyle: 'short',
         }),
