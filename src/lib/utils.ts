@@ -44,17 +44,7 @@ export function getLocale() {
  * @returns The formatted date string
  */
 export function formatDate(date: Date | string | number) {
-  if (typeof document === 'undefined') {
-    return date
-  }
-
-  return new Date(date).toISOString()
-
   const locale = getLocale()
 
-  return new Intl.DateTimeFormat(locale, {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-    timeZone: 'UTC',
-  }).format(new Date(date))
+  return locale
 }
