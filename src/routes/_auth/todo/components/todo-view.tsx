@@ -1,15 +1,10 @@
 import type { getTodo } from '@/server/todo'
+import { FormatDate } from '@/components/common/format-date'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { formatDate } from '@/lib/utils'
 import { CalendarDays, CheckCircle2, Clock, XCircle } from 'lucide-react'
 import { TodoProjectLabel } from './todo-project-label'
-
-// Component to handle date display with suppressed hydration warnings
-function DateDisplay({ date }: { date: Date | string | number }) {
-  return <span suppressHydrationWarning>{formatDate(date)}</span>
-}
 
 export function TodoView({
   todo,
@@ -86,14 +81,14 @@ export function TodoView({
         <div className="text-muted-foreground flex items-center">
           <CalendarDays className="mr-2 h-5 w-5" />
           <span>
-            Created: <DateDisplay date={todo.createdAt} />
+            Created: <FormatDate date={todo.createdAt} />
           </span>
         </div>
 
         <div className="text-muted-foreground flex items-center">
           <Clock className="mr-2 h-5 w-5" />
           <span>
-            Updated: <DateDisplay date={todo.updatedAt} />
+            Updated: <FormatDate date={todo.updatedAt} />
           </span>
         </div>
       </div>
