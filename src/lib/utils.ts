@@ -35,23 +35,16 @@ export function getLocale() {
 }
 
 /**
- * Format a date to a string based on the locale
+ * Format a date to a string based on the locale or use UTC in SSR
  * @param date - The date to format
  * @returns The formatted date string
  */
 export function formatDate(date: Date | string | number) {
   const locale = getLocale()
 
-  try {
-    return new Intl.DateTimeFormat(locale, {
-      dateStyle: 'medium',
-      timeStyle: 'short',
-    }).format(new Date(date))
-  } catch (error) {
-    return new Intl.DateTimeFormat(locale, {
-      dateStyle: 'medium',
-      timeStyle: 'short',
-      timeZone: 'UTC',
-    }).format(new Date(date))
-  }
+  return new Intl.DateTimeFormat(locale, {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+    timeZone: typeof window !== 'undefined' ? undefined : 'UTC',
+  }).format(new Date(date))
 }
