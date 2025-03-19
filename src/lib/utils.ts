@@ -44,6 +44,10 @@ export function getLocale() {
  * @returns The formatted date string
  */
 export function formatDate(date: Date | string | number) {
+  if (typeof document === 'undefined') {
+    return date
+  }
+
   const locale = getLocale()
 
   return new Intl.DateTimeFormat(locale, {
