@@ -11,14 +11,14 @@ export function FormatDate({ date }: { date: Date | string | number }) {
   const [displayDate, setDisplayDate] = useState<string>('')
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setDisplayDate(
-        new Date(date).toLocaleString(language || getBrowserLocale(), {
-          dateStyle: 'medium',
-          timeStyle: 'short',
-        }),
-      )
-    }
+    // if (typeof window !== 'undefined') {
+    setDisplayDate(
+      new Date(date).toLocaleString(language || getBrowserLocale(), {
+        dateStyle: 'medium',
+        timeStyle: 'short',
+      }),
+    )
+    // }
   }, [displayDate, date, language])
 
   return (
