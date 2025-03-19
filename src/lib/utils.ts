@@ -32,7 +32,7 @@ export function getLocale() {
     select: ({ user }) => user?.language,
   })
 
-  return language ?? getBrowserLocale()
+  return language
 }
 
 /**
@@ -41,10 +41,11 @@ export function getLocale() {
  * @returns The formatted date string
  */
 export function formatDate(date: Date | string | number) {
-  const locale = getLocale()
+  const locale = getLocale() ?? 'en-US'
 
   return new Intl.DateTimeFormat(locale, {
     dateStyle: 'medium',
     timeStyle: 'short',
+    timeZone: 'UTC',
   }).format(new Date(date))
 }
