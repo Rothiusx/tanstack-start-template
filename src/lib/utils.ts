@@ -31,7 +31,7 @@ export function getLocale() {
     select: ({ user }) => user?.language,
   })
 
-  return language ?? getBrowserLocale()
+  return language
 }
 
 /**
