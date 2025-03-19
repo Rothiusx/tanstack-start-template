@@ -27,6 +27,7 @@ export function FormatDate({ date }: { date: Date | string | number }) {
         new Date(date).toLocaleString(language, {
           dateStyle: 'medium',
           timeStyle: 'short',
+          timeZone: 'UTC',
         })}
     </span>
   )
