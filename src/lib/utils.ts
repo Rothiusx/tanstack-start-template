@@ -1,6 +1,5 @@
-import type { ClassValue } from 'clsx'
 import { getRouteApi } from '@tanstack/react-router'
-import { getHeaders, getWebRequest } from '@tanstack/react-start/server'
+import type { ClassValue } from 'clsx'
 import { clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
