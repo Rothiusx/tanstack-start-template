@@ -48,7 +48,6 @@ export function formatDate(date: Date | string | number) {
       timeStyle: 'short',
     }).format(new Date(date))
   } catch (error) {
-    console.error(error)
     return new Intl.DateTimeFormat(locale, {
       dateStyle: 'medium',
       timeStyle: 'short',
