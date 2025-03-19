@@ -1,10 +1,14 @@
 import { useLocale } from '@/hooks/use-locale'
+import { useRouteContext } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 
 // Component to handle date display with proper hydration
 export function FormatDate({ date }: { date: Date | string | number }) {
   const [clientDate, setClientDate] = useState<string>(date.toString())
-  const language = useLocale()
+  const language = useRouteContext({
+    from: '__root__',
+    select: ({ user }) => user?.language,
+  })
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
