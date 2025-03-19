@@ -44,11 +44,11 @@ export function getLocale() {
  * @returns The formatted date string
  */
 export function formatDate(date: Date | string | number) {
-  return ''
-  // const locale = getLocale()
+  const locale = getLocale()
 
-  // return new Intl.DateTimeFormat(locale, {
-  //   dateStyle: 'medium',
-  //   timeStyle: 'short',
-  // }).format(new Date(date))
+  return new Intl.DateTimeFormat(locale, {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+    timeZone: 'UTC',
+  }).format(new Date(date))
 }
