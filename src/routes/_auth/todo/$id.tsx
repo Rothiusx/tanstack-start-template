@@ -1,3 +1,4 @@
+import { FormatDate } from '@/components/common/format-date'
 import { NotFound } from '@/components/common/not-found'
 import { Button } from '@/components/ui/button'
 import {
@@ -8,7 +9,6 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import { formatDate } from '@/lib/utils'
 import { getTodoOptions, getTodosOptions } from '@/server/todo'
 import { todoSelectSchema } from '@/validation/todo'
 import { useSuspenseQuery } from '@tanstack/react-query'
@@ -108,7 +108,7 @@ function TodoDetail() {
                 Todo #{todo.id}
               </span>
               <span className="text-muted-foreground">
-                Created on {formatDate(todo.createdAt)}
+                <FormatDate date={todo.createdAt} />
               </span>
             </CardDescription>
           </CardHeader>

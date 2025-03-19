@@ -1,10 +1,10 @@
 import type { getTodos } from '@/server/todo'
 import type { ColumnDef } from '@tanstack/react-table'
+import { FormatDate } from '@/components/common/format-date'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { DataTable } from '@/components/ui/data-table'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
-import { formatDate } from '@/lib/utils'
 import { getTodosOptions } from '@/server/todo'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { CircleCheckBig, CircleX } from 'lucide-react'
@@ -67,12 +67,14 @@ const columns: ColumnDef<Awaited<ReturnType<typeof getTodos>>[number]>[] = [
     ),
   },
   {
-    accessorFn: (row) => formatDate(row.createdAt),
+    accessorKey: 'createdAt',
     header: 'Created',
+    cell: ({ row }) => <FormatDate date={row.original.createdAt} />,
   },
   {
-    accessorFn: (row) => formatDate(row.updatedAt),
+    accessorKey: 'updatedAt',
     header: 'Updated',
+    cell: ({ row }) => <FormatDate date={row.original.updatedAt} />,
   },
   {
     id: 'actions',
