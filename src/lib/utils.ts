@@ -39,12 +39,15 @@ export function getLocale() {
  * @param date - The date to format
  * @returns The formatted date string
  */
-export function formatDate(date: Date | string | number) {
+export function formatDate(
+  date: Date | string | number,
+  timeZone: string = 'UTC',
+) {
   const locale = getLocale()
 
   return new Intl.DateTimeFormat(locale, {
     dateStyle: 'medium',
     timeStyle: 'short',
-    timeZone: 'UTC', // Always use UTC for consistent rendering
+    timeZone,
   }).format(new Date(date))
 }

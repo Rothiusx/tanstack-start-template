@@ -12,12 +12,14 @@ export function FormatDate({ date }: { date: Date | string | number }) {
   // After hydration is complete, we can update to client timezone if needed
   useEffect(() => {
     // Only run this code on the client after hydration
-    const clientFormattedDate = new Intl.DateTimeFormat(navigator.language, {
-      dateStyle: 'medium',
-      timeStyle: 'short',
-    }).format(new Date(date))
+    if (typeof window !== 'undefined') {
+      const clientFormattedDate = new Intl.DateTimeFormat(navigator.language, {
+        dateStyle: 'medium',
+        timeStyle: 'short',
+      }).format(new Date(date))
 
-    setClientDate(clientFormattedDate)
+      setClientDate(clientFormattedDate)
+    }
   }, [date])
 
   // This ensures we always render exactly what the server rendered initially
