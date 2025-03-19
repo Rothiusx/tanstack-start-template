@@ -35,7 +35,7 @@ export function getLocale() {
 }
 
 /**
- * Format a date to a string based on the locale or use UTC in SSR
+ * Format a date to a string based on the locale - always uses UTC
  * @param date - The date to format
  * @returns The formatted date string
  */
@@ -45,6 +45,6 @@ export function formatDate(date: Date | string | number) {
   return new Intl.DateTimeFormat(locale, {
     dateStyle: 'medium',
     timeStyle: 'short',
-    timeZone: typeof window !== 'undefined' ? undefined : 'UTC',
+    timeZone: 'UTC', // Always use UTC for consistent rendering
   }).format(new Date(date))
 }
