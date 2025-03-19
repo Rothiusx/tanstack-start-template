@@ -8,27 +8,22 @@ export function FormatDate({ date }: { date: Date | string | number }) {
     from: '__root__',
     select: ({ user }) => user?.language,
   })
-  const [displayDate, setDisplayDate] = useState<string>('')
+  const [displayDate, setDisplayDate] = useState<string>(
+    new Date(date).toLocaleString(language, {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+      timeZone: 'UTC',
+    }),
+  )
 
   useEffect(() => {
-    // if (typeof window !== 'undefined') {
     setDisplayDate(
       new Date(date).toLocaleString(language || getBrowserLocale(), {
         dateStyle: 'medium',
         timeStyle: 'short',
       }),
     )
-    // }
-  }, [displayDate, date, language])
+  }, [date, language])
 
-  return (
-    <span suppressHydrationWarning>
-      {displayDate ||
-        new Date(date).toLocaleString(language, {
-          dateStyle: 'medium',
-          timeStyle: 'short',
-          timeZone: 'UTC',
-        })}
-    </span>
-  )
+  return <span>{displayDate}</span>
 }
