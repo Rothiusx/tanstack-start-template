@@ -1,21 +1,25 @@
-import { formatDate, getBrowserLocale } from '@/lib/utils'
+import { getBrowserLocale } from '@/lib/utils'
 import { useRouteContext } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 
-// Component to handle date display with proper hydration
+// Component to handle date display with SSR and hydration
 export function FormatDate({ date }: { date: Date | string | number }) {
   const language = useRouteContext({
     from: '__root__',
     select: ({ user }) => user?.language,
   })
-  const [clientDate, setClientDate] = useState<string | null>(null)
+  const [displayDate, setDisplayDate] = useState<string>('')
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      console.log('clientFormattedDate', clientDate)
-      setClientDate(date.toLocaleString(language ?? getBrowserLocale()))
+      setDisplayDate(
+        new Date(date).toLocaleDateString(language || getBrowserLocale(), {
+          dateStyle: 'medium',
+          timeStyle: 'short',
+        }),
+      )
     }
-  }, [clientDate, date, language])
+  }, [displayDate, date, language])
 
-  return <span suppressHydrationWarning>{clientDate}</span>
+  return <span suppressHydrationWarning>{displayDate}</span>
 }
