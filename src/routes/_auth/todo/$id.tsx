@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
+import { formatDate } from '@/lib/utils'
 import { getTodoOptions, getTodosOptions } from '@/server/todo'
 import { todoSelectSchema } from '@/validation/todo'
 import { useSuspenseQuery } from '@tanstack/react-query'
@@ -107,12 +108,7 @@ function TodoDetail() {
                 Todo #{todo.id}
               </span>
               <span className="text-muted-foreground">
-                Created on{' '}
-                {new Date(todo.createdAt).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
+                Created on {formatDate(todo.createdAt)}
               </span>
             </CardDescription>
           </CardHeader>

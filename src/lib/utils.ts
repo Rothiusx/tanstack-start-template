@@ -18,7 +18,10 @@ export async function sleep(ms: number = 100, enabled: boolean = true) {
  * @returns The browser's locale string (e.g. 'en-US', 'cs-CZ')
  */
 export function getBrowserLocale() {
-  return navigator.languages?.[0] ?? navigator.language ?? 'en-US'
+  if (typeof navigator === 'undefined') {
+    return 'en-US'
+  }
+  return navigator.language || 'en-US'
 }
 
 /**
