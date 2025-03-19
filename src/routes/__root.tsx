@@ -68,13 +68,6 @@ export const Route = createRootRouteWithContext<{
       },
     ],
   }),
-  /**
-   * ! Should not be needed anymore since we're are creating the query client instance along with the router
-   */
-  // onEnter: ({ context }) => {
-  //   // Remove all queries when opening the page to avoid hydration errors
-  //   context.queryClient.removeQueries()
-  // },
   pendingComponent: () => <LoadingScreen />,
   errorComponent: (props) => <DefaultErrorBoundary {...props} />,
   notFoundComponent: (props) => <NotFound {...props} />,
@@ -87,12 +80,9 @@ export const Route = createRootRouteWithContext<{
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
-        {import.meta.env.DEV && (
-          <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
-        )}
       </head>
       <body
         className="text-foreground from-background to-muted/30 flex min-h-screen flex-col bg-gradient-to-b antialiased"
@@ -108,10 +98,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           <Toaster richColors />
         </ThemeProvider>
 
-        <Suspense>
-          <ReactQueryDevtools />
-          <TanStackRouterDevtools />
-        </Suspense>
+        {import.meta.env.DEV && (
+          <Suspense>
+            <ReactQueryDevtools />
+            <TanStackRouterDevtools />
+          </Suspense>
+        )}
 
         <Scripts />
       </body>

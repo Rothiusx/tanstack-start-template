@@ -1,7 +1,13 @@
 import { StartClient } from '@tanstack/react-start'
 import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
+import reportWebVitals from './reportWebVitals'
 import { createRouter } from './router'
+
+// Import development tools
+if (import.meta.env.DEV) {
+  import('react-scan').then(({ scan }) => scan({ enabled: true }))
+}
 
 const router = createRouter()
 
@@ -11,3 +17,5 @@ hydrateRoot(
     <StartClient router={router} />
   </StrictMode>,
 )
+
+reportWebVitals(console.log)
