@@ -8,9 +8,7 @@ export function FormatDate({ date }: { date: Date | string | number }) {
     from: '__root__',
     select: ({ user }) => user?.language,
   })
-  const [clientDate, setClientDate] = useState<string>(
-    date.toLocaleString(language),
-  )
+  const [clientDate, setClientDate] = useState<string | null>(null)
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
