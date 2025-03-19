@@ -1,5 +1,5 @@
-import { getRouteApi } from '@tanstack/react-router'
 import type { ClassValue } from 'clsx'
+import { getRouteApi } from '@tanstack/react-router'
 import { clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -31,7 +31,7 @@ export function getLocale() {
     select: ({ user }) => user?.language,
   })
 
-  return language
+  return language ?? getBrowserLocale()
 }
 
 /**
@@ -40,11 +40,11 @@ export function getLocale() {
  * @returns The formatted date string
  */
 export function formatDate(date: Date | string | number) {
-  const locale = getLocale() ?? 'en-US'
+  const locale = getLocale()
 
   return new Intl.DateTimeFormat(locale, {
     dateStyle: 'medium',
     timeStyle: 'short',
-    timeZone: 'UTC',
+    timeZone: typeof window !== 'undefined' ? undefined : 'UTC',
   }).format(new Date(date))
 }
