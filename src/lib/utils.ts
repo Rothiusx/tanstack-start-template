@@ -48,6 +48,8 @@ export function formatDate(date: Date | string | number) {
     return date
   }
 
+  return new Date(date).toISOString()
+
   const locale = getLocale()
 
   return new Intl.DateTimeFormat(locale, {
