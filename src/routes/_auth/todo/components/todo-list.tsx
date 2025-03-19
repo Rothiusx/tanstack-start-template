@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { DataTable } from '@/components/ui/data-table'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import { formatDate } from '@/lib/utils'
 import { getTodosOptions } from '@/server/todo'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { CircleCheckBig, CircleX } from 'lucide-react'
@@ -66,13 +67,13 @@ const columns: ColumnDef<Awaited<ReturnType<typeof getTodos>>[number]>[] = [
     ),
   },
   {
-    // accessorFn: (row) => formatDate(row.createdAt),
-    accessorFn: (row) => row.createdAt.toLocaleDateString(),
+    accessorFn: (row) => formatDate(row.createdAt),
+    // accessorFn: (row) => row.createdAt.toLocaleDateString(),
     header: 'Created',
   },
   {
-    // accessorFn: (row) => formatDate(row.updatedAt),
-    accessorFn: (row) => row.updatedAt.toLocaleDateString(),
+    accessorFn: (row) => formatDate(row.updatedAt),
+    // accessorFn: (row) => row.updatedAt.toLocaleDateString(),
     header: 'Updated',
   },
   {
