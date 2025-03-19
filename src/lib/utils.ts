@@ -31,7 +31,7 @@ export function getLocale() {
     select: ({ user }) => user?.language,
   })
 
-  return language
+  return language ?? getBrowserLocale()
 }
 
 /**
@@ -42,5 +42,8 @@ export function getLocale() {
 export function formatDate(date: Date | string | number) {
   const locale = getLocale()
 
-  return locale
+  return new Intl.DateTimeFormat(locale, {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(new Date(date))
 }

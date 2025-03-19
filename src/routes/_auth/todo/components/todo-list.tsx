@@ -68,12 +68,10 @@ const columns: ColumnDef<Awaited<ReturnType<typeof getTodos>>[number]>[] = [
   },
   {
     accessorFn: (row) => formatDate(row.createdAt),
-    // accessorFn: (row) => row.createdAt.toLocaleDateString(),
     header: 'Created',
   },
   {
     accessorFn: (row) => formatDate(row.updatedAt),
-    // accessorFn: (row) => row.updatedAt.toLocaleDateString(),
     header: 'Updated',
   },
   {
