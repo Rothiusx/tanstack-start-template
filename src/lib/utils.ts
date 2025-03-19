@@ -44,9 +44,20 @@ export function getLocale() {
  */
 export function formatDate(date: Date | string | number) {
   const locale = getLocale()
+  const dateObj = new Date(date)
 
-  return new Intl.DateTimeFormat(locale, {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-  }).format(new Date(date))
+  // Use a more SSR-friendly approach
+  try {
+    return new Intl.DateTimeFormat(locale, {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    }).format(dateObj)
+  } catch (error) {
+    // Fallback for SSR or errors
+    console.error('Date formatting error:', error)
+    return dateObj.toLocaleString('en-US', {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    })
+  }
 }
