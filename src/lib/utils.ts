@@ -42,9 +42,17 @@ export function getLocale() {
 export function formatDate(date: Date | string | number) {
   const locale = getLocale()
 
-  return new Intl.DateTimeFormat(locale, {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-    timeZone: typeof window !== 'undefined' ? undefined : 'UTC',
-  }).format(new Date(date))
+  try {
+    return new Intl.DateTimeFormat(locale, {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    }).format(new Date(date))
+  } catch (error) {
+    console.error(error)
+    return new Intl.DateTimeFormat(locale, {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+      timeZone: 'UTC',
+    }).format(new Date(date))
+  }
 }
