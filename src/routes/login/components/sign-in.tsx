@@ -22,6 +22,7 @@ import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/ui/password-input'
 import { signIn } from '@/lib/auth/client'
 import { cn } from '@/lib/utils'
+import { getUserOptions } from '@/server/auth'
 import { signInSchema } from '@/validation/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQueryClient } from '@tanstack/react-query'
@@ -70,9 +71,7 @@ export default function SignIn() {
                     },
                     onSuccess: async () => {
                       toast.success('Login successful')
-                      await queryClient.invalidateQueries({
-                        queryKey: ['user'],
-                      })
+                      await queryClient.invalidateQueries(getUserOptions())
                     },
                   },
                 })

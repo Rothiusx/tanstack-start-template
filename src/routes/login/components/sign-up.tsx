@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/ui/password-input'
-import { signUp } from '@/lib/auth/client'
+import { isAuthClientError, signUp } from '@/lib/auth/client'
 import { getUserOptions } from '@/server/auth'
 import { signUpSchema } from '@/validation/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -66,8 +66,8 @@ export function SignUp() {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(
-                async ({ email, password, firstName, lastName, image }) =>
-                  signUp.email({
+                async ({ email, password, firstName, lastName, image }) => {
+                  await signUp.email({
                     email,
                     password,
                     name: `${firstName} ${lastName}`,
@@ -80,10 +80,19 @@ export function SignUp() {
                         navigate({ to: '/todo' })
                       },
                       onError: ({ error }) => {
+                        console.log(error)
+                        if (
+                          isAuthClientError(error.code, 'USER_ALREADY_EXISTS')
+                        ) {
+                          form.setError('email', {
+                            message: error.message,
+                          })
+                        }
                         toast.error(error.message)
                       },
                     },
-                  }),
+                  })
+                },
               )}
               className="space-y-8"
             >

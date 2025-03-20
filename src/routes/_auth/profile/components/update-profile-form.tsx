@@ -63,6 +63,8 @@ export function EditProfileForm({ user }: { user: User }) {
     },
   })
 
+  console.log(form.getValues('language'))
+
   return (
     <Form {...form}>
       <form
@@ -133,7 +135,7 @@ export function EditProfileForm({ user }: { user: User }) {
               <Select
                 key={field.value}
                 onValueChange={field.onChange}
-                defaultValue={field.value ?? undefined}
+                defaultValue={field.value ?? 'undefined'}
               >
                 <FormControl>
                   <SelectTrigger>

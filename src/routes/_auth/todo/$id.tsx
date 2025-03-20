@@ -51,7 +51,6 @@ export const Route = createFileRoute('/_auth/todo/$id')({
       <TodoNotFound />
     </NotFound>
   ),
-  // errorComponent: (error) => <DefaultErrorBoundary {...error} />,
   component: TodoDetail,
 })
 

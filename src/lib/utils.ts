@@ -14,11 +14,14 @@ export async function sleep(ms: number = 100, enabled: boolean = true) {
 }
 
 /**
- * Get the browser's locale
+ * Get the browser's locale with fallback to 'en-US'
  * @returns The browser's locale string (e.g. 'en-US', 'cs-CZ')
  */
 export function getBrowserLocale() {
-  return navigator.languages?.[0] ?? navigator.language ?? 'en-US'
+  if (typeof window !== 'undefined') {
+    return navigator.languages?.[0] ?? navigator.language ?? 'en-US'
+  }
+  return 'en-US'
 }
 
 /**

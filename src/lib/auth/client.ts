@@ -8,3 +8,13 @@ export const authClient = createAuthClient({
 })
 
 export const { signIn, signOut, signUp } = authClient
+
+/**
+ * Helper function to check if an error code matches a specific error code string
+ */
+export function isAuthClientError(
+  code: unknown,
+  expectedCode: keyof typeof authClient.$ERROR_CODES,
+): boolean {
+  return typeof code === 'string' && code === expectedCode
+}

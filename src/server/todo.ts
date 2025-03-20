@@ -58,7 +58,6 @@ export const getTodo = createServerFn({ method: 'GET' })
   .middleware([authMiddleware])
   .validator(todoSelectSchema.pick({ id: true }))
   .handler(async ({ data, context }) => {
-    // try {
     const result = await db.query.todo.findFirst({
       where: and(
         eq(todo.id, data.id),
@@ -85,12 +84,6 @@ export const getTodo = createServerFn({ method: 'GET' })
     }
 
     return result
-    // } catch (error) {
-    //   console.error(error)
-    //   throw error instanceof DrizzleError
-    //     ? error
-    //     : new Error('Failed to get todo')
-    // }
   })
 
 export function getTodoOptions(id: Awaited<ReturnType<typeof getTodo>>['id']) {
