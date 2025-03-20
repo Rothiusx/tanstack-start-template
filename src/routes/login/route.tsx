@@ -15,6 +15,9 @@ export const Route = createFileRoute('/login')({
       throw redirect({ to: '/' })
     }
   },
+  onError: () => {
+    throw redirect({ to: '/login' })
+  },
   head: () => ({
     meta: [{ title: 'Sign In' }],
   }),

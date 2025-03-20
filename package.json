@@ -1,6 +1,6 @@
 {
   "name": "tanstack-start-template",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "type": "module",
   "scripts": {
     "start": "vinxi start",
@@ -65,12 +65,12 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.10.1",
-    "@eslint-react/eslint-plugin": "^1.36.1",
+    "@eslint-react/eslint-plugin": "^1.37.0",
     "@tailwindcss/vite": "^4.0.14",
     "@tanstack/eslint-plugin-query": "^5.68.0",
     "@tanstack/eslint-plugin-router": "^1.114.12",
     "@types/pg": "^8.11.11",
-    "@types/react": "^19.0.11",
+    "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
     "babel-plugin-react-compiler": "latest",

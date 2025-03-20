@@ -38,6 +38,9 @@ export const Route = createFileRoute('/_auth/todo/$id')({
 
     return { title: todo.title }
   },
+  onError: () => {
+    throw redirect({ to: '/todo' })
+  },
   head: ({ loaderData: { title } }) => ({
     meta: [
       {
