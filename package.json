@@ -1,6 +1,6 @@
 {
   "name": "tanstack-start-template",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "type": "module",
   "scripts": {
     "start": "vinxi start",
@@ -8,8 +8,7 @@
     "serve": "vite preview",
     "test": "vitest run",
     "dev": "vinxi dev",
-    "tsc": "tsc",
-    "lint": "eslint .",
+    "lint": "tsc &&eslint .",
     "lint:fix": "eslint . --fix",
     "db": "drizzle-kit",
     "auth": "bunx --bun @better-auth/cli@latest",

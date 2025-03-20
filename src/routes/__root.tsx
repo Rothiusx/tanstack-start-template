@@ -80,10 +80,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body
-        className="text-foreground from-background to-muted/30 flex min-h-screen flex-col bg-gradient-to-b antialiased"
-        suppressHydrationWarning
-      >
+      <body className="text-foreground from-background to-muted/30 flex min-h-screen flex-col bg-gradient-to-b antialiased">
         <ThemeProvider attribute="class" enableColorScheme enableSystem>
           <header>
             <NavBar />
