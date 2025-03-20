@@ -47,7 +47,7 @@ export function NavBar() {
   ]
 
   return (
-    <nav className="from-secondary to-secondary/90 border-secondary/20 m-2 flex h-14 items-center justify-between rounded-lg border bg-gradient-to-r px-4 shadow-lg backdrop-blur-sm md:px-6">
+    <nav className="from-secondary to-secondary/90 border-secondary/20 m-2 mb-0 flex h-14 items-center justify-between rounded-lg border bg-gradient-to-r px-4 shadow-lg backdrop-blur-xs md:px-6">
       <div className="flex items-center">
         <div className="hidden md:flex md:items-center md:space-x-2">
           {links.map(({ to, label, icon }) => (

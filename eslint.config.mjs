@@ -5,7 +5,7 @@ import drizzle from 'eslint-plugin-drizzle'
 import prettier from 'eslint-plugin-prettier/recommended'
 import compiler from 'eslint-plugin-react-compiler'
 
-const config = antfu(
+export default antfu(
   {
     formatters: {
       css: 'prettier',
@@ -87,5 +87,3 @@ const config = antfu(
     ...prettier,
   },
 )
-
-export default config

@@ -82,7 +82,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="text-foreground from-background to-muted/30 flex min-h-screen flex-col bg-gradient-to-b antialiased">
         <ThemeProvider attribute="class" enableColorScheme enableSystem>
-          <header>
+          <header className="sticky top-0 z-50">
             <NavBar />
           </header>
 
