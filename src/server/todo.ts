@@ -1,5 +1,6 @@
 import { db } from '@/db'
 import { todo } from '@/db/schema'
+import { tryCatch } from '@/lib/try-catch'
 import { sleep } from '@/lib/utils'
 import { authMiddleware } from '@/middleware/auth'
 import {
@@ -9,10 +10,9 @@ import {
 } from '@/validation/todo'
 import { queryOptions } from '@tanstack/react-query'
 import { notFound } from '@tanstack/react-router'
-import { createServerFn } from '@tanstack/react-start'
-import { setResponseStatus } from '@tanstack/react-start/server'
-import { and, desc, DrizzleError, eq } from 'drizzle-orm'
-import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+import { createServerFn, json } from '@tanstack/react-start'
+import { and, desc, eq } from 'drizzle-orm'
+import { StatusCodes } from 'http-status-codes'
 
 /**
  * ! Server function to get all todos
@@ -20,28 +20,21 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 export const getTodos = createServerFn({ method: 'GET' })
   .middleware([authMiddleware])
   .handler(async () => {
-    try {
-      const result = await db.query.todo.findMany({
-        orderBy: [desc(todo.createdAt)],
-        with: {
-          user: {
-            columns: {
-              name: true,
-              image: true,
-            },
+    const result = await db.query.todo.findMany({
+      orderBy: [desc(todo.createdAt)],
+      with: {
+        user: {
+          columns: {
+            name: true,
+            image: true,
           },
         },
-      })
+      },
+    })
 
-      await sleep()
+    await sleep()
 
-      return result
-    } catch (error) {
-      console.error(error)
-      throw error instanceof DrizzleError
-        ? error
-        : new Error('Failed to get todos')
-    }
+    return result
   })
 
 export function getTodosOptions() {
@@ -100,32 +93,34 @@ export const createTodo = createServerFn({ method: 'POST' })
   .middleware([authMiddleware])
   .validator(todoCreateFormSchema)
   .handler(async ({ data, context }) => {
-    try {
-      const result = await db
+    const { data: result, error } = await tryCatch(
+      db
         .insert(todo)
         .values({
           userId: context.session.user.id,
           ...data,
         })
-        .returning()
+        .returning(),
+    )
 
-      await sleep()
-
-      return {
-        data: {
-          ...result[0],
-          user: {
-            name: context.session.user.name,
-            image: context.session.user.image ?? null,
-          },
-        },
-        message: 'Todo created successfully',
-      }
-    } catch (error) {
-      console.error(error)
-      throw new Error(
-        error instanceof DrizzleError ? error.message : 'Failed to create todo',
+    if (error) {
+      throw json(
+        { message: error.message },
+        { status: StatusCodes.UNPROCESSABLE_ENTITY },
       )
+    }
+
+    await sleep()
+
+    return {
+      data: {
+        ...result[0],
+        user: {
+          name: context.session.user.name,
+          image: context.session.user.image ?? null,
+        },
+      },
+      message: 'Todo created successfully',
     }
   })
 
@@ -137,25 +132,27 @@ export const deleteTodo = createServerFn({ method: 'POST' })
   .validator(todoSelectSchema.pick({ id: true, userId: true }))
   .handler(async ({ data, context }) => {
     if (data.userId !== context.session.user.id) {
-      setResponseStatus(StatusCodes.FORBIDDEN)
-      return {
-        message: ReasonPhrases.FORBIDDEN,
-      }
+      throw json(
+        { message: 'You are not allowed to delete this todo' },
+        { status: StatusCodes.FORBIDDEN },
+      )
     }
 
-    try {
-      await db.delete(todo).where(eq(todo.id, data.id))
+    const { data: result, error } = await tryCatch(
+      db.delete(todo).where(eq(todo.id, data.id)).returning(),
+    )
 
-      await sleep()
-
-      return {
-        message: 'Todo deleted successfully',
-      }
-    } catch (error) {
-      console.error(error)
-      throw new Error(
-        error instanceof DrizzleError ? error.message : 'Failed to delete todo',
+    if (error) {
+      throw json(
+        { message: 'Unable to delete todo' },
+        { status: StatusCodes.UNPROCESSABLE_ENTITY },
       )
+    }
+
+    await sleep()
+
+    return {
+      message: `Todo ${result[0].title} deleted successfully`,
     }
   })
 
@@ -166,15 +163,15 @@ export const updateTodo = createServerFn({ method: 'POST' })
   .middleware([authMiddleware])
   .validator(todoUpdateFormSchema)
   .handler(async ({ data, context }) => {
-    try {
-      if (context.session.user.id !== data.userId) {
-        setResponseStatus(StatusCodes.FORBIDDEN)
-        return {
-          message: ReasonPhrases.FORBIDDEN,
-        }
-      }
+    if (context.session.user.id !== data.userId) {
+      throw json(
+        { message: 'You are not allowed to update this todo' },
+        { status: StatusCodes.FORBIDDEN },
+      )
+    }
 
-      const result = await db
+    const { data: result, error } = await tryCatch(
+      db
         .update(todo)
         .set({
           title: data.title,
@@ -185,20 +182,20 @@ export const updateTodo = createServerFn({ method: 'POST' })
           completed: data.completed,
         })
         .where(eq(todo.id, data.id))
-        .returning()
+        .returning(),
+    )
 
-      await sleep()
-
-      return {
-        data: result[0],
-        message: `Todo ${result[0].title} updated successfully`,
-      }
-    } catch (error) {
-      console.error(error)
-      throw new Error(
-        error instanceof DrizzleError
-          ? error.message
-          : `Failed to update todo ${data.title}`,
+    if (error) {
+      throw json(
+        { message: 'Unable to update todo' },
+        { status: StatusCodes.UNPROCESSABLE_ENTITY },
       )
+    }
+
+    await sleep()
+
+    return {
+      data: result[0],
+      message: `Todo ${result[0].title} updated successfully`,
     }
   })

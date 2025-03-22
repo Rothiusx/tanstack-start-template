@@ -5,6 +5,12 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { DataTable } from '@/components/ui/data-table'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
+import { VirtualDataTable } from '@/components/ui/virtual-data-table'
 import { getTodosOptions } from '@/server/todo'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { CircleCheckBig, CircleX } from 'lucide-react'
@@ -26,6 +32,7 @@ const columns: ColumnDef<Awaited<ReturnType<typeof getTodos>>[number]>[] = [
         </AvatarFallback>
       </Avatar>
     ),
+    maxSize: 48,
   },
   {
     accessorKey: 'user.name',
@@ -38,6 +45,14 @@ const columns: ColumnDef<Awaited<ReturnType<typeof getTodos>>[number]>[] = [
   {
     accessorKey: 'description',
     header: 'Description',
+    cell: ({ row }) => (
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <p className="max-w-64 truncate">{row.original.description}</p>
+        </TooltipTrigger>
+        <TooltipContent>{row.original.description}</TooltipContent>
+      </Tooltip>
+    ),
   },
   {
     accessorKey: 'project',
@@ -88,10 +103,14 @@ export function TodoList() {
   return (
     <>
       {todos.length > 0 ? (
-        <ScrollArea>
-          <DataTable columns={columns} data={todos} />
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
+        todos.length > 250 ? (
+          <VirtualDataTable columns={columns} data={todos} />
+        ) : (
+          <ScrollArea>
+            <DataTable columns={columns} data={todos} />
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
+        )
       ) : (
         <p className="text-muted-foreground py-8 text-center">No todos found</p>
       )}

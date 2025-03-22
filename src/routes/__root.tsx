@@ -4,6 +4,7 @@ import { DefaultErrorBoundary } from '@/components/common/default-error-boundary
 import { LoadingScreen } from '@/components/common/loading-screen'
 import { NavBar } from '@/components/common/nav-bar'
 import { NotFound } from '@/components/common/not-found'
+import { TooltipProvider } from '@/components/ui/tooltip'
 import { getUserOptions } from '@/server/auth'
 import styles from '@/styles.css?url'
 import {
@@ -82,13 +83,15 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="text-foreground from-background to-muted/30 flex min-h-screen flex-col bg-gradient-to-b antialiased">
         <ThemeProvider attribute="class" enableColorScheme enableSystem>
-          <header className="sticky top-0 z-50">
-            <NavBar />
-          </header>
+          <TooltipProvider>
+            <header className="sticky top-0 z-50">
+              <NavBar />
+            </header>
 
-          <main className="flex flex-col p-8">{children}</main>
+            <main className="flex flex-col p-8">{children}</main>
 
-          <Toaster richColors />
+            <Toaster richColors />
+          </TooltipProvider>
         </ThemeProvider>
 
         {import.meta.env.DEV && (
