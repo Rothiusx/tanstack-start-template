@@ -20,6 +20,8 @@ import { Route as AuthAdminRouteImport } from './routes/_auth/_admin/route'
 import { Route as AuthTodoIndexImport } from './routes/_auth/todo/index'
 import { Route as AuthTodoCreateImport } from './routes/_auth/todo/create'
 import { Route as AuthTodoIdImport } from './routes/_auth/todo/$id'
+import { Route as AuthAdminUsersRouteImport } from './routes/_auth/_admin/users/route'
+import { Route as AuthAdminUsersIndexImport } from './routes/_auth/_admin/users/index'
 
 // Create/Update Routes
 
@@ -75,6 +77,18 @@ const AuthTodoIdRoute = AuthTodoIdImport.update({
   getParentRoute: () => AuthTodoRouteRoute,
 } as any)
 
+const AuthAdminUsersRouteRoute = AuthAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthAdminRouteRoute,
+} as any)
+
+const AuthAdminUsersIndexRoute = AuthAdminUsersIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthAdminUsersRouteRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -121,6 +135,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthTodoRouteImport
       parentRoute: typeof AuthRouteImport
     }
+    '/_auth/_admin/users': {
+      id: '/_auth/_admin/users'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof AuthAdminUsersRouteImport
+      parentRoute: typeof AuthAdminRouteImport
+    }
     '/_auth/todo/$id': {
       id: '/_auth/todo/$id'
       path: '/$id'
@@ -142,10 +163,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthTodoIndexImport
       parentRoute: typeof AuthTodoRouteImport
     }
+    '/_auth/_admin/users/': {
+      id: '/_auth/_admin/users/'
+      path: '/'
+      fullPath: '/users/'
+      preLoaderRoute: typeof AuthAdminUsersIndexImport
+      parentRoute: typeof AuthAdminUsersRouteImport
+    }
   }
 }
 
 // Create and export the route tree
+
+interface AuthAdminUsersRouteRouteChildren {
+  AuthAdminUsersIndexRoute: typeof AuthAdminUsersIndexRoute
+}
+
+const AuthAdminUsersRouteRouteChildren: AuthAdminUsersRouteRouteChildren = {
+  AuthAdminUsersIndexRoute: AuthAdminUsersIndexRoute,
+}
+
+const AuthAdminUsersRouteRouteWithChildren =
+  AuthAdminUsersRouteRoute._addFileChildren(AuthAdminUsersRouteRouteChildren)
+
+interface AuthAdminRouteRouteChildren {
+  AuthAdminUsersRouteRoute: typeof AuthAdminUsersRouteRouteWithChildren
+}
+
+const AuthAdminRouteRouteChildren: AuthAdminRouteRouteChildren = {
+  AuthAdminUsersRouteRoute: AuthAdminUsersRouteRouteWithChildren,
+}
+
+const AuthAdminRouteRouteWithChildren = AuthAdminRouteRoute._addFileChildren(
+  AuthAdminRouteRouteChildren,
+)
 
 interface AuthTodoRouteRouteChildren {
   AuthTodoIdRoute: typeof AuthTodoIdRoute
@@ -164,13 +215,13 @@ const AuthTodoRouteRouteWithChildren = AuthTodoRouteRoute._addFileChildren(
 )
 
 interface AuthRouteRouteChildren {
-  AuthAdminRouteRoute: typeof AuthAdminRouteRoute
+  AuthAdminRouteRoute: typeof AuthAdminRouteRouteWithChildren
   AuthProfileRouteRoute: typeof AuthProfileRouteRoute
   AuthTodoRouteRoute: typeof AuthTodoRouteRouteWithChildren
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
-  AuthAdminRouteRoute: AuthAdminRouteRoute,
+  AuthAdminRouteRoute: AuthAdminRouteRouteWithChildren,
   AuthProfileRouteRoute: AuthProfileRouteRoute,
   AuthTodoRouteRoute: AuthTodoRouteRouteWithChildren,
 }
@@ -181,23 +232,26 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof AuthAdminRouteRoute
+  '': typeof AuthAdminRouteRouteWithChildren
   '/login': typeof LoginRouteRoute
   '/profile': typeof AuthProfileRouteRoute
   '/todo': typeof AuthTodoRouteRouteWithChildren
+  '/users': typeof AuthAdminUsersRouteRouteWithChildren
   '/todo/$id': typeof AuthTodoIdRoute
   '/todo/create': typeof AuthTodoCreateRoute
   '/todo/': typeof AuthTodoIndexRoute
+  '/users/': typeof AuthAdminUsersIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof AuthAdminRouteRoute
+  '': typeof AuthAdminRouteRouteWithChildren
   '/login': typeof LoginRouteRoute
   '/profile': typeof AuthProfileRouteRoute
   '/todo/$id': typeof AuthTodoIdRoute
   '/todo/create': typeof AuthTodoCreateRoute
   '/todo': typeof AuthTodoIndexRoute
+  '/users': typeof AuthAdminUsersIndexRoute
 }
 
 export interface FileRoutesById {
@@ -205,12 +259,14 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteRouteWithChildren
   '/login': typeof LoginRouteRoute
-  '/_auth/_admin': typeof AuthAdminRouteRoute
+  '/_auth/_admin': typeof AuthAdminRouteRouteWithChildren
   '/_auth/profile': typeof AuthProfileRouteRoute
   '/_auth/todo': typeof AuthTodoRouteRouteWithChildren
+  '/_auth/_admin/users': typeof AuthAdminUsersRouteRouteWithChildren
   '/_auth/todo/$id': typeof AuthTodoIdRoute
   '/_auth/todo/create': typeof AuthTodoCreateRoute
   '/_auth/todo/': typeof AuthTodoIndexRoute
+  '/_auth/_admin/users/': typeof AuthAdminUsersIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -221,11 +277,21 @@ export interface FileRouteTypes {
     | '/login'
     | '/profile'
     | '/todo'
+    | '/users'
     | '/todo/$id'
     | '/todo/create'
     | '/todo/'
+    | '/users/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/login' | '/profile' | '/todo/$id' | '/todo/create' | '/todo'
+  to:
+    | '/'
+    | ''
+    | '/login'
+    | '/profile'
+    | '/todo/$id'
+    | '/todo/create'
+    | '/todo'
+    | '/users'
   id:
     | '__root__'
     | '/'
@@ -234,9 +300,11 @@ export interface FileRouteTypes {
     | '/_auth/_admin'
     | '/_auth/profile'
     | '/_auth/todo'
+    | '/_auth/_admin/users'
     | '/_auth/todo/$id'
     | '/_auth/todo/create'
     | '/_auth/todo/'
+    | '/_auth/_admin/users/'
   fileRoutesById: FileRoutesById
 }
 
@@ -283,7 +351,10 @@ export const routeTree = rootRoute
     },
     "/_auth/_admin": {
       "filePath": "_auth/_admin/route.tsx",
-      "parent": "/_auth"
+      "parent": "/_auth",
+      "children": [
+        "/_auth/_admin/users"
+      ]
     },
     "/_auth/profile": {
       "filePath": "_auth/profile/route.tsx",
@@ -298,6 +369,13 @@ export const routeTree = rootRoute
         "/_auth/todo/"
       ]
     },
+    "/_auth/_admin/users": {
+      "filePath": "_auth/_admin/users/route.tsx",
+      "parent": "/_auth/_admin",
+      "children": [
+        "/_auth/_admin/users/"
+      ]
+    },
     "/_auth/todo/$id": {
       "filePath": "_auth/todo/$id.tsx",
       "parent": "/_auth/todo"
@@ -309,6 +387,10 @@ export const routeTree = rootRoute
     "/_auth/todo/": {
       "filePath": "_auth/todo/index.tsx",
       "parent": "/_auth/todo"
+    },
+    "/_auth/_admin/users/": {
+      "filePath": "_auth/_admin/users/index.tsx",
+      "parent": "/_auth/_admin/users"
     }
   }
 }
