@@ -15,7 +15,7 @@ export function FormatDate({
     select: ({ user }) => user?.language,
   })
   const [displayDate, setDisplayDate] = useState(
-    new Date(date).toLocaleString(language, {
+    new Date(date).toLocaleString(language || 'en-US', {
       dateStyle: 'medium',
       timeStyle: 'short',
       timeZone: 'UTC',

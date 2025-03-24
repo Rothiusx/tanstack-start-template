@@ -13,10 +13,8 @@ export const getUser = createServerFn({ method: 'GET' }).handler(async () => {
   const { headers } = getWebRequest()!
   const session = await auth.api.getSession({ headers })
 
-  const language = headers.get('accept-language')?.split(',')[0] ?? 'en-US'
-  return session
-    ? { ...session.user, language: session.user.language ?? language }
-    : null
+  // const language = headers.get('accept-language')?.split(',')[0] ?? 'en-US'
+  return session?.user ?? null
 })
 
 export function getUserOptions() {
