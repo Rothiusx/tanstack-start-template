@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login/route'
 import { Route as AuthRouteImport } from './routes/_auth/route'
 import { Route as IndexImport } from './routes/index'
+import { Route as AuthUsersRouteImport } from './routes/_auth/users/route'
 import { Route as AuthTodoRouteImport } from './routes/_auth/todo/route'
 import { Route as AuthProfileRouteImport } from './routes/_auth/profile/route'
 import { Route as AuthAdminRouteImport } from './routes/_auth/_admin/route'
@@ -38,6 +39,12 @@ const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const AuthUsersRouteRoute = AuthUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthRouteRoute,
 } as any)
 
 const AuthTodoRouteRoute = AuthTodoRouteImport.update({
@@ -121,6 +128,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthTodoRouteImport
       parentRoute: typeof AuthRouteImport
     }
+    '/_auth/users': {
+      id: '/_auth/users'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof AuthUsersRouteImport
+      parentRoute: typeof AuthRouteImport
+    }
     '/_auth/todo/$id': {
       id: '/_auth/todo/$id'
       path: '/$id'
@@ -167,12 +181,14 @@ interface AuthRouteRouteChildren {
   AuthAdminRouteRoute: typeof AuthAdminRouteRoute
   AuthProfileRouteRoute: typeof AuthProfileRouteRoute
   AuthTodoRouteRoute: typeof AuthTodoRouteRouteWithChildren
+  AuthUsersRouteRoute: typeof AuthUsersRouteRoute
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
   AuthAdminRouteRoute: AuthAdminRouteRoute,
   AuthProfileRouteRoute: AuthProfileRouteRoute,
   AuthTodoRouteRoute: AuthTodoRouteRouteWithChildren,
+  AuthUsersRouteRoute: AuthUsersRouteRoute,
 }
 
 const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
@@ -185,6 +201,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRouteRoute
   '/profile': typeof AuthProfileRouteRoute
   '/todo': typeof AuthTodoRouteRouteWithChildren
+  '/users': typeof AuthUsersRouteRoute
   '/todo/$id': typeof AuthTodoIdRoute
   '/todo/create': typeof AuthTodoCreateRoute
   '/todo/': typeof AuthTodoIndexRoute
@@ -195,6 +212,7 @@ export interface FileRoutesByTo {
   '': typeof AuthAdminRouteRoute
   '/login': typeof LoginRouteRoute
   '/profile': typeof AuthProfileRouteRoute
+  '/users': typeof AuthUsersRouteRoute
   '/todo/$id': typeof AuthTodoIdRoute
   '/todo/create': typeof AuthTodoCreateRoute
   '/todo': typeof AuthTodoIndexRoute
@@ -208,6 +226,7 @@ export interface FileRoutesById {
   '/_auth/_admin': typeof AuthAdminRouteRoute
   '/_auth/profile': typeof AuthProfileRouteRoute
   '/_auth/todo': typeof AuthTodoRouteRouteWithChildren
+  '/_auth/users': typeof AuthUsersRouteRoute
   '/_auth/todo/$id': typeof AuthTodoIdRoute
   '/_auth/todo/create': typeof AuthTodoCreateRoute
   '/_auth/todo/': typeof AuthTodoIndexRoute
@@ -221,11 +240,20 @@ export interface FileRouteTypes {
     | '/login'
     | '/profile'
     | '/todo'
+    | '/users'
     | '/todo/$id'
     | '/todo/create'
     | '/todo/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/login' | '/profile' | '/todo/$id' | '/todo/create' | '/todo'
+  to:
+    | '/'
+    | ''
+    | '/login'
+    | '/profile'
+    | '/users'
+    | '/todo/$id'
+    | '/todo/create'
+    | '/todo'
   id:
     | '__root__'
     | '/'
@@ -234,6 +262,7 @@ export interface FileRouteTypes {
     | '/_auth/_admin'
     | '/_auth/profile'
     | '/_auth/todo'
+    | '/_auth/users'
     | '/_auth/todo/$id'
     | '/_auth/todo/create'
     | '/_auth/todo/'
@@ -275,7 +304,8 @@ export const routeTree = rootRoute
       "children": [
         "/_auth/_admin",
         "/_auth/profile",
-        "/_auth/todo"
+        "/_auth/todo",
+        "/_auth/users"
       ]
     },
     "/login": {
@@ -297,6 +327,10 @@ export const routeTree = rootRoute
         "/_auth/todo/create",
         "/_auth/todo/"
       ]
+    },
+    "/_auth/users": {
+      "filePath": "_auth/users/route.tsx",
+      "parent": "/_auth"
     },
     "/_auth/todo/$id": {
       "filePath": "_auth/todo/$id.tsx",
