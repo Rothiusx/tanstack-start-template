@@ -37,7 +37,7 @@
     "@tanstack/react-router-with-query": "^1.114.27",
     "@tanstack/react-start": "^1.114.27",
     "@tanstack/react-table": "^8.21.2",
-    "@tanstack/react-virtual": "^3.13.4",
+    "@tanstack/react-virtual": "^3.13.5",
     "better-auth": "^1.2.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -65,7 +65,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.10.2",
+    "@antfu/eslint-config": "^4.11.0",
     "@eslint-react/eslint-plugin": "^1.37.3",
     "@tailwindcss/vite": "^4.0.15",
     "@tanstack/eslint-plugin-query": "^5.68.0",
@@ -81,7 +81,7 @@
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-drizzle": "^0.2.3",
     "eslint-plugin-format": "^1.0.1",
-    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-prettier": "^5.2.4",
     "eslint-plugin-react-compiler": "latest",
     "http-status-codes": "^2.3.0",
     "prettier": "^3.5.3",
