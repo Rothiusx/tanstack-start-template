@@ -33,10 +33,10 @@ export function NavBar() {
             label: 'Todos',
             icon: <ClipboardList className="size-6" />,
           },
-          ...(user.role === 'admin'
+          ...(user.role === 'user'
             ? [
                 {
-                  to: '/' as const,
+                  to: '/users' as const,
                   label: 'Admin',
                   icon: <ShieldUser className="size-6" />,
                 },
