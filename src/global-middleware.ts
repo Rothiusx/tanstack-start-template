@@ -1,14 +1,6 @@
-// src/global-middleware.ts
-import {
-  createMiddleware,
-  registerGlobalMiddleware,
-} from '@tanstack/react-start'
-
-export const testMiddleware = createMiddleware().server(({ next }) => {
-  console.log('test middleware')
-  return next()
-})
+import { loggerMiddleware } from '@/middleware/logger'
+import { registerGlobalMiddleware } from '@tanstack/react-start'
 
 registerGlobalMiddleware({
-  middleware: [testMiddleware],
+  middleware: [loggerMiddleware],
 })
