@@ -51,6 +51,7 @@ export default antfu(
     react: {
       overrides: {
         'react-compiler/react-compiler': 'error',
+        'react-hooks-extra/no-direct-set-state-in-use-effect': 'off',
       },
     },
     rules: {
@@ -79,6 +80,7 @@ export default antfu(
       'ts/strict-boolean-expressions': 'off',
       'react/no-unstable-context-value': 'off',
       'react/no-array-index-key': 'off',
+      'react/no-context-provider': 'off',
       'react-refresh/only-export-components': 'off',
     },
   },

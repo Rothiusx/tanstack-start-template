@@ -1,6 +1,6 @@
 import { db } from '@/db'
 import { user } from '@/db/schema'
-import env from '@/env'
+import { env } from '@/env'
 import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { admin, openAPI } from 'better-auth/plugins'

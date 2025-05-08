@@ -1,50 +1,50 @@
-import path from 'node:path'
 import process from 'node:process'
-import { config } from 'dotenv'
-import { expand } from 'dotenv-expand'
+import { createEnv } from '@t3-oss/env-core'
 import { z } from 'zod'
 
-expand(
-  config({
-    path: path.resolve(
-      process.cwd(),
-      process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
-    ),
-  }),
-)
-
-const envSchema = z
-  .object({
+export const env = createEnv({
+  server: {
     NODE_ENV: z
       .enum(['development', 'test', 'production'])
       .default('development'),
     DATABASE_URL: z.string().url(),
-    VITE_BASE_URL: z.string().url(),
     BETTER_AUTH_SECRET: z.string(),
     DISCORD_CLIENT_ID: z.string(),
     DISCORD_CLIENT_SECRET: z.string(),
-  })
-  .superRefine((input, ctx) => {
-    if (input.NODE_ENV === 'production' && !input.DATABASE_URL) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.invalid_type,
-        expected: 'string',
-        received: 'undefined',
-        path: ['DATABASE_URL'],
-        message: "Must be set when NODE_ENV is 'production'",
-      })
-    }
-  })
+  },
 
-export type Env = z.infer<typeof envSchema>
+  /**
+   * The prefix that client-side variables must have. This is enforced both at
+   * a type-level and at runtime.
+   */
+  clientPrefix: 'VITE_',
 
-const { data: env, error } = envSchema.safeParse(process.env)
+  client: {
+    VITE_APP_TITLE: z.string().min(1),
+    VITE_BASE_URL: z.string().url(),
+  },
 
-if (error) {
-  console.error('❌ Invalid env:')
-  console.error(JSON.stringify(error.flatten().fieldErrors, null, 2))
-  process.exit(1)
-}
+  /**
+   * What object holds the environment variables at runtime. This is usually
+   * `process.env` or `import.meta.env`.
+   */
+  runtimeEnv: {
+    ...process.env,
+    ...import.meta.env,
+  },
 
-// eslint-disable-next-line ts/no-unnecessary-type-assertion
-export default env!
+  /**
+   * By default, this library will feed the environment variables directly to
+   * the Zod validator.
+   *
+   * This means that if you have an empty string for a value that is supposed
+   * to be a number (e.g. `PORT=` in a ".env" file), Zod will incorrectly flag
+   * it as a type mismatch violation. Additionally, if you have an empty string
+   * for a value that is supposed to be a string with a default value (e.g.
+   * `DOMAIN=` in an ".env" file), the default value will never be applied.
+   *
+   * In order to solve these issues, we recommend that all new projects
+   * explicitly specify this option as true.
+   */
+  emptyStringAsUndefined: true,
+})
