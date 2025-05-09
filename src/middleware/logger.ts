@@ -14,7 +14,7 @@ const logger = pino(stream)
 /**
  * Middleware for request logging
  */
-export const loggerMiddleware = createMiddleware().server(async ({ next }) => {
+export const loggerMiddleware = createMiddleware().server(({ next }) => {
   const request = getWebRequest()
   const headers = getHeaders()
 
@@ -24,7 +24,5 @@ export const loggerMiddleware = createMiddleware().server(async ({ next }) => {
     headers,
   })
 
-  const response = await next()
-
-  return response
+  return next()
 })

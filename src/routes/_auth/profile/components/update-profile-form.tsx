@@ -63,8 +63,6 @@ export function EditProfileForm({ user }: { user: User }) {
     },
   })
 
-  console.log(form.getValues())
-
   return (
     <Form {...form}>
       <form
