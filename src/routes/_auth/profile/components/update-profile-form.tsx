@@ -134,7 +134,11 @@ export function EditProfileForm({ user }: { user: User }) {
               <FormLabel>Language</FormLabel>
               <Select
                 value={field.value ?? ''}
-                onValueChange={field.onChange}
+                onValueChange={(value) =>
+                  value === 'none'
+                    ? field.onChange(null)
+                    : field.onChange(value)
+                }
                 defaultValue={field.value ?? undefined}
               >
                 <FormControl>
@@ -143,7 +147,7 @@ export function EditProfileForm({ user }: { user: User }) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {field.value && (
+                  {form.getValues().language && (
                     <SelectItem value="none" className="text-muted-foreground">
                       Select a language
                     </SelectItem>
