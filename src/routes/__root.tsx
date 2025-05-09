@@ -17,19 +17,23 @@ import { ThemeProvider } from 'next-themes'
 import { lazy, Suspense } from 'react'
 import { Toaster } from 'sonner'
 
-// Lazy load query devtools
-const ReactQueryDevtools = lazy(() =>
-  import('@tanstack/react-query-devtools').then((res) => ({
-    default: res.ReactQueryDevtools,
-  })),
-)
+// Lazy load router devtools in development
+const TanStackRouterDevtools = import.meta.env.DEV
+  ? lazy(() =>
+      import('@tanstack/react-router-devtools').then((res) => ({
+        default: res.TanStackRouterDevtools,
+      })),
+    )
+  : () => null
 
-// Lazy load router devtools
-const TanStackRouterDevtools = lazy(() =>
-  import('@tanstack/react-router-devtools').then((res) => ({
-    default: res.TanStackRouterDevtools,
-  })),
-)
+// Lazy load query devtools in development
+const ReactQueryDevtools = import.meta.env.DEV
+  ? lazy(() =>
+      import('@tanstack/react-query-devtools').then((res) => ({
+        default: res.ReactQueryDevtools,
+      })),
+    )
+  : () => null
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient
