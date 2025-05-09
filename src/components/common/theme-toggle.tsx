@@ -5,21 +5,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Moon, Sun } from 'lucide-react'
+import { Monitor, Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
-
-// function setTheme(theme: 'light' | 'dark' | 'system') {
-//   localStorage.setItem('theme', theme)
-//   const root = document.documentElement
-//   root.classList.remove('light', 'dark')
-
-//   if (theme === 'system') {
-//     const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-//     root.classList.add(isDark ? 'dark' : 'light')
-//   } else {
-//     root.classList.add(theme)
-//   }
-// }
 
 export function ThemeToggle() {
   const { setTheme } = useTheme()
@@ -35,12 +22,15 @@ export function ThemeToggle() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme('light')}>
+          <Sun />
           Light
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('dark')}>
+          <Moon />
           Dark
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('system')}>
+          <Monitor />
           System
         </DropdownMenuItem>
       </DropdownMenuContent>
