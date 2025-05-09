@@ -63,6 +63,8 @@ export function EditProfileForm({ user }: { user: User }) {
     },
   })
 
+  console.log(form.getValues())
+
   return (
     <Form {...form}>
       <form
@@ -131,6 +133,7 @@ export function EditProfileForm({ user }: { user: User }) {
             <FormItem>
               <FormLabel>Language</FormLabel>
               <Select
+                value={field.value ?? ''}
                 onValueChange={field.onChange}
                 defaultValue={field.value ?? undefined}
               >
