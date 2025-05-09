@@ -37,7 +37,7 @@ export const Route = createRootRouteWithContext<{
 }>()({
   beforeLoad: async ({ context }) => {
     // Get user in root route and pass it to the context
-    const user = await context.queryClient.fetchQuery(getUserOptions())
+    const user = await context.queryClient.ensureQueryData(getUserOptions())
     return { user }
   },
   head: () => ({
@@ -50,7 +50,7 @@ export const Route = createRootRouteWithContext<{
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'TanStack Start Template',
+        title: import.meta.env.VITE_APP_TITLE,
       },
       {
         name: 'description',

@@ -1,5 +1,4 @@
 import { auth } from '@/lib/auth'
-import { roles } from '@/lib/auth/permissions'
 import { redirect } from '@tanstack/react-router'
 import { createMiddleware } from '@tanstack/react-start'
 import { getWebRequest, setResponseStatus } from '@tanstack/react-start/server'
@@ -36,16 +35,13 @@ export const userPermissionMiddleware = createMiddleware()
     const hasPermission = await auth.api.userHasPermission({
       body: {
         userId: context.session.user.id,
-        permission: {
-          user: roles.user.statements.user,
+        permissions: {
+          user: ['list'],
         },
       },
     })
 
-    console.log('HAS PERMISSION', hasPermission)
-
     if (!hasPermission.success) {
-      setResponseStatus(401)
       throw redirect({ to: '/' })
     }
 
