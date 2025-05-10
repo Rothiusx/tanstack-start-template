@@ -24,7 +24,7 @@ function UsersPage() {
     <div className="container mx-auto py-6">
       <div className="mb-8 flex flex-col items-center gap-2 text-center">
         <h1 className="text-4xl font-bold">Admin Dashboard</h1>
-        <p className="text-muted-foreground text-lg">
+        <p className="text-lg text-muted-foreground">
           Manage users and system settings
         </p>
       </div>
@@ -33,7 +33,7 @@ function UsersPage() {
         <CardHeader className="pb-2">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2 text-2xl font-bold">
-              <Users className="text-primary size-6" />
+              <Users className="size-6 text-primary" />
               Users Management
             </CardTitle>
           </div>

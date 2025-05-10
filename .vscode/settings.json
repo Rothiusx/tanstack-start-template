@@ -13,34 +13,31 @@
   "editor.quickSuggestions": {
     "strings": true
   },
-
-  "files.eol": "\n",
-  "files.autoSave": "onFocusChange",
-  "files.associations": {
-    "*.css": "tailwindcss"
+  "search.exclude": {
+    "**/routeTree.gen.ts": true,
+    "**/.output": true,
+    "**/.vinxi": true
   },
   "files.watcherExclude": {
     "**/routeTree.gen.ts": true,
     "**/.output": true,
     "**/.vinxi": true
   },
-  "search.exclude": {
-    "**/routeTree.gen.ts": true,
-    "**/.output": true,
-    "**/.vinxi": true
-  },
   "files.readonlyInclude": {
-    "**/routeTree.gen.ts": true
+    "**/routeTree.gen.ts": true,
+    "bun.lock": true
   },
-
+  "files.eol": "\n",
+  "files.autoSave": "onFocusChange",
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
   "typescript.preferences.autoImportFileExcludePatterns": ["@radix-ui/*"],
-
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
     ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
     ["cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
   ],
-
   "eslint.validate": [
     "javascript",
     "javascriptreact",

@@ -57,7 +57,7 @@ const columns: ColumnDef<Awaited<ReturnType<typeof getUsers>>[number]>[] = [
         {row.original.banned === true ? (
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="text-destructive-foreground flex items-center">
+              <div className="flex items-center text-destructive-foreground">
                 <Ban className="mr-2 size-5" />
                 <span>Banned</span>
               </div>
@@ -72,7 +72,7 @@ const columns: ColumnDef<Awaited<ReturnType<typeof getUsers>>[number]>[] = [
             </TooltipContent>
           </Tooltip>
         ) : (
-          <div className="text-success-foreground flex items-center">
+          <div className="flex items-center text-success-foreground">
             <CheckCircle2 className="mr-2 size-5" />
             <span>Active</span>
           </div>
@@ -110,7 +110,7 @@ export function UsersList() {
           </ScrollArea>
         )
       ) : (
-        <p className="text-muted-foreground py-8 text-center">No users found</p>
+        <p className="py-8 text-center text-muted-foreground">No users found</p>
       )}
     </>
   )

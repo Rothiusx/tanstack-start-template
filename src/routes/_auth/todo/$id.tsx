@@ -66,7 +66,7 @@ function TodoDetail() {
   return (
     <div className="container max-w-3xl py-10">
       <div className="relative">
-        <div className="from-primary/20 via-secondary/20 to-primary/20 absolute -inset-1 rounded-xl bg-gradient-to-r opacity-70 blur-xl"></div>
+        <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 opacity-70 blur-xl"></div>
         <Card className="relative border shadow-xl">
           <CardHeader className="space-y-4 pb-2">
             <div className="flex items-center justify-between">
@@ -77,9 +77,9 @@ function TodoDetail() {
                   </Link>
                 </Button>
                 <div>
-                  <CardTitle className="from-primary to-secondary bg-gradient-to-r bg-clip-text text-2xl font-bold text-transparent">
+                  <CardTitle className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-2xl font-bold text-transparent">
                     {todo.title}
-                    <p className="text-muted-foreground mt-1 text-xs font-normal">
+                    <p className="mt-1 text-xs font-normal text-muted-foreground">
                       Created by {todo.user.name}
                     </p>
                   </CardTitle>
@@ -106,7 +106,7 @@ function TodoDetail() {
               </Button>
             </div>
             <CardDescription className="flex items-center gap-2 text-sm">
-              <span className="bg-primary/10 text-primary rounded-full px-2.5 py-0.5 text-xs font-medium">
+              <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
                 Todo #{todo.id}
               </span>
               <span className="text-muted-foreground">
@@ -129,7 +129,7 @@ function TodoPending() {
   return (
     <div className="container max-w-3xl py-10">
       <div className="relative">
-        <div className="from-primary/20 via-secondary/20 to-primary/20 absolute -inset-1 rounded-xl bg-gradient-to-r opacity-70 blur-xl"></div>
+        <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 opacity-70 blur-xl"></div>
         <Card className="relative border shadow-xl">
           <CardHeader className="py-6">
             <div className="flex items-center justify-between">
@@ -166,7 +166,7 @@ function TodoNotFound() {
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-4">
-        <p className="text-muted-foreground text-lg font-semibold">
+        <p className="text-lg font-semibold text-muted-foreground">
           Todo #{id} you are looking for does not exist.
         </p>
       </div>

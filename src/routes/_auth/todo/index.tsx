@@ -31,20 +31,20 @@ function Todo() {
     <div className="container mx-auto flex flex-col gap-6 py-2">
       <div className="space-y-3">
         <h1 className="flex items-center gap-2 text-4xl font-bold tracking-tight">
-          <ClipboardList className="text-primary size-9" />
+          <ClipboardList className="size-9 text-primary" />
           Task Manager
         </h1>
-        <p className="text-muted-foreground text-lg">
+        <p className="text-lg text-muted-foreground">
           Your personal productivity hub. Organize, prioritize, and accomplish
           your goals with ease.
         </p>
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        <Card className="from-primary/10 to-primary/5 border-primary/20 bg-gradient-to-br shadow-lg transition-all hover:shadow-xl">
+        <Card className="border-primary/20 bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg transition-all hover:shadow-xl">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <CheckCircle2 className="text-primary size-5" />
+              <CheckCircle2 className="size-5 text-primary" />
               Stay Organized
             </CardTitle>
             <CardDescription>Track your progress effortlessly</CardDescription>
@@ -57,10 +57,10 @@ function Todo() {
           </CardContent>
         </Card>
 
-        <Card className="from-secondary/10 to-secondary/5 border-secondary/20 bg-gradient-to-br shadow-lg transition-all hover:shadow-xl">
+        <Card className="border-secondary/20 bg-gradient-to-br from-secondary/10 to-secondary/5 shadow-lg transition-all hover:shadow-xl">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Clock className="text-primary size-5" />
+              <Clock className="size-5 text-primary" />
               Save Time
             </CardTitle>
             <CardDescription>Efficient task management</CardDescription>
@@ -73,10 +73,10 @@ function Todo() {
           </CardContent>
         </Card>
 
-        <Card className="from-accent/10 to-accent/5 border-accent/20 bg-gradient-to-br shadow-lg transition-all hover:shadow-xl">
+        <Card className="border-accent/20 bg-gradient-to-br from-accent/10 to-accent/5 shadow-lg transition-all hover:shadow-xl">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Calendar className="text-primary size-5" />
+              <Calendar className="size-5 text-primary" />
               Plan Ahead
             </CardTitle>
             <CardDescription>Never miss a deadline</CardDescription>
@@ -91,12 +91,12 @@ function Todo() {
       </div>
 
       <div className="relative">
-        <div className="from-primary/20 via-secondary/20 to-primary/20 absolute -inset-1 rounded-xl bg-gradient-to-r opacity-70 blur-xl"></div>
+        <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 opacity-70 blur-xl"></div>
         <Card className="relative border shadow-lg">
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
               <CardTitle className="flex items-center gap-2 text-2xl font-bold">
-                <ClipboardList className="text-primary size-6" />
+                <ClipboardList className="size-6 text-primary" />
                 Your Tasks
               </CardTitle>
               <Button

@@ -22,7 +22,7 @@ export function DefaultErrorBoundary({
       <Card className="w-full max-w-2xl shadow-lg">
         <CardHeader className="space-y-1">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="text-destructive h-6 w-6" />
+            <AlertTriangle className="h-6 w-6 text-destructive" />
             <CardTitle className="text-xl font-semibold">
               Something went wrong
             </CardTitle>
@@ -35,7 +35,7 @@ export function DefaultErrorBoundary({
         <Separator />
         <CardContent className="pt-6">
           <div className="space-y-4">
-            <div className="bg-muted rounded-md p-4">
+            <div className="rounded-md bg-muted p-4">
               <p className="font-mono text-sm break-words">
                 {error.message || 'Unknown error'}
               </p>
@@ -44,10 +44,10 @@ export function DefaultErrorBoundary({
             {info?.componentStack != null && (
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <Terminal className="text-muted-foreground h-4 w-4" />
+                  <Terminal className="h-4 w-4 text-muted-foreground" />
                   <p className="text-sm font-medium">Stack trace</p>
                 </div>
-                <div className="bg-muted max-h-60 overflow-auto rounded-md p-4">
+                <div className="max-h-60 overflow-auto rounded-md bg-muted p-4">
                   <pre className="font-mono text-xs break-words whitespace-pre-wrap">
                     {info.componentStack}
                   </pre>

@@ -38,7 +38,7 @@ export function NotFound({
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="space-y-1">
           <div className="flex items-center gap-2">
-            <FileQuestion className="text-primary h-6 w-6" />
+            <FileQuestion className="h-6 w-6 text-primary" />
             <CardTitle className="text-xl font-semibold">
               Page Not Found
             </CardTitle>
@@ -50,13 +50,13 @@ export function NotFound({
         <Separator />
         <CardContent className="pt-6">
           <div className="flex flex-col items-center justify-center space-y-4 py-6 text-center">
-            <Search className="text-muted-foreground h-16 w-16 opacity-50" />
+            <Search className="h-16 w-16 text-muted-foreground opacity-50" />
             <p className="text-muted-foreground">
               The page you requested either doesn't exist or you don't have
               access to it.
             </p>
             {message && (
-              <p className="text-muted-foreground text-lg font-semibold">
+              <p className="text-lg font-semibold text-muted-foreground">
                 {message}
               </p>
             )}

@@ -47,7 +47,7 @@ export function NavBar() {
   ]
 
   return (
-    <nav className="from-secondary to-secondary/90 border-secondary/20 m-2 mb-0 flex h-14 items-center justify-between rounded-lg border bg-gradient-to-r px-4 shadow-lg backdrop-blur-xs md:px-6">
+    <nav className="m-2 mb-0 flex h-14 items-center justify-between rounded-lg border border-secondary/20 bg-gradient-to-r from-secondary to-secondary/90 px-4 shadow-lg backdrop-blur-xs md:px-6">
       <div className="flex items-center">
         <div className="hidden md:flex md:items-center md:space-x-2">
           {links.map(({ to, label, icon }) => (
@@ -58,7 +58,7 @@ export function NavBar() {
                 className:
                   'bg-secondary-foreground/15 text-secondary-foreground',
               }}
-              className="hover:bg-secondary-foreground/10 text-muted-foreground flex items-center gap-2 rounded-md px-3 py-1.5 text-xl font-medium transition-all"
+              className="flex items-center gap-2 rounded-md px-3 py-1.5 text-xl font-medium text-muted-foreground transition-all hover:bg-secondary-foreground/10"
             >
               {icon}
               {label}

@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useState } from 'react'
 
 const messageVariants = cva(
-  'w-full p-4 py-3 flex gap-4 items-center rounded-lg',
+  'flex w-full items-center gap-4 rounded-lg p-4 py-3',
   {
     variants: {
       variant: {

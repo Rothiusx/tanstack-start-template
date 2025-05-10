@@ -38,7 +38,7 @@ function Home() {
               ]}
             />
           </h1>
-          <p className="text-muted-foreground mx-auto text-xl">
+          <p className="mx-auto text-xl text-muted-foreground">
             A modern, feature-rich application built with React and beautiful UI
             components.
           </p>
@@ -65,12 +65,12 @@ function Home() {
         </div>
 
         <div className="relative w-full max-w-5xl py-10">
-          <div className="from-primary/20 to-secondary/20 absolute -inset-0.5 rounded-xl bg-gradient-to-r blur-xl"></div>
+          <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-primary/20 to-secondary/20 blur-xl"></div>
           <div className="relative rounded-lg bg-black/5 p-4 backdrop-blur-sm dark:bg-white/5">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              <Card className="bg-background/80 border-0 shadow-lg transition-all hover:shadow-xl">
+              <Card className="border-0 bg-background/80 shadow-lg transition-all hover:shadow-xl">
                 <CardHeader>
-                  <Zap className="text-primary h-8 w-8" />
+                  <Zap className="h-8 w-8 text-primary" />
                   <CardTitle className="text-xl">Feature Rich</CardTitle>
                   <CardDescription>
                     Powerful components at your fingertips
@@ -90,9 +90,9 @@ function Home() {
                 </CardFooter>
               </Card>
 
-              <Card className="bg-background/80 border-0 shadow-lg transition-all hover:shadow-xl">
+              <Card className="border-0 bg-background/80 shadow-lg transition-all hover:shadow-xl">
                 <CardHeader>
-                  <Layout className="text-primary h-8 w-8" />
+                  <Layout className="h-8 w-8 text-primary" />
                   <CardTitle className="text-xl">Modern Design</CardTitle>
                   <CardDescription>
                     Beautiful UI components with Shadcn
@@ -112,9 +112,9 @@ function Home() {
                 </CardFooter>
               </Card>
 
-              <Card className="bg-background/80 border-0 shadow-lg transition-all hover:shadow-xl">
+              <Card className="border-0 bg-background/80 shadow-lg transition-all hover:shadow-xl">
                 <CardHeader>
-                  <Shield className="text-primary h-8 w-8" />
+                  <Shield className="h-8 w-8 text-primary" />
                   <CardTitle className="text-xl">
                     Secure Authentication
                   </CardTitle>
@@ -170,7 +170,7 @@ function Home() {
               <LinkPreview
                 key={label}
                 url={url}
-                className="hover:text-primary flex items-center gap-2 transition-colors lg:gap-3"
+                className="flex items-center gap-2 transition-colors hover:text-primary lg:gap-3"
               >
                 {icon}
                 <span className="lg:text-lg xl:text-xl">{label}</span>

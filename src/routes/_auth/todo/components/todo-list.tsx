@@ -74,9 +74,9 @@ const columns: ColumnDef<Awaited<ReturnType<typeof getTodos>>[number]>[] = [
     cell: ({ row }) => (
       <>
         {row.original.completed ? (
-          <CircleCheckBig className="text-success-foreground size-6" />
+          <CircleCheckBig className="size-6 text-success-foreground" />
         ) : (
-          <CircleX className="text-destructive-foreground size-6" />
+          <CircleX className="size-6 text-destructive-foreground" />
         )}
       </>
     ),
@@ -112,7 +112,7 @@ export function TodoList() {
           </ScrollArea>
         )
       ) : (
-        <p className="text-muted-foreground py-8 text-center">No todos found</p>
+        <p className="py-8 text-center text-muted-foreground">No todos found</p>
       )}
     </>
   )

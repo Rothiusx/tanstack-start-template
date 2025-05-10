@@ -194,7 +194,7 @@ export function SignUp() {
                               onChange(file)
                             }
                           }}
-                          className="hover:bg-muted/50 transition-colors"
+                          className="transition-colors hover:bg-muted/50"
                         />
                       </FormControl>
                     </div>

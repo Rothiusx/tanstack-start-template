@@ -30,7 +30,7 @@ export function TodoView({
       </div>
 
       <div className="space-y-2">
-        <h3 className="text-muted-foreground text-sm font-medium">
+        <h3 className="text-sm font-medium text-muted-foreground">
           Description
         </h3>
         <p className="text-base">
@@ -42,14 +42,14 @@ export function TodoView({
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="space-y-2">
-          <h3 className="text-muted-foreground text-sm font-medium">Project</h3>
+          <h3 className="text-sm font-medium text-muted-foreground">Project</h3>
           <div className="flex items-center">
             <TodoProjectLabel project={todo.project} />
           </div>
         </div>
 
         <div className="space-y-2">
-          <h3 className="text-muted-foreground text-sm font-medium">
+          <h3 className="text-sm font-medium text-muted-foreground">
             Language
           </h3>
           <Badge variant="outline" className="uppercase">
@@ -58,15 +58,15 @@ export function TodoView({
         </div>
 
         <div className="space-y-2">
-          <h3 className="text-muted-foreground text-sm font-medium">Status</h3>
+          <h3 className="text-sm font-medium text-muted-foreground">Status</h3>
           <div className="flex items-center">
             {todo.completed ? (
-              <div className="text-success-foreground flex items-center">
+              <div className="flex items-center text-success-foreground">
                 <CheckCircle2 className="mr-2 h-5 w-5" />
                 <span>Completed</span>
               </div>
             ) : (
-              <div className="text-destructive-foreground flex items-center">
+              <div className="flex items-center text-destructive-foreground">
                 <XCircle className="mr-2 h-5 w-5" />
                 <span>Not Completed</span>
               </div>
@@ -78,14 +78,14 @@ export function TodoView({
       <Separator />
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="text-muted-foreground flex items-center">
+        <div className="flex items-center text-muted-foreground">
           <CalendarDays className="mr-2 h-5 w-5" />
           <span>
             Created: <FormatDate date={todo.createdAt} />
           </span>
         </div>
 
-        <div className="text-muted-foreground flex items-center">
+        <div className="flex items-center text-muted-foreground">
           <Clock className="mr-2 h-5 w-5" />
           <span>
             Updated: <FormatDate date={todo.updatedAt} />
