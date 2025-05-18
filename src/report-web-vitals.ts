@@ -1,4 +1,4 @@
-function reportWebVitals(onPerfEntry?: () => void) {
+export default function reportWebVitals(onPerfEntry?: () => void) {
   if (onPerfEntry && typeof onPerfEntry === 'function') {
     import('web-vitals').then(({ onCLS, onINP, onFCP, onLCP, onTTFB }) => {
       onCLS(onPerfEntry)
@@ -9,5 +9,3 @@ function reportWebVitals(onPerfEntry?: () => void) {
     })
   }
 }
-
-export default reportWebVitals
