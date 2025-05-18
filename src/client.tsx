@@ -1,8 +1,8 @@
 import { StartClient } from '@tanstack/react-start'
 import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
-import reportWebVitals from './reportWebVitals'
-import { createRouter } from './router'
+import reportWebVitals from '@/report-web-vitals'
+import { createRouter } from '@/router'
 
 // Import development tools
 if (import.meta.env.DEV) {
