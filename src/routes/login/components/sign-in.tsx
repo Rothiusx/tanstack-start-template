@@ -160,15 +160,16 @@ export default function SignIn({
             disabled={flowStarted}
             onClick={async () => {
               setFlowStarted(true)
-              const { error } = await signIn.social({
+              await signIn.social({
                 provider: 'discord',
                 callbackURL: CALLBACK_URL,
+                fetchOptions: {
+                  onError: ({ error }) => {
+                    setFlowStarted(false)
+                    toast.error(error.message)
+                  },
+                },
               })
-
-              if (error) {
-                setFlowStarted(false)
-                toast.error(error.message)
-              }
             }}
           >
             {flowStarted ? (
