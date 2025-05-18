@@ -166,7 +166,7 @@ export default function SignIn({
                   onRequest: () => {
                     setFlowStarted(true)
                   },
-                  onSuccess: () => {
+                  onResponse: () => {
                     setFlowStarted(false)
                   },
                   onError: ({ error }) => {
