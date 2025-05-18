@@ -1,4 +1,5 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
+import { useState } from 'react'
 import { z } from 'zod'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import SignIn from './components/sign-in'
@@ -27,6 +28,7 @@ export const Route = createFileRoute('/login')({
 function Login() {
   const { tab } = Route.useSearch()
   const navigate = Route.useNavigate()
+  const [flowStarted, setFlowStarted] = useState(false)
 
   return (
     <section className="container mx-auto mt-[8vh] max-w-md">
@@ -40,10 +42,12 @@ function Login() {
       >
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="sign-in">Sign In</TabsTrigger>
-          <TabsTrigger value="sign-up">Sign Up</TabsTrigger>
+          <TabsTrigger value="sign-up" disabled={flowStarted}>
+            Sign Up
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="sign-in">
-          <SignIn />
+          <SignIn flowStarted={flowStarted} setFlowStarted={setFlowStarted} />
         </TabsContent>
         <TabsContent value="sign-up">
           <SignUp />

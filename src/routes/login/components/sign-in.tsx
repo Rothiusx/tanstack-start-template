@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useQueryClient } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { Loader2 } from 'lucide-react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { DiscordIcon } from '@/components/icons/discord'
@@ -36,7 +37,13 @@ import { signInSchema } from '@/validation/auth'
  */
 const CALLBACK_URL: LinkOptions['to'] = '/'
 
-export default function SignIn() {
+export default function SignIn({
+  flowStarted,
+  setFlowStarted,
+}: {
+  flowStarted: boolean
+  setFlowStarted: (value: boolean) => void
+}) {
   const queryClient = useQueryClient()
 
   const form = useForm({
@@ -124,7 +131,8 @@ export default function SignIn() {
                     <FormLabel htmlFor="rememberMe">Remember me</FormLabel>
                     <Link
                       to="/"
-                      className="ml-auto inline-block text-sm underline"
+                      className="ml-auto inline-block text-sm underline aria-disabled:opacity-50"
+                      disabled={flowStarted}
                     >
                       Forgot your password?
                     </Link>
@@ -136,7 +144,7 @@ export default function SignIn() {
               <Button
                 type="submit"
                 className="w-full"
-                disabled={form.formState.isSubmitting}
+                disabled={form.formState.isSubmitting || flowStarted}
               >
                 {form.formState.isSubmitting ? (
                   <Loader2 className="size-6 animate-spin" />
@@ -149,15 +157,23 @@ export default function SignIn() {
           <Button
             variant="outline"
             className={cn('w-full gap-2')}
+            disabled={flowStarted}
             onClick={async () => {
               await signIn.social({
                 provider: 'discord',
                 callbackURL: CALLBACK_URL,
               })
+              setFlowStarted(true)
             }}
           >
-            <DiscordIcon className="size-4" />
-            Sign in with Discord
+            {flowStarted ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <>
+                <DiscordIcon className="size-4" />
+                Sign in with Discord
+              </>
+            )}
           </Button>
         </div>
       </CardContent>
