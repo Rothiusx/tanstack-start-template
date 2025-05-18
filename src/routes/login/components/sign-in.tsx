@@ -159,13 +159,17 @@ export default function SignIn({
             className={cn('w-full gap-2')}
             disabled={flowStarted}
             onClick={async () => {
-              setFlowStarted(true)
               await signIn.social({
                 provider: 'discord',
                 callbackURL: CALLBACK_URL,
                 fetchOptions: {
-                  onError: ({ error }) => {
+                  onRequest: () => {
+                    setFlowStarted(true)
+                  },
+                  onSuccess: () => {
                     setFlowStarted(false)
+                  },
+                  onError: ({ error }) => {
                     toast.error(error.message)
                   },
                 },
