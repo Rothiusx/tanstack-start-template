@@ -1,9 +1,9 @@
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-
-import { cn } from '@/lib/utils'
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
 import * as React from 'react'
+
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 
 function PasswordInput({
   ref,

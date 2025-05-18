@@ -1,7 +1,7 @@
 import type { ComponentProps } from 'react'
-import { getBrowserLocale } from '@/lib/utils'
 import { useRouteContext } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
+import { getBrowserLocale } from '@/lib/utils'
 
 // Component to handle date display with SSR and hydration
 export function FormatDate({

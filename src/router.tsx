@@ -1,4 +1,3 @@
-import { routeTree } from '@/routeTree.gen'
 import {
   MutationCache,
   notifyManager,
@@ -8,6 +7,7 @@ import { createRouter as createTanstackRouter } from '@tanstack/react-router'
 import { routerWithQueryClient } from '@tanstack/react-router-with-query'
 import { toast } from 'sonner'
 import superjson from 'superjson'
+import { routeTree } from '@/routeTree.gen'
 import { DefaultErrorBoundary } from './components/common/default-error-boundary'
 import { LoadingScreen } from './components/common/loading-screen'
 import { NotFound } from './components/common/not-found'

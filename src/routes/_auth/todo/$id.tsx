@@ -1,3 +1,7 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { createFileRoute, Link, redirect } from '@tanstack/react-router'
+import { ArrowLeft, Edit } from 'lucide-react'
+import { z } from 'zod'
 import { FormatDate } from '@/components/common/format-date'
 import { NotFound } from '@/components/common/not-found'
 import { Button } from '@/components/ui/button'
@@ -11,10 +15,6 @@ import {
 import { Skeleton } from '@/components/ui/skeleton'
 import { getTodoOptions, getTodosOptions } from '@/server/todo'
 import { todoSelectSchema } from '@/validation/todo'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { createFileRoute, Link, redirect } from '@tanstack/react-router'
-import { ArrowLeft, Edit } from 'lucide-react'
-import { z } from 'zod'
 import { TodoUpdateForm } from './components/todo-update-form'
 import { TodoView } from './components/todo-view'
 
@@ -41,10 +41,10 @@ export const Route = createFileRoute('/_auth/todo/$id')({
   onError: () => {
     throw redirect({ to: '/todo' })
   },
-  head: ({ loaderData: { title } }) => ({
+  head: ({ loaderData }) => ({
     meta: [
       {
-        title,
+        title: loaderData?.title ?? 'Todo',
       },
     ],
   }),

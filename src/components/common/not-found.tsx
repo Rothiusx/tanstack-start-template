@@ -1,4 +1,8 @@
 import type { NotFoundRouteProps } from '@tanstack/react-router'
+import { Link } from '@tanstack/react-router'
+import { FileQuestion, Home, Search } from 'lucide-react'
+import { useLayoutEffect, useState } from 'react'
+import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -9,10 +13,6 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import { Link } from '@tanstack/react-router'
-import { FileQuestion, Home, Search } from 'lucide-react'
-import { useLayoutEffect, useState } from 'react'
-import { z } from 'zod'
 
 const notFoundSchema = z.object({
   data: z.object({

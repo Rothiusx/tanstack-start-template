@@ -1,3 +1,6 @@
+import { Link } from '@tanstack/react-router'
+import { ClipboardList, Home, Loader2, Menu, ShieldUser } from 'lucide-react'
+import { Fragment, Suspense } from 'react'
 import { BetterAuthIcon } from '@/components/icons/better-auth'
 import { DrizzleIcon } from '@/components/icons/drizzle'
 import { ShadcnIcon } from '@/components/icons/shadcn'
@@ -11,9 +14,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useUser } from '@/hooks/use-user'
-import { Link } from '@tanstack/react-router'
-import { ClipboardList, Home, Loader2, Menu, ShieldUser } from 'lucide-react'
-import { Fragment, Suspense } from 'react'
 import { ThemeToggle } from './theme-toggle'
 import { UserMenu } from './user-menu'
 

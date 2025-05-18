@@ -1,6 +1,6 @@
-import { user } from '@/db/schema'
 import { createSchemaFactory } from 'drizzle-zod'
 import { z } from 'zod'
+import { user } from '@/db/schema'
 
 const { createInsertSchema, createSelectSchema } = createSchemaFactory({
   coerce: {

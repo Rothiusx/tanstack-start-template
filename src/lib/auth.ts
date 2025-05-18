@@ -1,10 +1,10 @@
-import { db } from '@/db'
-import { user } from '@/db/schema'
-import { env } from '@/env'
 import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { admin, openAPI } from 'better-auth/plugins'
 import { eq } from 'drizzle-orm'
+import { db } from '@/db'
+import { user } from '@/db/schema'
+import { env } from '@/env'
 import { ac, roles } from './auth/permissions'
 
 export const auth = betterAuth({

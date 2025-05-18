@@ -1,9 +1,9 @@
 import type { getTodo } from '@/server/todo'
+import { CalendarDays, CheckCircle2, Clock, XCircle } from 'lucide-react'
 import { FormatDate } from '@/components/common/format-date'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { CalendarDays, CheckCircle2, Clock, XCircle } from 'lucide-react'
 import { TodoProjectLabel } from './todo-project-label'
 
 export function TodoView({

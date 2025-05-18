@@ -1,7 +1,7 @@
 import type { FileRoutesById } from '@/routeTree.gen'
-import { getUserOptions } from '@/server/auth'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { redirect, useRouteContext } from '@tanstack/react-router'
+import { getUserOptions } from '@/server/auth'
 
 /**
  * Hook to get the user from the root context

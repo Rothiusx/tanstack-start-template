@@ -1,5 +1,7 @@
-import type { getUsers } from '@/server/users'
 import type { ColumnDef } from '@tanstack/react-table'
+import type { getUsers } from '@/server/users'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { Ban, CheckCircle2 } from 'lucide-react'
 import { FormatDate } from '@/components/common/format-date'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
@@ -11,8 +13,6 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { getUsersOptions } from '@/server/users'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { Ban, CheckCircle2 } from 'lucide-react'
 import { UsersActions } from './users-actions'
 
 const columns: ColumnDef<Awaited<ReturnType<typeof getUsers>>[number]>[] = [

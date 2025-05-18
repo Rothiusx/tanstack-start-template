@@ -1,3 +1,4 @@
+import { createFileRoute } from '@tanstack/react-router'
 import { LoadingScreen } from '@/components/common/loading-screen'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
@@ -10,7 +11,6 @@ import {
 } from '@/components/ui/card'
 import { useUser } from '@/hooks/use-user'
 import { EditProfileForm } from '@/routes/_auth/profile/components/update-profile-form'
-import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_auth/profile')({
   head: () => ({

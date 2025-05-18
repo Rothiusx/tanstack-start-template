@@ -1,3 +1,7 @@
+import { useQueryClient } from '@tanstack/react-query'
+import { Link, useRouter } from '@tanstack/react-router'
+import { CircleUser, CircleUserRound, LogIn, LogOut } from 'lucide-react'
+import { toast } from 'sonner'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
@@ -12,10 +16,6 @@ import { useLocale } from '@/hooks/use-locale'
 import { useUser } from '@/hooks/use-user'
 import { signOut } from '@/lib/auth/client'
 import { getUserOptions } from '@/server/auth'
-import { useQueryClient } from '@tanstack/react-query'
-import { Link, useRouter } from '@tanstack/react-router'
-import { CircleUser, CircleUserRound, LogIn, LogOut } from 'lucide-react'
-import { toast } from 'sonner'
 
 export function UserMenu() {
   const router = useRouter()

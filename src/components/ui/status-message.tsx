@@ -1,9 +1,9 @@
 import type { VariantProps } from 'class-variance-authority'
-import { cn } from '@/lib/utils'
 import { cva } from 'class-variance-authority'
 import { BadgeCheck, Info, TriangleAlert } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useState } from 'react'
+import { cn } from '@/lib/utils'
 
 const messageVariants = cva(
   'flex w-full items-center gap-4 rounded-lg p-4 py-3',

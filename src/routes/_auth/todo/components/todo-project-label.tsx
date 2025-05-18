@@ -1,4 +1,5 @@
 import type { TodoSelect } from '@/validation/todo'
+import { CircleHelp } from 'lucide-react'
 import { AngularIcon } from '@/components/icons/angular'
 import { NextIcon } from '@/components/icons/next'
 import { SolidIcon } from '@/components/icons/solid'
@@ -6,7 +7,6 @@ import { SvelteIcon } from '@/components/icons/svelte'
 import { TanStackIcon } from '@/components/icons/tanstack'
 import { VueIcon } from '@/components/icons/vue'
 import { cn } from '@/lib/utils'
-import { CircleHelp } from 'lucide-react'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const projects = {

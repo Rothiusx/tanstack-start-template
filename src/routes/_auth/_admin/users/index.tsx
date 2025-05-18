@@ -1,3 +1,6 @@
+import { createFileRoute } from '@tanstack/react-router'
+import { Users } from 'lucide-react'
+import { Suspense } from 'react'
 import {
   Card,
   CardContent,
@@ -7,9 +10,6 @@ import {
 } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { getUsersOptions } from '@/server/users'
-import { createFileRoute } from '@tanstack/react-router'
-import { Users } from 'lucide-react'
-import { Suspense } from 'react'
 import { UsersList } from './components/users-list'
 
 export const Route = createFileRoute('/_auth/_admin/users/')({

@@ -1,12 +1,5 @@
-import type { getUser } from '@/server/auth'
 import type { QueryClient } from '@tanstack/react-query'
-import { DefaultErrorBoundary } from '@/components/common/default-error-boundary'
-import { LoadingScreen } from '@/components/common/loading-screen'
-import { NavBar } from '@/components/common/nav-bar'
-import { NotFound } from '@/components/common/not-found'
-import { TooltipProvider } from '@/components/ui/tooltip'
-import { getUserOptions } from '@/server/auth'
-import styles from '@/styles.css?url'
+import type { getUser } from '@/server/auth'
 import {
   createRootRouteWithContext,
   HeadContent,
@@ -16,6 +9,13 @@ import {
 import { ThemeProvider } from 'next-themes'
 import { lazy, Suspense } from 'react'
 import { Toaster } from 'sonner'
+import { DefaultErrorBoundary } from '@/components/common/default-error-boundary'
+import { LoadingScreen } from '@/components/common/loading-screen'
+import { NavBar } from '@/components/common/nav-bar'
+import { NotFound } from '@/components/common/not-found'
+import { TooltipProvider } from '@/components/ui/tooltip'
+import { getUserOptions } from '@/server/auth'
+import styles from '@/styles.css?url'
 
 // Lazy load router devtools in development
 const TanStackRouterDevtools = import.meta.env.DEV

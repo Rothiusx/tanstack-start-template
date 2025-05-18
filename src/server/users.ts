@@ -1,7 +1,7 @@
-import { db } from '@/db'
-import { userPermissionMiddleware } from '@/middleware/auth'
 import { queryOptions } from '@tanstack/react-query'
 import { createServerFn } from '@tanstack/react-start'
+import { db } from '@/db'
+import { userPermissionMiddleware } from '@/middleware/auth'
 
 /**
  * ! Server function to get all users

@@ -1,5 +1,5 @@
-import { getBrowserLocale } from '@/lib/utils'
 import { useEffect, useState } from 'react'
+import { getBrowserLocale } from '@/lib/utils'
 import { useRootContextUser } from './use-user'
 
 /**

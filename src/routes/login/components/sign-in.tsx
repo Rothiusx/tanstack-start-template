@@ -1,4 +1,10 @@
 import type { LinkOptions } from '@tanstack/react-router'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useQueryClient } from '@tanstack/react-query'
+import { Link } from '@tanstack/react-router'
+import { Loader2 } from 'lucide-react'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { DiscordIcon } from '@/components/icons/discord'
 import { Button } from '@/components/ui/button'
 import {
@@ -24,12 +30,6 @@ import { signIn } from '@/lib/auth/client'
 import { cn } from '@/lib/utils'
 import { getUserOptions } from '@/server/auth'
 import { signInSchema } from '@/validation/auth'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useQueryClient } from '@tanstack/react-query'
-import { Link } from '@tanstack/react-router'
-import { Loader2 } from 'lucide-react'
-import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 
 /**
  * The callback URL for the sign in

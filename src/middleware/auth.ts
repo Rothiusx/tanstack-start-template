@@ -1,7 +1,7 @@
-import { auth } from '@/lib/auth'
 import { redirect } from '@tanstack/react-router'
 import { createMiddleware } from '@tanstack/react-start'
 import { getWebRequest, setResponseStatus } from '@tanstack/react-start/server'
+import { auth } from '@/lib/auth'
 
 // https://tanstack.com/start/latest/docs/framework/react/middleware
 // This is a sample middleware that you can use in your server functions.

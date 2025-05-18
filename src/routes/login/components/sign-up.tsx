@@ -1,4 +1,11 @@
 import type { LinkOptions } from '@tanstack/react-router'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
+import { Loader2 } from 'lucide-react'
+import { useState } from 'react'
+import { useForm, useWatch } from 'react-hook-form'
+import { toast } from 'sonner'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
@@ -21,13 +28,6 @@ import { PasswordInput } from '@/components/ui/password-input'
 import { isAuthClientError, signUp } from '@/lib/auth/client'
 import { getUserOptions } from '@/server/auth'
 import { signUpSchema } from '@/validation/auth'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useQueryClient } from '@tanstack/react-query'
-import { useNavigate } from '@tanstack/react-router'
-import { Loader2 } from 'lucide-react'
-import { useState } from 'react'
-import { useForm, useWatch } from 'react-hook-form'
-import { toast } from 'sonner'
 
 /**
  * The callback URL for the sign up

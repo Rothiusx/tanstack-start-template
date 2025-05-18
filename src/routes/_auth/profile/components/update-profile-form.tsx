@@ -1,5 +1,11 @@
 import type { StatusMessageProps } from '@/components/ui/status-message'
 import type { User } from '@/lib/auth'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { Loader2 } from 'lucide-react'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -21,12 +27,6 @@ import {
 import { StatusMessage } from '@/components/ui/status-message'
 import { getUserOptions, updateUser } from '@/server/auth'
 import { userUpdateSchema } from '@/validation/auth'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Loader2 } from 'lucide-react'
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 
 export function EditProfileForm({ user }: { user: User }) {
   const queryClient = useQueryClient()

@@ -1,3 +1,5 @@
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { ArrowRight, Layout, Shield, Zap } from 'lucide-react'
 import { BetterAuthIcon } from '@/components/icons/better-auth'
 import { DrizzleIcon } from '@/components/icons/drizzle'
 import { ShadcnIcon } from '@/components/icons/shadcn'
@@ -14,8 +16,6 @@ import {
 import { FlipWords } from '@/components/ui/flip-words'
 import { LinkPreview } from '@/components/ui/link-preview'
 import { useUser } from '@/hooks/use-user'
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { ArrowRight, Layout, Shield, Zap } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
   component: Home,

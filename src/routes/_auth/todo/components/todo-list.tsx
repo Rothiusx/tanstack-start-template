@@ -1,5 +1,7 @@
-import type { getTodos } from '@/server/todo'
 import type { ColumnDef } from '@tanstack/react-table'
+import type { getTodos } from '@/server/todo'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { CircleCheckBig, CircleX } from 'lucide-react'
 import { FormatDate } from '@/components/common/format-date'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
@@ -12,8 +14,6 @@ import {
 } from '@/components/ui/tooltip'
 import { VirtualDataTable } from '@/components/ui/virtual-data-table'
 import { getTodosOptions } from '@/server/todo'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { CircleCheckBig, CircleX } from 'lucide-react'
 import { TodoListActions } from './todo-list-actions'
 import { TodoProjectLabel } from './todo-project-label'
 

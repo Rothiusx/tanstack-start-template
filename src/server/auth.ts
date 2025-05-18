@@ -1,10 +1,10 @@
+import { queryOptions } from '@tanstack/react-query'
+import { createServerFn } from '@tanstack/react-start'
+import { getWebRequest } from '@tanstack/react-start/server'
 import { auth } from '@/lib/auth'
 import { sleep } from '@/lib/utils'
 import { authMiddleware } from '@/middleware/auth'
 import { userUpdateSchema } from '@/validation/auth'
-import { queryOptions } from '@tanstack/react-query'
-import { createServerFn } from '@tanstack/react-start'
-import { getWebRequest } from '@tanstack/react-start/server'
 
 /**
  * ! Server function to get user session

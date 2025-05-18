@@ -1,11 +1,11 @@
-import { db } from '@/db'
-import { todo } from '@/db/schema'
-import { todoSelectSchema } from '@/validation/todo'
 import { json } from '@tanstack/react-start'
 import { createAPIFileRoute } from '@tanstack/react-start/api'
 import { setResponseStatus } from '@tanstack/react-start/server'
 import { eq } from 'drizzle-orm'
 import { StatusCodes } from 'http-status-codes'
+import { db } from '@/db'
+import { todo } from '@/db/schema'
+import { todoSelectSchema } from '@/validation/todo'
 
 export const APIRoute = createAPIFileRoute('/api/todo/$id')({
   GET: async ({ params }) => {
