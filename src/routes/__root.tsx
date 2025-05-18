@@ -14,6 +14,7 @@ import { LoadingScreen } from '@/components/common/loading-screen'
 import { NavBar } from '@/components/common/nav-bar'
 import { NotFound } from '@/components/common/not-found'
 import { TooltipProvider } from '@/components/ui/tooltip'
+import { env } from '@/env'
 import { getUserOptions } from '@/server/auth'
 import styles from '@/styles.css?url'
 
@@ -54,7 +55,7 @@ export const Route = createRootRouteWithContext<{
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: import.meta.env.VITE_APP_TITLE,
+        title: env.VITE_APP_TITLE,
       },
       {
         name: 'description',

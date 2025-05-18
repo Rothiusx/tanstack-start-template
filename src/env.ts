@@ -1,4 +1,3 @@
-import process from 'node:process'
 import { createEnv } from '@t3-oss/env-core'
 import { z } from 'zod'
 
@@ -29,6 +28,7 @@ export const env = createEnv({
    * `process.env` or `import.meta.env`.
    */
   runtimeEnv: {
+    // eslint-disable-next-line node/prefer-global/process
     ...process.env,
     ...import.meta.env,
   },
