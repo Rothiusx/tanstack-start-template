@@ -24,8 +24,7 @@
     "**/.vinxi": true
   },
   "files.readonlyInclude": {
-    "**/routeTree.gen.ts": true,
-    "bun.lock": true
+    "**/routeTree.gen.ts": true
   },
   "files.eol": "\n",
   "files.autoSave": "onFocusChange",
