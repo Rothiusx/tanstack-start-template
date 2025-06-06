@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { ClipboardList, Home, Loader2, Menu, ShieldUser } from 'lucide-react'
+import { motion } from 'motion/react'
 import { Fragment, Suspense } from 'react'
 import { BetterAuthIcon } from '@/components/icons/better-auth'
 import { DrizzleIcon } from '@/components/icons/drizzle'
@@ -58,10 +59,20 @@ export function NavBar() {
                 className:
                   'bg-secondary-foreground/15 text-secondary-foreground',
               }}
-              className="flex items-center gap-2 rounded-md px-3 py-1.5 text-xl font-medium text-muted-foreground transition-all hover:bg-secondary-foreground/10"
+              className="relative flex items-center gap-2 rounded-md px-3 py-1.5 text-xl font-medium text-muted-foreground transition-all hover:bg-secondary-foreground/10"
             >
-              {icon}
-              {label}
+              {({ isActive }) => (
+                <>
+                  {icon}
+                  {label}
+                  {isActive && (
+                    <motion.div
+                      layoutId="active-nav-link"
+                      className="absolute inset-0 rounded-md bg-secondary-foreground/15 text-secondary-foreground"
+                    />
+                  )}
+                </>
+              )}
             </Link>
           ))}
         </div>

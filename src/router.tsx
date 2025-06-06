@@ -57,7 +57,7 @@ export function createRouter() {
         user: null,
       },
       scrollRestoration: true,
-      defaultStructuralSharing: true,
+      defaultViewTransition: true,
       defaultPreload: 'intent',
       defaultPendingComponent: () => <LoadingScreen />,
       defaultNotFoundComponent: (props) => <NotFound {...props} />,

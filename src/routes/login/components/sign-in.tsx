@@ -166,10 +166,8 @@ export default function SignIn({
                   onRequest: () => {
                     setFlowStarted(true)
                   },
-                  onResponse: () => {
-                    setFlowStarted(false)
-                  },
                   onError: ({ error }) => {
+                    setFlowStarted(false)
                     toast.error(error.message)
                   },
                 },
