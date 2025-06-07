@@ -38,7 +38,7 @@
     "@tanstack/react-start": "^1.120.5",
     "@tanstack/react-start-config": "^1.120.5",
     "@tanstack/react-table": "^8.21.3",
-    "@tanstack/react-virtual": "^3.13.8",
+    "@tanstack/react-virtual": "^3.13.9",
     "better-auth": "^1.2.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
