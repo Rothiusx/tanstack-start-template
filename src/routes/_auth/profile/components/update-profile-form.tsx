@@ -98,7 +98,15 @@ export function UpdateProfileForm({ user }: { user: User }) {
                   inputMode="numeric"
                   placeholder="18"
                   {...field}
-                  value={field.value?.toString() ?? ''}
+                  onChange={(e) => {
+                    const value = e.target.value
+                    if (value === '') {
+                      field.onChange(null)
+                    } else {
+                      field.onChange(Number(value))
+                    }
+                  }}
+                  value={String(field.value ?? '')}
                 />
               </FormControl>
               <FormMessage />
