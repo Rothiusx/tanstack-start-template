@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build --preset vercel",
+    "build": "vite build",
     "preview": "vite preview",
     "start": "node .output/server/index.mjs",
     "check-types": "tsc",
