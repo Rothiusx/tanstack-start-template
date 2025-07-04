@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { useUser } from '@/hooks/use-user'
-import { EditProfileForm } from '@/routes/_auth/profile/components/update-profile-form'
+import { UpdateProfileForm } from '@/routes/_auth/profile/components/update-profile-form'
 
 export const Route = createFileRoute('/_auth/profile')({
   head: () => ({
@@ -57,7 +57,7 @@ function Profile() {
             </CardDescription>
           </CardHeader>
           <CardContent className="p-6 backdrop-blur-sm">
-            <EditProfileForm user={user} />
+            <UpdateProfileForm user={user} />
           </CardContent>
         </Card>
       </div>

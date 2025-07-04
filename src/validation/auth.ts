@@ -1,16 +1,13 @@
-import {
-  createInsertSchema,
-  createSchemaFactory,
-  createSelectSchema,
-} from 'drizzle-zod'
+import { createSchemaFactory } from 'drizzle-zod'
 import { z } from 'zod/v4'
 import { user } from '@/db/schema'
 
-// const { createInsertSchema, createSelectSchema } = createSchemaFactory({
-//   coerce: {
-//     number: true,
-//   },
-// })
+const { createInsertSchema, createSelectSchema } = createSchemaFactory({
+  zodInstance: z,
+  coerce: {
+    number: true,
+  },
+})
 
 /**
  * User select schema and type

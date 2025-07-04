@@ -28,7 +28,7 @@ import { StatusMessage } from '@/components/ui/status-message'
 import { getUserOptions, updateUser } from '@/server/auth'
 import { userUpdateSchema } from '@/validation/auth'
 
-export function EditProfileForm({ user }: { user: User }) {
+export function UpdateProfileForm({ user }: { user: User }) {
   const queryClient = useQueryClient()
   const [message, setMessage] = useState<StatusMessageProps>({
     message: '',
@@ -98,7 +98,7 @@ export function EditProfileForm({ user }: { user: User }) {
                   inputMode="numeric"
                   placeholder="18"
                   {...field}
-                  value={field.value ?? ''}
+                  value={field.value?.toString() ?? ''}
                 />
               </FormControl>
               <FormMessage />
