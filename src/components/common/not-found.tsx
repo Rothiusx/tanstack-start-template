@@ -2,7 +2,7 @@ import type { NotFoundRouteProps } from '@tanstack/react-router'
 import { Link } from '@tanstack/react-router'
 import { FileQuestion, Home, Search } from 'lucide-react'
 import { useLayoutEffect, useState } from 'react'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { Button } from '@/components/ui/button'
 import {
   Card,

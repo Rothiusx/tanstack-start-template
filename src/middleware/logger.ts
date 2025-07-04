@@ -14,15 +14,17 @@ const logger = pino(stream)
 /**
  * Middleware for request logging
  */
-export const loggerMiddleware = createMiddleware().server(({ next }) => {
-  const request = getWebRequest()
-  const headers = getHeaders()
+export const loggerMiddleware = createMiddleware({ type: 'function' }).server(
+  ({ next }) => {
+    const request = getWebRequest()
+    const headers = getHeaders()
 
-  logger.info({
-    method: request?.method,
-    url: request?.url,
-    headers,
-  })
+    logger.info({
+      method: request?.method,
+      url: request?.url,
+      headers,
+    })
 
-  return next()
-})
+    return next()
+  },
+)

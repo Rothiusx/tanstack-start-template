@@ -9,27 +9,29 @@ import { auth } from '@/lib/auth'
 /**
  * Middleware to force authentication on a server function, and add the user to the context.
  */
-export const authMiddleware = createMiddleware().server(async ({ next }) => {
-  const { headers } = getWebRequest()!
+export const authMiddleware = createMiddleware({ type: 'function' }).server(
+  async ({ next }) => {
+    const { headers } = getWebRequest()
 
-  const session = await auth.api.getSession({
-    headers,
-    query: {
-      // ensure session is fresh
-      // https://www.better-auth.com/docs/concepts/session-management#session-caching
-      disableCookieCache: true,
-    },
-  })
+    const session = await auth.api.getSession({
+      headers,
+      query: {
+        // ensure session is fresh
+        // https://www.better-auth.com/docs/concepts/session-management#session-caching
+        disableCookieCache: true,
+      },
+    })
 
-  if (!session) {
-    setResponseStatus(401)
-    throw redirect({ to: '/login' })
-  }
+    if (!session) {
+      setResponseStatus(401)
+      throw redirect({ to: '/login' })
+    }
 
-  return next({ context: { session } })
-})
+    return next({ context: { session } })
+  },
+)
 
-export const userPermissionMiddleware = createMiddleware()
+export const userPermissionMiddleware = createMiddleware({ type: 'function' })
   .middleware([authMiddleware])
   .server(async ({ next, context }) => {
     const hasPermission = await auth.api.userHasPermission({

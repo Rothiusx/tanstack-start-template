@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link, redirect } from '@tanstack/react-router'
 import { ArrowLeft, Edit } from 'lucide-react'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { FormatDate } from '@/components/common/format-date'
 import { NotFound } from '@/components/common/not-found'
 import { Button } from '@/components/ui/button'

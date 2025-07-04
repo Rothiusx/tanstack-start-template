@@ -1,5 +1,5 @@
 import { createSchemaFactory } from 'drizzle-zod'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { todo } from '@/db/schema'
 
 const { createInsertSchema, createSelectSchema } = createSchemaFactory({

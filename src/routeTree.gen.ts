@@ -8,172 +8,289 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { createServerRootRoute } from '@tanstack/react-start/server'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as LoginRouteImport } from './routes/login/route'
-import { Route as AuthRouteImport } from './routes/_auth/route'
-import { Route as IndexImport } from './routes/index'
-import { Route as AuthTodoRouteImport } from './routes/_auth/todo/route'
-import { Route as AuthProfileRouteImport } from './routes/_auth/profile/route'
-import { Route as AuthAdminRouteImport } from './routes/_auth/_admin/route'
-import { Route as AuthTodoIndexImport } from './routes/_auth/todo/index'
-import { Route as AuthTodoCreateImport } from './routes/_auth/todo/create'
-import { Route as AuthTodoIdImport } from './routes/_auth/todo/$id'
-import { Route as AuthAdminUsersRouteImport } from './routes/_auth/_admin/users/route'
-import { Route as AuthAdminUsersIndexImport } from './routes/_auth/_admin/users/index'
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteRouteImport } from './routes/login/route'
+import { Route as AuthRouteRouteImport } from './routes/_auth/route'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthTodoRouteRouteImport } from './routes/_auth/todo/route'
+import { Route as AuthProfileRouteRouteImport } from './routes/_auth/profile/route'
+import { Route as AuthAdminRouteRouteImport } from './routes/_auth/_admin/route'
+import { Route as AuthTodoIndexRouteImport } from './routes/_auth/todo/index'
+import { Route as AuthTodoCreateRouteImport } from './routes/_auth/todo/create'
+import { Route as AuthTodoIdRouteImport } from './routes/_auth/todo/$id'
+import { Route as AuthAdminUsersRouteRouteImport } from './routes/_auth/_admin/users/route'
+import { Route as AuthAdminUsersIndexRouteImport } from './routes/_auth/_admin/users/index'
+import { ServerRoute as ApiTodoIdServerRouteImport } from './routes/api/todo/$id'
+import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
 
-// Create/Update Routes
+const rootServerRouteImport = createServerRootRoute()
 
-const LoginRouteRoute = LoginRouteImport.update({
+const LoginRouteRoute = LoginRouteRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const AuthRouteRoute = AuthRouteImport.update({
+const AuthRouteRoute = AuthRouteRouteImport.update({
   id: '/_auth',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const IndexRoute = IndexImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const AuthTodoRouteRoute = AuthTodoRouteImport.update({
+const AuthTodoRouteRoute = AuthTodoRouteRouteImport.update({
   id: '/todo',
   path: '/todo',
   getParentRoute: () => AuthRouteRoute,
 } as any)
-
-const AuthProfileRouteRoute = AuthProfileRouteImport.update({
+const AuthProfileRouteRoute = AuthProfileRouteRouteImport.update({
   id: '/profile',
   path: '/profile',
   getParentRoute: () => AuthRouteRoute,
 } as any)
-
-const AuthAdminRouteRoute = AuthAdminRouteImport.update({
+const AuthAdminRouteRoute = AuthAdminRouteRouteImport.update({
   id: '/_admin',
   getParentRoute: () => AuthRouteRoute,
 } as any)
-
-const AuthTodoIndexRoute = AuthTodoIndexImport.update({
+const AuthTodoIndexRoute = AuthTodoIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AuthTodoRouteRoute,
 } as any)
-
-const AuthTodoCreateRoute = AuthTodoCreateImport.update({
+const AuthTodoCreateRoute = AuthTodoCreateRouteImport.update({
   id: '/create',
   path: '/create',
   getParentRoute: () => AuthTodoRouteRoute,
 } as any)
-
-const AuthTodoIdRoute = AuthTodoIdImport.update({
+const AuthTodoIdRoute = AuthTodoIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => AuthTodoRouteRoute,
 } as any)
-
-const AuthAdminUsersRouteRoute = AuthAdminUsersRouteImport.update({
+const AuthAdminUsersRouteRoute = AuthAdminUsersRouteRouteImport.update({
   id: '/users',
   path: '/users',
   getParentRoute: () => AuthAdminRouteRoute,
 } as any)
-
-const AuthAdminUsersIndexRoute = AuthAdminUsersIndexImport.update({
+const AuthAdminUsersIndexRoute = AuthAdminUsersIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AuthAdminUsersRouteRoute,
 } as any)
+const ApiTodoIdServerRoute = ApiTodoIdServerRouteImport.update({
+  id: '/api/todo/$id',
+  path: '/api/todo/$id',
+  getParentRoute: () => rootServerRouteImport,
+} as any)
+const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
+  getParentRoute: () => rootServerRouteImport,
+} as any)
 
-// Populate the FileRoutesByPath interface
+export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/login': typeof LoginRouteRoute
+  '/profile': typeof AuthProfileRouteRoute
+  '/todo': typeof AuthTodoRouteRouteWithChildren
+  '/users': typeof AuthAdminUsersRouteRouteWithChildren
+  '/todo/$id': typeof AuthTodoIdRoute
+  '/todo/create': typeof AuthTodoCreateRoute
+  '/todo/': typeof AuthTodoIndexRoute
+  '/users/': typeof AuthAdminUsersIndexRoute
+}
+export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/login': typeof LoginRouteRoute
+  '/profile': typeof AuthProfileRouteRoute
+  '/todo/$id': typeof AuthTodoIdRoute
+  '/todo/create': typeof AuthTodoCreateRoute
+  '/todo': typeof AuthTodoIndexRoute
+  '/users': typeof AuthAdminUsersIndexRoute
+}
+export interface FileRoutesById {
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/_auth': typeof AuthRouteRouteWithChildren
+  '/login': typeof LoginRouteRoute
+  '/_auth/_admin': typeof AuthAdminRouteRouteWithChildren
+  '/_auth/profile': typeof AuthProfileRouteRoute
+  '/_auth/todo': typeof AuthTodoRouteRouteWithChildren
+  '/_auth/_admin/users': typeof AuthAdminUsersRouteRouteWithChildren
+  '/_auth/todo/$id': typeof AuthTodoIdRoute
+  '/_auth/todo/create': typeof AuthTodoCreateRoute
+  '/_auth/todo/': typeof AuthTodoIndexRoute
+  '/_auth/_admin/users/': typeof AuthAdminUsersIndexRoute
+}
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/profile'
+    | '/todo'
+    | '/users'
+    | '/todo/$id'
+    | '/todo/create'
+    | '/todo/'
+    | '/users/'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/login'
+    | '/profile'
+    | '/todo/$id'
+    | '/todo/create'
+    | '/todo'
+    | '/users'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/login'
+    | '/_auth/_admin'
+    | '/_auth/profile'
+    | '/_auth/todo'
+    | '/_auth/_admin/users'
+    | '/_auth/todo/$id'
+    | '/_auth/todo/create'
+    | '/_auth/todo/'
+    | '/_auth/_admin/users/'
+  fileRoutesById: FileRoutesById
+}
+export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren
+  LoginRouteRoute: typeof LoginRouteRoute
+}
+export interface FileServerRoutesByFullPath {
+  '/api/auth/$': typeof ApiAuthSplatServerRoute
+  '/api/todo/$id': typeof ApiTodoIdServerRoute
+}
+export interface FileServerRoutesByTo {
+  '/api/auth/$': typeof ApiAuthSplatServerRoute
+  '/api/todo/$id': typeof ApiTodoIdServerRoute
+}
+export interface FileServerRoutesById {
+  __root__: typeof rootServerRouteImport
+  '/api/auth/$': typeof ApiAuthSplatServerRoute
+  '/api/todo/$id': typeof ApiTodoIdServerRoute
+}
+export interface FileServerRouteTypes {
+  fileServerRoutesByFullPath: FileServerRoutesByFullPath
+  fullPaths: '/api/auth/$' | '/api/todo/$id'
+  fileServerRoutesByTo: FileServerRoutesByTo
+  to: '/api/auth/$' | '/api/todo/$id'
+  id: '__root__' | '/api/auth/$' | '/api/todo/$id'
+  fileServerRoutesById: FileServerRoutesById
+}
+export interface RootServerRouteChildren {
+  ApiAuthSplatServerRoute: typeof ApiAuthSplatServerRoute
+  ApiTodoIdServerRoute: typeof ApiTodoIdServerRoute
+}
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_auth': {
       id: '/_auth'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthRouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/_auth/_admin': {
-      id: '/_auth/_admin'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthAdminRouteImport
-      parentRoute: typeof AuthRouteImport
-    }
-    '/_auth/profile': {
-      id: '/_auth/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof AuthProfileRouteImport
-      parentRoute: typeof AuthRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_auth/todo': {
       id: '/_auth/todo'
       path: '/todo'
       fullPath: '/todo'
-      preLoaderRoute: typeof AuthTodoRouteImport
-      parentRoute: typeof AuthRouteImport
+      preLoaderRoute: typeof AuthTodoRouteRouteImport
+      parentRoute: typeof AuthRouteRoute
     }
-    '/_auth/_admin/users': {
-      id: '/_auth/_admin/users'
-      path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof AuthAdminUsersRouteImport
-      parentRoute: typeof AuthAdminRouteImport
+    '/_auth/profile': {
+      id: '/_auth/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthProfileRouteRouteImport
+      parentRoute: typeof AuthRouteRoute
     }
-    '/_auth/todo/$id': {
-      id: '/_auth/todo/$id'
-      path: '/$id'
-      fullPath: '/todo/$id'
-      preLoaderRoute: typeof AuthTodoIdImport
-      parentRoute: typeof AuthTodoRouteImport
-    }
-    '/_auth/todo/create': {
-      id: '/_auth/todo/create'
-      path: '/create'
-      fullPath: '/todo/create'
-      preLoaderRoute: typeof AuthTodoCreateImport
-      parentRoute: typeof AuthTodoRouteImport
+    '/_auth/_admin': {
+      id: '/_auth/_admin'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthAdminRouteRouteImport
+      parentRoute: typeof AuthRouteRoute
     }
     '/_auth/todo/': {
       id: '/_auth/todo/'
       path: '/'
       fullPath: '/todo/'
-      preLoaderRoute: typeof AuthTodoIndexImport
-      parentRoute: typeof AuthTodoRouteImport
+      preLoaderRoute: typeof AuthTodoIndexRouteImport
+      parentRoute: typeof AuthTodoRouteRoute
+    }
+    '/_auth/todo/create': {
+      id: '/_auth/todo/create'
+      path: '/create'
+      fullPath: '/todo/create'
+      preLoaderRoute: typeof AuthTodoCreateRouteImport
+      parentRoute: typeof AuthTodoRouteRoute
+    }
+    '/_auth/todo/$id': {
+      id: '/_auth/todo/$id'
+      path: '/$id'
+      fullPath: '/todo/$id'
+      preLoaderRoute: typeof AuthTodoIdRouteImport
+      parentRoute: typeof AuthTodoRouteRoute
+    }
+    '/_auth/_admin/users': {
+      id: '/_auth/_admin/users'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof AuthAdminUsersRouteRouteImport
+      parentRoute: typeof AuthAdminRouteRoute
     }
     '/_auth/_admin/users/': {
       id: '/_auth/_admin/users/'
       path: '/'
       fullPath: '/users/'
-      preLoaderRoute: typeof AuthAdminUsersIndexImport
-      parentRoute: typeof AuthAdminUsersRouteImport
+      preLoaderRoute: typeof AuthAdminUsersIndexRouteImport
+      parentRoute: typeof AuthAdminUsersRouteRoute
     }
   }
 }
-
-// Create and export the route tree
+declare module '@tanstack/react-start/server' {
+  interface ServerFileRoutesByPath {
+    '/api/todo/$id': {
+      id: '/api/todo/$id'
+      path: '/api/todo/$id'
+      fullPath: '/api/todo/$id'
+      preLoaderRoute: typeof ApiTodoIdServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
+  }
+}
 
 interface AuthAdminUsersRouteRouteChildren {
   AuthAdminUsersIndexRoute: typeof AuthAdminUsersIndexRoute
@@ -230,168 +347,18 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
   AuthRouteRouteChildren,
 )
 
-export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '': typeof AuthAdminRouteRouteWithChildren
-  '/login': typeof LoginRouteRoute
-  '/profile': typeof AuthProfileRouteRoute
-  '/todo': typeof AuthTodoRouteRouteWithChildren
-  '/users': typeof AuthAdminUsersRouteRouteWithChildren
-  '/todo/$id': typeof AuthTodoIdRoute
-  '/todo/create': typeof AuthTodoCreateRoute
-  '/todo/': typeof AuthTodoIndexRoute
-  '/users/': typeof AuthAdminUsersIndexRoute
-}
-
-export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '': typeof AuthAdminRouteRouteWithChildren
-  '/login': typeof LoginRouteRoute
-  '/profile': typeof AuthProfileRouteRoute
-  '/todo/$id': typeof AuthTodoIdRoute
-  '/todo/create': typeof AuthTodoCreateRoute
-  '/todo': typeof AuthTodoIndexRoute
-  '/users': typeof AuthAdminUsersIndexRoute
-}
-
-export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/_auth': typeof AuthRouteRouteWithChildren
-  '/login': typeof LoginRouteRoute
-  '/_auth/_admin': typeof AuthAdminRouteRouteWithChildren
-  '/_auth/profile': typeof AuthProfileRouteRoute
-  '/_auth/todo': typeof AuthTodoRouteRouteWithChildren
-  '/_auth/_admin/users': typeof AuthAdminUsersRouteRouteWithChildren
-  '/_auth/todo/$id': typeof AuthTodoIdRoute
-  '/_auth/todo/create': typeof AuthTodoCreateRoute
-  '/_auth/todo/': typeof AuthTodoIndexRoute
-  '/_auth/_admin/users/': typeof AuthAdminUsersIndexRoute
-}
-
-export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | ''
-    | '/login'
-    | '/profile'
-    | '/todo'
-    | '/users'
-    | '/todo/$id'
-    | '/todo/create'
-    | '/todo/'
-    | '/users/'
-  fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | ''
-    | '/login'
-    | '/profile'
-    | '/todo/$id'
-    | '/todo/create'
-    | '/todo'
-    | '/users'
-  id:
-    | '__root__'
-    | '/'
-    | '/_auth'
-    | '/login'
-    | '/_auth/_admin'
-    | '/_auth/profile'
-    | '/_auth/todo'
-    | '/_auth/_admin/users'
-    | '/_auth/todo/$id'
-    | '/_auth/todo/create'
-    | '/_auth/todo/'
-    | '/_auth/_admin/users/'
-  fileRoutesById: FileRoutesById
-}
-
-export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AuthRouteRoute: typeof AuthRouteRouteWithChildren
-  LoginRouteRoute: typeof LoginRouteRoute
-}
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRouteRoute: AuthRouteRouteWithChildren,
   LoginRouteRoute: LoginRouteRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/_auth",
-        "/login"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/_auth": {
-      "filePath": "_auth/route.tsx",
-      "children": [
-        "/_auth/_admin",
-        "/_auth/profile",
-        "/_auth/todo"
-      ]
-    },
-    "/login": {
-      "filePath": "login/route.tsx"
-    },
-    "/_auth/_admin": {
-      "filePath": "_auth/_admin/route.tsx",
-      "parent": "/_auth",
-      "children": [
-        "/_auth/_admin/users"
-      ]
-    },
-    "/_auth/profile": {
-      "filePath": "_auth/profile/route.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/todo": {
-      "filePath": "_auth/todo/route.tsx",
-      "parent": "/_auth",
-      "children": [
-        "/_auth/todo/$id",
-        "/_auth/todo/create",
-        "/_auth/todo/"
-      ]
-    },
-    "/_auth/_admin/users": {
-      "filePath": "_auth/_admin/users/route.tsx",
-      "parent": "/_auth/_admin",
-      "children": [
-        "/_auth/_admin/users/"
-      ]
-    },
-    "/_auth/todo/$id": {
-      "filePath": "_auth/todo/$id.tsx",
-      "parent": "/_auth/todo"
-    },
-    "/_auth/todo/create": {
-      "filePath": "_auth/todo/create.tsx",
-      "parent": "/_auth/todo"
-    },
-    "/_auth/todo/": {
-      "filePath": "_auth/todo/index.tsx",
-      "parent": "/_auth/todo"
-    },
-    "/_auth/_admin/users/": {
-      "filePath": "_auth/_admin/users/index.tsx",
-      "parent": "/_auth/_admin/users"
-    }
-  }
+const rootServerRouteChildren: RootServerRouteChildren = {
+  ApiAuthSplatServerRoute: ApiAuthSplatServerRoute,
+  ApiTodoIdServerRoute: ApiTodoIdServerRoute,
 }
-ROUTE_MANIFEST_END */
+export const serverRouteTree = rootServerRouteImport
+  ._addFileChildren(rootServerRouteChildren)
+  ._addFileTypes<FileServerRouteTypes>()

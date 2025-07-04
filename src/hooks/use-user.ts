@@ -1,5 +1,5 @@
 import type { FileRoutesById } from '@/routeTree.gen'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { redirect, useRouteContext } from '@tanstack/react-router'
 import { getUserOptions } from '@/server/auth'
 
@@ -26,7 +26,7 @@ export function useUser(route?: keyof FileRoutesById) {
     select: ({ user }) => user,
   })
 
-  const { data } = useSuspenseQuery({
+  const { data } = useQuery({
     ...getUserOptions(),
     initialData: user,
   })

@@ -16,6 +16,10 @@ dist
 # local
 *.local
 
+# tanstack
+.tanstack
+routeTree.gen.ts
+
 # env files (can opt-in for committing if needed)
 .env*
 !.env.example

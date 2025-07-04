@@ -10,7 +10,7 @@ import { userUpdateSchema } from '@/validation/auth'
  * ! Server function to get user session
  */
 export const getUser = createServerFn({ method: 'GET' }).handler(async () => {
-  const { headers } = getWebRequest()!
+  const { headers } = getWebRequest()
   const session = await auth.api.getSession({ headers })
 
   // const language = headers.get('accept-language')?.split(',')[0] ?? 'en-US'
@@ -31,7 +31,7 @@ export const updateUser = createServerFn({ method: 'POST' })
   .middleware([authMiddleware])
   .validator(userUpdateSchema)
   .handler(async ({ data, context }) => {
-    const { headers } = getWebRequest()!
+    const { headers } = getWebRequest()
     const { email, ...user } = data
     try {
       if (email !== context.session.user.email) {

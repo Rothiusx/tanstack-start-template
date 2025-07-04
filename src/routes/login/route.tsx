@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { useState } from 'react'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import SignIn from './components/sign-in'
 import { SignUp } from './components/sign-up'

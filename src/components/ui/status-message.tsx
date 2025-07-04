@@ -68,7 +68,7 @@ export function StatusMessage({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, type: 'easeIn' }}
+          transition={{ duration: 0.5, type: 'spring' }}
         >
           {getIcon({ variant })}
           <span className="text-sm font-semibold">{message}</span>

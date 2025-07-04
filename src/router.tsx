@@ -19,6 +19,11 @@ export function createRouter() {
     notifyManager.setScheduler(window.requestAnimationFrame)
   }
 
+  // Import development tools
+  if (import.meta.env.DEV) {
+    import('react-scan').then(({ scan }) => scan({ enabled: true }))
+  }
+
   // Create a new query client inside the router
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -29,7 +34,7 @@ export function createRouter() {
         deserializeData: superjson.deserialize,
       },
       queries: {
-        staleTime: 1000 * 10,
+        staleTime: 1000 * 10, // 10 seconds
       },
     },
     mutationCache: new MutationCache({
@@ -58,7 +63,9 @@ export function createRouter() {
       },
       scrollRestoration: true,
       defaultViewTransition: true,
+      defaultStructuralSharing: true,
       defaultPreload: 'intent',
+      defaultPreloadStaleTime: 0,
       defaultPendingComponent: () => <LoadingScreen />,
       defaultNotFoundComponent: (props) => <NotFound {...props} />,
       defaultErrorComponent: (props) => <DefaultErrorBoundary {...props} />,
