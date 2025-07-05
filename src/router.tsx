@@ -7,10 +7,11 @@ import { createRouter as createTanstackRouter } from '@tanstack/react-router'
 import { routerWithQueryClient } from '@tanstack/react-router-with-query'
 import { toast } from 'sonner'
 import superjson from 'superjson'
+import { DefaultErrorBoundary } from '@/components/common/default-error-boundary'
+import { LoadingScreen } from '@/components/common/loading-screen'
+import { NotFound } from '@/components/common/not-found'
+import { importDevTools } from '@/lib/dev-tools'
 import { routeTree } from '@/routeTree.gen'
-import { DefaultErrorBoundary } from './components/common/default-error-boundary'
-import { LoadingScreen } from './components/common/loading-screen'
-import { NotFound } from './components/common/not-found'
 
 // Function to create a new router instance
 export function createRouter() {
@@ -19,10 +20,7 @@ export function createRouter() {
     notifyManager.setScheduler(window.requestAnimationFrame)
   }
 
-  // Import development tools
-  if (import.meta.env.DEV) {
-    import('react-scan').then(({ scan }) => scan({ enabled: true }))
-  }
+  importDevTools()
 
   // Create a new query client inside the router
   const queryClient = new QueryClient({

@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
-import { ClipboardList, Home, Loader2, Menu, ShieldUser } from 'lucide-react'
+import { ClipboardList, Home, Loader2, ShieldUser } from 'lucide-react'
 import { motion } from 'motion/react'
-import { Fragment, Suspense } from 'react'
+import { Suspense } from 'react'
 import { BetterAuthIcon } from '@/components/icons/better-auth'
 import { DrizzleIcon } from '@/components/icons/drizzle'
 import { ShadcnIcon } from '@/components/icons/shadcn'
@@ -11,10 +11,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useUser } from '@/hooks/use-user'
+import { MobileNav } from './mobile-nav'
 import { ThemeToggle } from './theme-toggle'
 import { UserMenu } from './user-menu'
 
@@ -77,24 +77,7 @@ export function NavBar() {
           ))}
         </div>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild className="ml-2 md:hidden">
-            <Menu className="size-8" />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="w-48">
-            {links.map(({ to, label, icon }, index) => (
-              <Fragment key={to}>
-                {index > 0 && <DropdownMenuSeparator />}
-                <DropdownMenuItem asChild>
-                  <Link to={to} className="flex items-center gap-2">
-                    {icon}
-                    {label}
-                  </Link>
-                </DropdownMenuItem>
-              </Fragment>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <MobileNav links={links} />
       </div>
 
       <div className="flex items-center gap-2">

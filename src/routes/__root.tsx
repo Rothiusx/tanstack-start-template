@@ -7,7 +7,7 @@ import {
   Scripts,
 } from '@tanstack/react-router'
 import { ThemeProvider } from 'next-themes'
-import { lazy, Suspense } from 'react'
+import { Suspense } from 'react'
 import { Toaster } from 'sonner'
 import { DefaultErrorBoundary } from '@/components/common/default-error-boundary'
 import { LoadingScreen } from '@/components/common/loading-screen'
@@ -15,26 +15,9 @@ import { NavBar } from '@/components/common/nav-bar'
 import { NotFound } from '@/components/common/not-found'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { env } from '@/env'
+import { ReactQueryDevtools, TanStackRouterDevtools } from '@/lib/dev-tools'
 import { getUserOptions } from '@/server/auth'
 import styles from '@/styles.css?url'
-
-// Lazy load router devtools in development
-const TanStackRouterDevtools = import.meta.env.DEV
-  ? lazy(() =>
-      import('@tanstack/react-router-devtools').then((res) => ({
-        default: res.TanStackRouterDevtools,
-      })),
-    )
-  : () => null
-
-// Lazy load query devtools in development
-const ReactQueryDevtools = import.meta.env.DEV
-  ? lazy(() =>
-      import('@tanstack/react-query-devtools').then((res) => ({
-        default: res.ReactQueryDevtools,
-      })),
-    )
-  : () => null
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient

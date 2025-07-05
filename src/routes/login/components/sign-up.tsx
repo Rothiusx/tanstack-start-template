@@ -80,7 +80,6 @@ export function SignUp() {
                         navigate({ to: '/todo' })
                       },
                       onError: ({ error }) => {
-                        console.log(error)
                         if (
                           isAuthClientError(error.code, 'USER_ALREADY_EXISTS')
                         ) {
