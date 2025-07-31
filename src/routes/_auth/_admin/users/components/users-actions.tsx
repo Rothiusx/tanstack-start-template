@@ -1,7 +1,7 @@
 import type { getUsers } from '@/server/users'
-import { Ban, FilePenLine, ShieldCheck } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useUser } from '@/hooks/use-user'
+import { Ban, FilePenLine, ShieldCheck } from 'lucide-react'
 
 export function UsersActions({
   user,

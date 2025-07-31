@@ -1,3 +1,8 @@
+import { DefaultErrorBoundary } from '@/components/common/default-error-boundary'
+import { LoadingScreen } from '@/components/common/loading-screen'
+import { NotFound } from '@/components/common/not-found'
+import { importDevTools } from '@/lib/dev-tools'
+import { routeTree } from '@/routeTree.gen'
 import {
   MutationCache,
   notifyManager,
@@ -7,11 +12,6 @@ import { createRouter as createTanstackRouter } from '@tanstack/react-router'
 import { routerWithQueryClient } from '@tanstack/react-router-with-query'
 import { toast } from 'sonner'
 import superjson from 'superjson'
-import { DefaultErrorBoundary } from '@/components/common/default-error-boundary'
-import { LoadingScreen } from '@/components/common/loading-screen'
-import { NotFound } from '@/components/common/not-found'
-import { importDevTools } from '@/lib/dev-tools'
-import { routeTree } from '@/routeTree.gen'
 
 // Function to create a new router instance
 export function createRouter() {
