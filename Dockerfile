@@ -13,8 +13,6 @@ RUN bun install --frozen-lockfile
 FROM oven/bun:alpine AS builder
 WORKDIR /app
 
-RUN apk add --no-cache python3 make g++ bash
-
 COPY package.json bun.lock ./
 RUN bun install --ci --frozen-lockfile
 
