@@ -8,7 +8,7 @@ import {
   notifyManager,
   QueryClient,
 } from '@tanstack/react-query'
-import { createRouter as createTanstackRouter } from '@tanstack/react-router'
+import { createRouter as createTanStackRouter } from '@tanstack/react-router'
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query'
 import { toast } from 'sonner'
 import superjson from 'superjson'
@@ -52,7 +52,7 @@ export function createRouter() {
   })
 
   // Return a router instance with the query client
-  const router = createTanstackRouter({
+  const router = createTanStackRouter({
     routeTree,
     context: {
       queryClient,
