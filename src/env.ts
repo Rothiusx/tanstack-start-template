@@ -3,6 +3,7 @@ import { z } from 'zod/v4'
 
 export const env = createEnv({
   server: {
+    DEPLOYMENT_PLATFORM: z.enum(['bun', 'vercel']).default('vercel'),
     DATABASE_URL: z.url(),
     BETTER_AUTH_SECRET: z.string(),
     DISCORD_CLIENT_ID: z.string(),

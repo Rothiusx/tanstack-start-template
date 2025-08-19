@@ -1,0 +1,29 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+
+# production
+dist
+.output
+.nitro
+.vercel
+
+# misc
+.DS_Store
+*.pem
+
+# local
+*.local
+
+# tanstack
+.tanstack
+
+# env files (can opt-in for committing if needed)
+.env*
+!.env.example
+
+# vscode
+.vscode/*
+!.vscode/settings.json
+
