@@ -1,38 +1,30 @@
 import tailwindcss from '@tailwindcss/vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
+import viteReact from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
-import tsConfigPaths from 'vite-tsconfig-paths'
+import viteTsConfigPaths from 'vite-tsconfig-paths'
 
-export default defineConfig({
+const config = defineConfig({
   plugins: [
-    tsConfigPaths({
+    viteTsConfigPaths({
       projects: ['./tsconfig.json'],
     }),
     tailwindcss(),
     tanstackStart({
-      // https://react.dev/learn/react-compiler
-      react: {
-        babel: {
-          plugins: [
-            [
-              'babel-plugin-react-compiler',
-              {
-                target: '19',
-              },
-            ],
-          ],
-        },
-      },
+      customViteReactPlugin: true,
       tsr: {
         routeFileIgnorePrefix: 'components',
         quoteStyle: 'single',
         semicolons: false,
       },
-      // https://tanstack.com/start/latest/docs/framework/react/hosting#deployment
       target: 'vercel',
     }),
+    viteReact({
+      babel: {
+        plugins: [['babel-plugin-react-compiler', { target: '19' }]],
+      },
+    }),
   ],
-  server: {
-    port: 3000,
-  },
 })
+
+export default config

@@ -1,23 +1,26 @@
-import type { QueryClient } from '@tanstack/react-query'
-import type { getUser } from '@/server/auth'
-import {
-  createRootRouteWithContext,
-  HeadContent,
-  Outlet,
-  Scripts,
-} from '@tanstack/react-router'
-import { ThemeProvider } from 'next-themes'
-import { Suspense } from 'react'
-import { Toaster } from 'sonner'
 import { DefaultErrorBoundary } from '@/components/common/default-error-boundary'
 import { LoadingScreen } from '@/components/common/loading-screen'
 import { NavBar } from '@/components/common/nav-bar'
 import { NotFound } from '@/components/common/not-found'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { env } from '@/env'
-import { ReactQueryDevtools, TanStackRouterDevtools } from '@/lib/dev-tools'
+import {
+  ReactQueryDevtoolsPanel,
+  TanStackRouterDevtoolsPanel,
+} from '@/lib/dev-tools'
+import type { getUser } from '@/server/auth'
 import { getUserOptions } from '@/server/auth'
 import styles from '@/styles.css?url'
+import { TanStackDevtools } from '@tanstack/react-devtools'
+import type { QueryClient } from '@tanstack/react-query'
+import {
+  createRootRouteWithContext,
+  HeadContent,
+  Scripts,
+} from '@tanstack/react-router'
+import { ThemeProvider } from 'next-themes'
+import { Suspense } from 'react'
+import { Toaster } from 'sonner'
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient
@@ -56,11 +59,7 @@ export const Route = createRootRouteWithContext<{
   pendingComponent: () => <LoadingScreen />,
   errorComponent: (props) => <DefaultErrorBoundary {...props} />,
   notFoundComponent: (props) => <NotFound {...props} />,
-  component: () => (
-    <RootDocument>
-      <Outlet />
-    </RootDocument>
-  ),
+  shellComponent: RootDocument,
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
@@ -84,8 +83,21 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 
         {import.meta.env.DEV && (
           <Suspense>
-            <ReactQueryDevtools />
-            <TanStackRouterDevtools />
+            <TanStackDevtools
+              config={{
+                position: 'bottom-left',
+              }}
+              plugins={[
+                {
+                  name: 'Tanstack Router',
+                  render: <TanStackRouterDevtoolsPanel />,
+                },
+                {
+                  name: 'Tanstack Query',
+                  render: <ReactQueryDevtoolsPanel />,
+                },
+              ]}
+            />
           </Suspense>
         )}
 

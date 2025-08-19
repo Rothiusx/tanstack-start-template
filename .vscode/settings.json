@@ -31,6 +31,9 @@
   "files.associations": {
     "*.css": "tailwindcss"
   },
+  "[tailwindcss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "typescript.preferences.autoImportFileExcludePatterns": ["@radix-ui/*"],
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],

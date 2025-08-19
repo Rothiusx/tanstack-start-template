@@ -1,17 +1,17 @@
+import { DefaultErrorBoundary } from '@/components/common/default-error-boundary'
+import { LoadingScreen } from '@/components/common/loading-screen'
+import { NotFound } from '@/components/common/not-found'
+import { importDevTools } from '@/lib/dev-tools'
+import { routeTree } from '@/routeTree.gen'
 import {
   MutationCache,
   notifyManager,
   QueryClient,
 } from '@tanstack/react-query'
 import { createRouter as createTanstackRouter } from '@tanstack/react-router'
-import { routerWithQueryClient } from '@tanstack/react-router-with-query'
+import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query'
 import { toast } from 'sonner'
 import superjson from 'superjson'
-import { DefaultErrorBoundary } from '@/components/common/default-error-boundary'
-import { LoadingScreen } from '@/components/common/loading-screen'
-import { NotFound } from '@/components/common/not-found'
-import { importDevTools } from '@/lib/dev-tools'
-import { routeTree } from '@/routeTree.gen'
 
 // Function to create a new router instance
 export function createRouter() {
@@ -52,24 +52,30 @@ export function createRouter() {
   })
 
   // Return a router instance with the query client
-  return routerWithQueryClient(
-    createTanstackRouter({
-      routeTree,
-      context: {
-        queryClient,
-        user: null,
-      },
-      scrollRestoration: true,
-      defaultViewTransition: true,
-      defaultStructuralSharing: true,
-      defaultPreload: 'intent',
-      defaultPreloadStaleTime: 0,
-      defaultPendingComponent: () => <LoadingScreen />,
-      defaultNotFoundComponent: (props) => <NotFound {...props} />,
-      defaultErrorComponent: (props) => <DefaultErrorBoundary {...props} />,
-    }),
+  const router = createTanstackRouter({
+    routeTree,
+    context: {
+      queryClient,
+      user: null,
+    },
+    scrollRestoration: true,
+    defaultViewTransition: true,
+    defaultStructuralSharing: true,
+    defaultPreload: 'intent',
+    defaultPreloadStaleTime: 0,
+    defaultPendingComponent: () => <LoadingScreen />,
+    defaultNotFoundComponent: (props) => <NotFound {...props} />,
+    defaultErrorComponent: (props) => <DefaultErrorBoundary {...props} />,
+  })
+
+  setupRouterSsrQueryIntegration({
+    router,
     queryClient,
-  )
+    handleRedirects: true,
+    wrapQueryClient: true,
+  })
+
+  return router
 }
 
 // Register the default error for the query client

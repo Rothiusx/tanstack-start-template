@@ -8,19 +8,19 @@ export function importDevTools() {
 }
 
 // Lazy load router devtools in development
-export const TanStackRouterDevtools = import.meta.env.DEV
+export const TanStackRouterDevtoolsPanel = import.meta.env.DEV
   ? lazy(() =>
       import('@tanstack/react-router-devtools').then((res) => ({
-        default: res.TanStackRouterDevtools,
+        default: res.TanStackRouterDevtoolsPanel,
       })),
     )
   : () => null
 
 // Lazy load query devtools in development
-export const ReactQueryDevtools = import.meta.env.DEV
+export const ReactQueryDevtoolsPanel = import.meta.env.DEV
   ? lazy(() =>
       import('@tanstack/react-query-devtools').then((res) => ({
-        default: res.ReactQueryDevtools,
+        default: res.ReactQueryDevtoolsPanel,
       })),
     )
   : () => null
